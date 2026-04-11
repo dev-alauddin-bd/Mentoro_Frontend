@@ -1,0 +1,192 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "courses": "Cursos",
+    "dashboard": "Panel de Control",
+    "admin": "Admin",
+    "login": "Iniciar Sesión",
+    "signup": "Regístrate",
+    "logout": "Cerrar Sesión",
+    "instructors": "Instructores",
+    "about": "Acerca de Nosotros",
+    "contact": "Contacto"
+  },
+  "home": {
+    "title": "Aprende cualquier cosa, en cualquier momento",
+    "subtitle": "Accede a miles de cursos de instructores expertos de todo el mundo",
+    "cta": "Explora Cursos",
+    "featured": "Cursos Destacados",
+    "featured_desc": "Aprende de los mejores profesores del mundo",
+    "view_all": "Ver todo"
+  },
+  "hero": {
+    "featured": "Cursos Destacados",
+    "title": "Aprende cualquier cosa, en cualquier momento",
+    "subtitle": "Accede a miles de cursos de instructores expertos de todo el mundo",
+    "cta": "Explora Cursos",
+    "watch_demo": "Ver Demostración",
+    "stats": {
+      "courses": "Cursos",
+      "students": "Estudiantes",
+      "instructors": "Instructores"
+    },
+    "floating_cards": {
+      "card1": {
+        "title": "Instructores expertos",
+        "subtitle": "Aprender de los mejores"
+      },
+      "card2": {
+        "title": "Acceso de por vida",
+        "subtitle": "Aprender para siempre"
+      },
+      "card3": {
+        "title": "Calificación 4.9/5",
+        "subtitle": "Calificado por el estudiante"
+      }
+    },
+    "scroll_indicator": "Desplazar para explorar"
+  },
+  "courses": {
+    "search": "Buscar cursos...",
+    "filter": "Filtrar",
+    "price": "Precio",
+    "all": "Todos los cursos",
+    "enrolled": "Inscrito",
+    "enroll": "Inscribirse ahora",
+    "description": "Descubra y se inscriba en miles de cursos",
+    "search_placeholder": "Buscar por título o categoría...",
+    "sort": {
+      "newest": "Más nuevos",
+      "priceLow": "Precio: De menor a mayor",
+      "priceHigh": "Precio: De mayor a menor"
+    },
+    "category": {
+      "all": "Todas las categorías",
+      "web": "Desarrollo web",
+      "mobile": "Desarrollo móvil",
+      "design": "Diseño",
+      "data": "Ciencia de datos",
+      "business": "Negocios"
+    },
+    "loading": "Cargando cursos...",
+    "no_results": "No se encontraron cursos."
+  },
+  "pagination": {
+    "previous": "Anterior",
+    "next": "Siguiente"
+  },
+  "auth": {
+    "welcome_back": "Bienvenido de vuelta",
+    "enter_credentials": "Ingrese sus credenciales para iniciar sesión",
+    "or_continue_with": "O continúe con",
+    "demo_credentials": "Credenciales de demostración:",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirm_password": "Confirma la contraseña",
+    "invalid_credentials": "Correo electrónico o contraseña inválido",
+    "login_error": "Inicio de sesión fallido. Inténtalo de nuevo",
+    "demo_email": "Correo electrónico de demostración",
+    "demo_password": "Contraseña de demostración",
+    "remember_me": "Recuérdame",
+    "forgot_password": "¿Olvidaste la contraseña?",
+    "logging_in": "Iniciando sesión...",
+    "sign_in": "Iniciar sesión",
+    "no_account": "¿No tienes una cuenta?",
+    "sign_up": "Regístrate",
+    "full_name": "Nombre completo",
+    "agree_terms": "Acepto los",
+    "terms": "Términos de servicio",
+    "privacy": "Política de privacidad",
+    "and": "y",
+    "agree_terms_error": "Por favor, acepta los términos y condiciones",
+    "password_mismatch": "Las contraseñas no coinciden",
+    "weak_password": "La contraseña no es lo suficientemente segura",
+    "signup_error": "Registro fallido. Inténtalo de nuevo.",
+    "creating_account": "Creando cuenta...",
+    "already_have_account": "¿Ya tienes una cuenta?",
+    "start_learning": "¡Comienza a aprender hoy!",
+    "create_account_desc": "Crea tu cuenta para acceder a miles de cursos de instructores expertos."
+  },
+  "dashboard": {
+    "title": "Mi Panel de Control",
+    "welcome": "Bienvenido de nuevo",
+    "subtitle": "Sigue aprendiendo y logrando tus objetivos.",
+    "enrolled": "Cursos Matriculados",
+    "progress": "Progreso",
+    "continue": "Continúa Aprendiendo",
+    "recent_activity": "Actividad Reciente",
+    "enrolled_courses": "Cursos Matriculados",
+    "hours_learned": "Horas Aprendidas",
+    "certificates": "Certificados",
+    "completion_rate": "Tasa de Completado"
+  },
+  "admin": {
+    "title": "Panel de Control de Administrador",
+    "subtitle": "Gestiona cursos, usuarios y analíticas de plataforma",
+    "recent_courses": "Cursos recientes",
+    "recent_users": "Usuarios recientes",
+    "courses": "Gestiona cursos",
+    "students": "Gestiona estudiantes",
+    "assignments": "Revisa tareas"
+  },
+  "requirements": {
+    "title": "Requisitos del sistema",
+    "subtitle": "Asegúrate de tener los requisitos necesarios para obtener la mejor experiencia de aprendizaje en CourseMaster",
+    "need_help": "¿Necesitas ayuda?"
+  },
+  "extra": {
+    "trust_title": "=Razonado por los mejores equipos del mundo",
+    "instructors_title": "Nuestros instructores expertos",
+    "about_title": "Acerca de CourseMaster",
+    "contact_title": "Pontente en contacto",
+    "testimonials_title": "Lo que nuestros estudiantes dicen",
+    "become_instructor": "Conviértete en instructor",
+    "become_instructor_desc": "Únete a miles de instructores y comparte tus conocimientos en todo el mundo mientras ganas dinero.",
+    "earnings_avg": "Ganancias promedio",
+    "start_teaching": "Comienza a enseñar ahora",
+    "unlock_potential": "Desbloquea tu potencial hoy.",
+    "quote": "\"La mejor inversión que puedes hacer es en ti mismo.\"",
+    "price": "Precio",
+    "loading": "Cargando...",
+    "voices_success": "Voces de éxito",
+    "testimonial_title": "No solo tómate nuestra palabra.",
+    "testimonial_subtitle": "Únete a 50,000+ estudiantes de 120+ países de todo el mundo.",
+    "for_instructors": "Para instructores aspirantes",
+    "instructor_cta_title": "Comparte tus conocimientos con",
+    "instructor_cta_millions": "millones",
+    "instructor_cta_desc": "Crea un curso hermoso en minutos. Recibe pagos mensuales. Alcance a estudiantes de todo el mundo.",
+    "learn_how_works": "Aprende cómo funciona",
+    "avg_earnings_label": "Ganancias mensuales promedio por experto"
+  },
+  "footer": {
+    "explore": "Explorar cursos",
+    "upcoming": "Próximas transmisiones en vivo",
+    "bundles": "Paquetes de cursos",
+    "learning_path": "Ruta de aprendizaje",
+    "teach": "Enseñar en CM",
+    "instructor_dash": "Panel de control del instructor",
+    "revenue": "Compartir ingresos",
+    "help": "Centro de ayuda",
+    "privacy": "Política de privacidad",
+    "terms": "Términos del servicio",
+    "cookie": "Configuración de cookies",
+    "ip_policy": "Política de propiedad intelectual",
+    "status": "Estado",
+    "support": "Soporte",
+    "links": "Enlaces útiles",
+    "community": "Comunidad",
+    "legal": "Legal"
+  },
+  "upcoming": {
+    "title": "Ahora y próximas",
+    "subtitle": "Sesiones de aprendizaje en vivo"
+  },
+  "common": {
+    "close": "Cerrar",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "more": "Más páginas",
+    "sidebar": "Barra lateral",
+    "toggle_sidebar": "Alternar barra lateral"
+  }
+}

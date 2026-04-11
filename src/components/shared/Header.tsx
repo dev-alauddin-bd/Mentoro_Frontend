@@ -1,21 +1,91 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector, useDispatch } from "react-redux";
+import { Globe, ChevronDown, Check, Menu, X } from "lucide-react";
 
-import { Menu, X, Globe } from "lucide-react";
 import { RootState, AppDispatch } from "@/redux/store";
 import { logout } from "@/redux/features/auth/authSlice";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
-export function Header() {
-  const { t, i18n } = useTranslation();
-  const dispatch = useDispatch<AppDispatch>();
-  const { isAuthenticated, user } = useSelector(
-    (state: RootState) => state.cmAuth
+// --- Types & Constants ---
+const languages = [
+  { code: "en", name: "English" },
+  { code: "bn", name: "বাংলা" },
+  { code: "fr", name: "Français" },
+  { code: "es", name: "Español" },
+  { code: "ar", name: "العربية" },
+];
+
+// --- Sub-Component: LanguageSwitcher ---
+function LanguageSwitcher() {
+  const { i18n } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+    localStorage.setItem("i18nextLng", lng);
+    document.documentElement.lang = lng;
+    document.documentElement.dir = lng === "ar" ? "rtl" : "ltr";
+    setIsOpen(false);
+  };
+
+  const currentLanguage = languages.find((l) => l.code === i18n.language) || languages[0];
+
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="flex h-9 items-center gap-2 rounded-xl border border-border bg-background px-3 text-xs font-black transition-all hover:bg-secondary hover:border-primary/30 active:scale-95 shadow-sm"
+      >
+        <Globe className="h-3.5 w-3.5 text-primary" />
+        <span className="uppercase tracking-tighter">{currentLanguage.code}</span>
+        <ChevronDown className={`h-3 w-3 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-44 origin-top-right rounded-xl border border-border bg-background p-1.5 shadow-xl animate-in fade-in zoom-in duration-200 z-[100]">
+          <div className="px-2 py-1.5 text-[10px] font-black uppercase tracking-widest text-muted-foreground/50">
+            Select Language
+          </div>
+          {languages.map((lang) => (
+            <button
+              key={lang.code}
+              onClick={() => changeLanguage(lang.code)}
+              className={`flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-xs font-bold transition-colors ${
+                i18n.language === lang.code
+                  ? "bg-primary/10 text-primary"
+                  : "hover:bg-secondary text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {lang.name}
+              {i18n.language === lang.code && <Check className="h-3.5 w-3.5 stroke-[3px]" />}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
   );
+}
+
+// --- Main Component: Header ---
+export function Header() {
+  const { t } = useTranslation();
+  const dispatch = useDispatch<AppDispatch>();
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.cmAuth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = () => {
@@ -23,20 +93,12 @@ export function Header() {
     window.location.href = "/";
   };
 
-  console.log(i18n)
-const toggleLanguage = () => {
-  const newLang = i18n.language === 'en' ? 'bn' : 'en';
-  i18n.changeLanguage(newLang); // updates i18n
-  localStorage.setItem('i18nextLng', newLang); // persist
-  document.documentElement.lang = newLang; // update html lang dynamically
-};
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md transition-all duration-300">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
           
-          {/* Logo Section */}
+          {/* Logo */}
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-2.5 transition-transform hover:scale-105 active:scale-95 duration-200">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-indigo-400 shadow-lg shadow-primary/25">
@@ -47,39 +109,27 @@ const toggleLanguage = () => {
               </span>
             </Link>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Nav */}
             <nav className="hidden items-center gap-1 xl:flex px-2 py-1 bg-secondary/50 rounded-2xl border border-border/50">
               <NavLink href="/" label={t("nav.home")} />
               <NavLink href="/courses" label={t("nav.courses")} />
-        
-              <NavLink href="/about" label={t("nav.about") || t("extra.about_title")} />
-              <NavLink href="/contact" label={t("nav.contact") || t("extra.contact_title")} />
+              <NavLink href="/about" label={t("nav.about") || "About"} />
+              <NavLink href="/contact" label={t("nav.contact") || "Contact"} />
               {isAuthenticated && <NavLink href="/dashboard" label={t("nav.dashboard")} />}
               {isAuthenticated && user?.role === "admin" && <NavLink href="/admin" label={t("nav.admin")} />}
             </nav>
           </div>
 
-
-          {/* Right Action Section */}
+          {/* Right Actions */}
           <div className="flex items-center gap-3">
-            
-            {/* Theme and Language Actions */}
             <div className="flex items-center gap-2">
               <ThemeSwitcher />
-              
-              {/* Language Toggle */}
-              <button
-                onClick={toggleLanguage}
-                className="flex h-9 items-center gap-2 rounded-xl border border-border bg-background px-4 text-xs font-black transition-all hover:bg-secondary hover:border-primary/30 active:scale-95"
-              >
-                <Globe className="h-3.5 w-3.5 text-primary" />
-                <span className="uppercase tracking-tighter">{i18n.language === "en" ? "BN" : "EN"}</span>
-              </button>
+              <LanguageSwitcher />
             </div>
 
             <div className="h-6 w-[1px] bg-border mx-1 hidden sm:block" />
 
-            {/* User Interaction Area */}
+            {/* User Interaction */}
             {isAuthenticated ? (
               <div className="flex items-center gap-3">
                 <div className="hidden flex-col items-end sm:flex">
@@ -91,32 +141,29 @@ const toggleLanguage = () => {
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="hidden sm:flex h-9 items-center justify-center rounded-xl bg-destructive/10 px-4 text-xs font-black text-destructive transition-all hover:bg-destructive hover:text-white active:scale-95"
+                  className="hidden sm:flex h-9 items-center justify-center rounded-xl bg-destructive/10 px-4 text-xs font-black text-destructive transition-all hover:bg-destructive hover:text-white"
                 >
                   {t("nav.logout")}
                 </button>
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <Link
-                  href="/login"
-                  className="rounded-xl px-4 py-2 text-xs font-black text-muted-foreground transition-all hover:bg-secondary hover:text-foreground"
-                >
+                <Link href="/login" className="rounded-xl px-4 py-2 text-xs font-black text-muted-foreground hover:text-foreground transition-colors">
                   {t("nav.login")}
                 </Link>
                 <Link
                   href="/signup"
-                  className="hidden sm:flex h-9 items-center justify-center rounded-xl bg-primary px-5 text-xs font-black text-white shadow-lg shadow-primary/25 transition-all hover:translate-y-[-2px] hover:shadow-xl active:translate-y-0"
+                  className="hidden sm:flex h-9 items-center justify-center rounded-xl bg-primary px-5 text-xs font-black text-white shadow-lg shadow-primary/25 hover:translate-y-[-2px] transition-all active:translate-y-0"
                 >
                   {t("nav.signup")}
                 </Link>
               </div>
             )}
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Toggle */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-secondary text-foreground lg:hidden transition-colors hover:bg-primary/10 hover:text-primary"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-secondary text-foreground lg:hidden hover:text-primary transition-colors"
             >
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
@@ -124,46 +171,34 @@ const toggleLanguage = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation Dropdown */}
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden animate-in slide-in-from-top-4 duration-200 border-t bg-background p-4 grid gap-2">
+        <div className="lg:hidden animate-in slide-in-from-top-4 duration-200 border-t bg-background p-4 grid gap-2 shadow-xl">
           <MobileNavLink href="/" label={t("nav.home")} onClick={() => setIsMenuOpen(false)} />
           <MobileNavLink href="/courses" label={t("nav.courses")} onClick={() => setIsMenuOpen(false)} />
-          <MobileNavLink href="/about" label={t("nav.about") || t("extra.about_title")} onClick={() => setIsMenuOpen(false)} />
-          <MobileNavLink href="/contact" label={t("nav.contact") || t("extra.contact_title")} onClick={() => setIsMenuOpen(false)} />
-
+          <MobileNavLink href="/about" label={t("nav.about")} onClick={() => setIsMenuOpen(false)} />
+          
           {isAuthenticated && (
             <>
+              <div className="h-[1px] bg-border my-1" />
               <MobileNavLink href="/dashboard" label={t("nav.dashboard")} onClick={() => setIsMenuOpen(false)} />
-              {user?.role === "admin" && (
-                <MobileNavLink href="/admin" label={t("nav.admin")} onClick={() => setIsMenuOpen(false)} />
-              )}
-              <div className="h-[1px] bg-border my-2" />
               <button
                 onClick={handleLogout}
-                className="flex w-full items-center justify-center rounded-xl bg-destructive py-3 text-sm font-black text-white transition-opacity hover:opacity-90"
+                className="mt-2 flex w-full items-center justify-center rounded-xl bg-destructive py-3 text-sm font-black text-white"
               >
                 {t("nav.logout")}
               </button>
             </>
           )}
           {!isAuthenticated && (
-             <div className="grid grid-cols-2 gap-3 pt-2">
-               <Link
-                 href="/login"
-                 onClick={() => setIsMenuOpen(false)}
-                 className="flex h-11 items-center justify-center rounded-xl bg-secondary text-sm font-black text-foreground"
-               >
-                 {t("nav.login")}
-               </Link>
-               <Link
-                 href="/signup"
-                 onClick={() => setIsMenuOpen(false)}
-                 className="flex h-11 items-center justify-center rounded-xl bg-primary text-sm font-black text-white"
-               >
-                 {t("nav.signup")}
-               </Link>
-             </div>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <Link href="/login" onClick={() => setIsMenuOpen(false)} className="flex h-11 items-center justify-center rounded-xl bg-secondary text-sm font-black text-foreground">
+                {t("nav.login")}
+              </Link>
+              <Link href="/signup" onClick={() => setIsMenuOpen(false)} className="flex h-11 items-center justify-center rounded-xl bg-primary text-sm font-black text-white">
+                {t("nav.signup")}
+              </Link>
+            </div>
           )}
         </div>
       )}
@@ -171,12 +206,12 @@ const toggleLanguage = () => {
   );
 }
 
-// Helper components for clean code
+// --- Helpers ---
 function NavLink({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
-      className="rounded-xl px-4 py-1.5 text-xs font-black tracking-tight text-foreground/70 transition-all hover:bg-background hover:text-primary hover:shadow-sm"
+      className="rounded-xl px-4 py-2 text-xs font-black text-muted-foreground transition-all hover:bg-background hover:text-primary hover:shadow-sm"
     >
       {label}
     </Link>
@@ -188,10 +223,9 @@ function MobileNavLink({ href, label, onClick }: { href: string; label: string; 
     <Link
       href={href}
       onClick={onClick}
-      className="flex h-11 items-center rounded-xl bg-secondary/50 px-4 text-sm font-black text-foreground transition-colors hover:bg-primary/10 hover:text-primary"
+      className="flex w-full items-center rounded-xl px-4 py-3 text-sm font-black text-muted-foreground transition-colors hover:bg-secondary hover:text-primary"
     >
       {label}
     </Link>
   );
 }
-

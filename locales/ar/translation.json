@@ -1,0 +1,192 @@
+{
+  "nav": {
+    "home": "الصفحة الرئيسية",
+    "courses": "الدورات",
+    "dashboard": "لوحة التحكم",
+    "admin": "المشرف",
+    "login": "تسجيل الدخول",
+    "signup": "تسجيل",
+    "logout": "تسجيل الخروج",
+    "instructors": "المعلمون",
+    "about": "معلومات عنا",
+    "contact": "التواصل"
+  },
+  "home": {
+    "title": "تعلم أي شيء، في أي وقت",
+    "subtitle": "استفد من آلاف الدورات من معلمين خبيرين في جميع أنحاء العالم",
+    "cta": "استكشاف الدورات",
+    "featured": "الدورات المميزة",
+    "featured_desc": "تعلم من أفضل معلمي العالم",
+    "view_all": "عرض الكل"
+  },
+  "hero": {
+    "featured": "الدورات المميزة",
+    "title": "تعلم أي شيء، في أي समय",
+    "subtitle": "استفد من آلاف الدورات من معلمين خبيرين في جميع أنحاء العالم",
+    "cta": "استكشاف الدورات",
+    "watch_demo": "مشاهدة العرض التوضيحي",
+    "stats": {
+      "courses": "الدورات",
+      "students": "الطلاب",
+      "instructors": "المعلمون"
+    },
+    "floating_cards": {
+      "card1": {
+        "title": "معلمون ذوي خبرة",
+        "subtitle": "تعلم من الأفضل"
+      },
+      "card2": {
+        "title": "وصول مدى الحياة",
+        "subtitle": "تعلم إلى الأبد"
+      },
+      "card3": {
+        "title": "تقييم 4.9/5",
+        "subtitle": "تم تقييمه من قبل الطلاب"
+      }
+    },
+    "scroll_indicator": "اسحب للاستكشاف"
+  },
+  "courses": {
+    "search": "بحث الدورات...",
+    "filter": "فلتر",
+    "price": "السعر",
+    "all": "جميع الدورات",
+    "enrolled": "مشترك",
+    "enroll": "اشترك الآن",
+    "description": "اكتشف واشترك في آلاف الدورات",
+    "search_placeholder": "بحث حسب العنوان أو الفئة...",
+    "sort": {
+      "newest": "أحدث",
+      "priceLow": "السعر: من الأقل إلى الأعلى",
+      "priceHigh": "السعر: من الأعلى إلى الأقل"
+    },
+    "category": {
+      "all": "جميع الفئات",
+      "web": "تطوير الويب",
+      "mobile": "تطوير الهاتف المحمول",
+      "design": "تصميم",
+      "data": "علم البيانات",
+      "business": "أعمال"
+    },
+    "loading": "جاري تحميل الدورات...",
+    "no_results": "لم يتم العثور على دورات."
+  },
+  "pagination": {
+    "previous": "السابق",
+    "next": "التالي"
+  },
+  "auth": {
+    "welcome_back": "مرحباً بعودتك",
+    "enter_credentials": "أدخل بيانات تسجيل الدخول الخاصة بك",
+    "or_continue_with": "أو استمر مع",
+    "demo_credentials": "عرض بيانات تسجيل الدخول للدेमو:",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirm_password": "أكد كلمة المرور",
+    "invalid_credentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "login_error": "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى",
+    "demo_email": "البريد الإلكتروني للتحديث",
+    "demo_password": "كلمة مرور العرض",
+    "remember_me": "تذكرني",
+    "forgot_password": "نسيت كلمة المرور؟",
+    "logging_in": "正在 تسجيل الدخول...",
+    "sign_in": "سجل الدخول",
+    "no_account": "ليس لديك حساب؟",
+    "sign_up": "سجل الآن",
+    "full_name": "الاسم الكامل",
+    "agree_terms": "أوافق على",
+    "terms": "شروط الخدمة",
+    "privacy": "سياسة الخصوصية",
+    "and": "و",
+    "agree_terms_error": "الرجاء الموافقة على الشروط والأحكام",
+    "password_mismatch": "كلمات المرور لا تتطابق",
+    "weak_password": "كلمة المرور غير قوية بما足ى",
+    "signup_error": "فشل التسجيل. يرجى المحاولة مرة أخرى.",
+    "creating_account": "إنشاء حساب...",
+    "already_have_account": "هل لديك حساب بالفعل؟",
+    "start_learning": "ابدأ بالتعلم اليوم!",
+    "create_account_desc": "انشئ حسابك للوصول إلى آلاف الدورات من معلمين خبراء."
+  },
+  "dashboard": {
+    "title": "لوحة القيادة الخاصة بي",
+    "welcome": "مرحباً بعودتك",
+    "subtitle": "استمر في التعلم وتحقيق أهدافك.",
+    "enrolled": "الدورات المسجلة",
+    "progress": "الยอด التقدم",
+    "continue": "استمرار التعلم",
+    "recent_activity": "النشاط الأخير",
+    "enrolled_courses": "الدورات المسجلة",
+    "hours_learned": "ساعات التعلم",
+    "certificates": "الشهادات",
+    "completion_rate": "معدل الانتهاء"
+  },
+  "admin": {
+    "title": "لوحة القيادة الإدارية",
+    "subtitle": "إدارة الدورات و المستخدمين و تحليلات المنصة",
+    "recent_courses": "الدورات الأخيرة",
+    "recent_users": "المستخدمون الأخيرون",
+    "courses": "إدارة الدورات",
+    "students": "إدارة الطلاب",
+    "assignments": "مراجعة الواجبات"
+  },
+  "requirements": {
+    "title": "متطلبات النظام",
+    "subtitle": "تأكد من أنك تحقق المتطلبات اللازمة للحصول على أفضل تجربة تعلم على CourseMaster",
+    "need_help": "هل تحتاج إلى مساعدة؟"
+  },
+  "extra": {
+    "trust_title": "معتمد من قبل meilleures فرق في العالم",
+    "instructors_title": "مدربينا الخبراء",
+    "about_title": "关于 CourseMaster",
+    "contact_title": "اتصل بنا",
+    "testimonials_title": "ما يقوله طلابنا",
+    "become_instructor": "اصبح مدربا",
+    "become_instructor_desc": "انضم إلى آلاف المدربين ومشاركة معرفتك في جميع أنحاء العالم وتعلم الأموال",
+    "earnings_avg": "معدل الأرباح",
+    "start_teaching": "ابداً في التدريس الآن",
+    "unlock_potential": "فتح إمكانياتك اليوم.",
+    "quote": "\"أفضل استثمار يمكنك الإستفادة منه هو في نفسك.\"",
+    "price": "السعر",
+    "loading": "جاري التحميل...",
+    "voices_success": "أصوات النجاح",
+    "testimonial_title": "لا تعتمد على كلامنا فقط.",
+    "testimonial_subtitle": "انضم إلى 50,000+ طالب من 120+ دولة حول العالم.",
+    "for_instructors": "لمعلمي المستقبل",
+    "instructor_cta_title": "شارك معارفك مع",
+    "instructor_cta_millions": "الملايين",
+    "instructor_cta_desc": "انشئ دورة جميلة في دقائق. احصل على الأجر شهرياً. وصول إلى الطلاب حول العالم.",
+    "learn_how_works": "تعلم كيف يعمل",
+    "avg_earnings_label": "معدل الأرباح الشهري الممتاز لكل خبير"
+  },
+  "footer": {
+    "explore": "استكشف الدورات",
+    "upcoming": "المواعيد الحية القادمة",
+    "bundles": "حزمة الدورات",
+    "learning_path": "مسار التعلم",
+    "teach": "تعليم على سي إم",
+    "instructor_dash": "لوحة المعلومات للمعلم",
+    "revenue": "حصة الإيرادات",
+    "help": "مركز المساعدة",
+    "privacy": "سياسة الخصوصية",
+    "terms": "شروط الخدمة",
+    "cookie": "إعدادات الكوكيز",
+    "ip_policy": "سياسة البراءات",
+    "status": "الحالة",
+    "support": "الدعم الفني",
+    "links": "روابط مفيدة",
+    "community": "المجتمع",
+    "legal": "القسم القانوني"
+  },
+  "upcoming": {
+    "title": "الآن والقادم",
+    "subtitle": "دورات التعلم الحية"
+  },
+  "common": {
+    "close": "إغلاق",
+    "previous": "السابق",
+    "next": "التالي",
+    "more": "مزيد من الصفحات",
+    "sidebar": "酒店",
+    "toggle_sidebar": "切换侧边栏"
+  }
+}
