@@ -29,31 +29,13 @@ export interface IModule {
   course?: ICourse;
   lessons?: ILesson[];
   assignment?: IAssignment | null;
-  quiz?: IQuiz | null;
   order: number;
 }
 export interface IAssignment {
   id: string;
   description: string;
-  submissionType: SubmissionType;
   moduleId: string;
   module?: IModule;
-}
-
-export interface IQuiz {
-  id: string;
-  moduleId: string;
-  module?: IModule;
-  questions?: IQuizQuestion[];
-}
-
-export interface IQuizQuestion {
-  id: string;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  quizId: string;
-  quiz?: IQuiz;
 }
 
 export interface IEnrollment {

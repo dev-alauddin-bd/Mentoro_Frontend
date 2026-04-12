@@ -14,9 +14,6 @@ type FormValues = {
   previewVideo: string;
   price: number;
   categoryId: string;
-  tags: string;
-  instructor: string;
-
 };
 
 // Convert YouTube URL → embed URL
@@ -44,9 +41,6 @@ export default function CourseCreateForm({
         previewVideo: "",
         price: 0,
         categoryId: "",
-        tags: "",
-        instructor: "",
-
       },
     });
 
@@ -116,8 +110,6 @@ export default function CourseCreateForm({
         previewVideo: embedVideoUrl,
         price: Number(data.price),
         categoryId: data.categoryId,
-        instructor: data.instructor,
-
       };
 
       console.log("🚀 FINAL PAYLOAD:", payload);
@@ -201,15 +193,6 @@ export default function CourseCreateForm({
                 </div>
             </div>
 
-            <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Instructor Name</label>
-                <input
-                {...register("instructor")}
-                placeholder="Ex. John Doe"
-                className="w-full h-14 px-6 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50"
-                />
-            </div>
-            
             <div className="space-y-2">
                 <label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Preview Video URL</label>
                 <input

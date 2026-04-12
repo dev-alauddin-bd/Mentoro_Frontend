@@ -62,11 +62,6 @@ export const instructorItems = [
     icon: FileText,
   },
   {
-    title: "Manage Quizzes",
-    url: "/dashboard/instructor/quizzes",
-    icon: FileText,
-  },
-  {
     title: "Analytics",
     url: "/dashboard/instructor/analytics",
     icon: BarChart,

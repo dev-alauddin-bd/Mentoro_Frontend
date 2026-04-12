@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { useGetCourseByIdQuery, useEnrollCourseMutation } from "@/redux/features/course/courseAPi";
+import { useGetCourseByIdQuery, useEnrollCourseMutation, useCreateCheckoutMutation } from "@/redux/features/course/courseAPi";
 import {
    PlayCircle, BookOpen, Clock, Users, Star, CheckCircle,
    ChevronDown, ChevronUp, Loader2, Award, Zap, Shield, X, MonitorPlay, BarChart
@@ -20,6 +20,7 @@ export default function EnhancedCourseDetailsPage() {
    console.log("res", courseResponse)
 
    const [enrollCourse, { isLoading: isEnrolling }] = useEnrollCourseMutation();
+   const [createCheckout, { isLoading: isCheckingOut }] = useCreateCheckoutMutation();
    const [activeModule, setActiveModule] = useState<string | null>(null);
    const [showVideoModal, setShowVideoModal] = useState(false);
 
@@ -48,18 +49,23 @@ export default function EnhancedCourseDetailsPage() {
 
    const handleEnrollment = async () => {
       console.log("click hooise")
-      //  if (isEnrolled) {
-      //    router.push("/dashboard/student/courses");
-      //    return;
-      //  }
 
       try {
-         const res = await enrollCourse(courseId).unwrap();
-         console.log("res", res.data.paymentUrl)
-         window.location.href = res.data.paymentUrl;
-         // toast.success("Successfully enrolled in the course!");
-         refetch();
-         // router.push("/dashboard/student/courses");
+         const isFree = course?.price === 0;
+         
+         if (isFree) {
+            await enrollCourse(courseId).unwrap();
+            toast.success("Successfully enrolled in the free course!");
+            refetch();
+         } else {
+            const res = await createCheckout(courseId).unwrap();
+            console.log("res", res.data?.paymentUrl)
+            if (res.data?.paymentUrl) {
+               window.location.href = res.data.paymentUrl;
+            } else {
+               toast.error("Failed to initiate checkout");
+            }
+         }
       } catch (err: any) {
          if (err?.status === 401) {
             toast.error("Please login to enroll.");
@@ -339,16 +345,16 @@ export default function EnhancedCourseDetailsPage() {
 ) : (
    <button
       onClick={handleEnrollment}
-      disabled={isEnrolling}
+      disabled={isEnrolling || isCheckingOut}
       className="w-full h-16 rounded-[1.5rem] flex items-center justify-center gap-3 font-black uppercase tracking-widest text-sm bg-primary text-white hover:scale-[1.03] active:scale-95 shadow-primary/30 transition-all"
    >
-      {isEnrolling ? (
+      {isEnrolling || isCheckingOut ? (
          <Loader2 className="w-5 h-5 animate-spin" />
       ) : (
          <PlayCircle className="w-5 h-5" />
       )}
 
-      {isFree ? "Enroll Now for Free" : "Buy Now for Instant Access"}
+      {isFree ? "Enroll Now for Free" : "Enroll Now"}
    </button>
 )}
                         {/* Features checklist */}

@@ -13,7 +13,10 @@ import {
   Clock,
   ExternalLink,
   Sparkles,
+  Upload,
 } from "lucide-react";
+import { useState, useRef } from "react";
+import { toast } from "react-hot-toast";
 
 // ---------- TYPES ----------
 type InfoItemProps = {
@@ -31,6 +34,41 @@ type StatusItemProps = {
 
 export default function ProfilePage() {
   const { user } = useSelector((state: RootState) => state.cmAuth);
+  
+  const [isUploading, setIsUploading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleProfileUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!user) return;
+    
+    setIsUploading(true);
+    const formData = new FormData(e.currentTarget);
+
+    try {
+      // In a real Redux setup, use an RTK Mutation hook. Since we don't have updateProfileMutation readily available, using fetch.
+      // E.g. useUpdateProfileMutation() but let's do a direct fetch with auth token if token was in Redux state, 
+      // or we can just send it with credentials. Assuming cookie/auth setup:
+      const res = await fetch("http://localhost:5000/api/v1/users/profile", {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+        },
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Failed to update profile");
+      
+      toast.success("Profile updated perfectly!");
+      // Ideally dispatch to redux to update user state here.
+      window.location.reload(); 
+    } catch (err: any) {
+      toast.error(err.message || "Error updating profile");
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   if (!user) {
     return (
@@ -73,8 +111,11 @@ export default function ProfilePage() {
 
             <div className="relative w-32 h-32 mx-auto">
               <div className="absolute inset-0 bg-primary/20 blur-[30px] rounded-full scale-110"></div>
-
-           
+              <img 
+                src={user.avatar || `https://ui-avatars.com/api/?name=${user.name}&background=random`} 
+                alt={user.name} 
+                className="w-full h-full rounded-full object-cover border-4 border-background relative z-10"
+              />
             </div>
 
             <h2 className="text-2xl font-black mt-6">{user.name}</h2>
@@ -118,12 +159,47 @@ export default function ProfilePage() {
           <div className="space-y-6">
             <h3 className="text-2xl font-black">Basic Information</h3>
 
-            <div className="grid md:grid-cols-2 gap-8">
-              <InfoItem icon={<User />} label="Name" value={user.name} />
-              <InfoItem icon={<Mail />} label="Email" value={user.email} />
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
               <InfoItem icon={<Shield />} label="Role" value={user.role} isCaps />
-              <InfoItem icon={<Calendar />} label="Account" value="Pro User" />
+              <InfoItem icon={<Calendar />} label="Member Since" value={user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "Present"} />
             </div>
+
+            <form ref={formRef} onSubmit={handleProfileUpdate} className="space-y-6 bg-secondary/30 p-6 rounded-2xl border border-border">
+              <h4 className="text-sm font-bold uppercase text-primary mb-4 flex items-center gap-2">
+                <Edit3 className="w-4 h-4" /> Edit Profile
+              </h4>
+
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-muted-foreground uppercase mb-1">Display Name</label>
+                  <input 
+                    name="name" 
+                    defaultValue={user.name} 
+                    className="w-full bg-background border rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary outline-none" 
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-muted-foreground uppercase mb-1">Avatar Image</label>
+                  <div className="relative border-2 border-dashed border-muted-foreground/30 rounded-xl px-4 py-6 hover:bg-background transition-colors text-center cursor-pointer overflow-hidden">
+                    <input 
+                      type="file" 
+                      name="avatar" 
+                      accept="image/*"
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
+                    />
+                    <Upload className="w-6 h-6 text-muted-foreground mx-auto mb-2" />
+                    <span className="text-sm font-medium text-muted-foreground">Click or Drag to Upload to Cloudinary</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex justify-end pt-2">
+                <button disabled={isUploading} type="submit" className="bg-primary text-primary-foreground px-6 py-3 rounded-xl font-bold uppercase text-xs hover:opacity-90 disabled:opacity-50 transition-all flex items-center gap-2">
+                  {isUploading ? "Uploading Data..." : "Save Changes"} <CheckCircle2 className="w-4 h-4" />
+                </button>
+              </div>
+            </form>
           </div>
 
           <hr />

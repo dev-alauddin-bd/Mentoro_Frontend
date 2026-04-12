@@ -79,6 +79,15 @@ export const courseApi = baseApi.injectEndpoints({
       invalidatesTags: ["Course"],
     }),
 
+    // Process Payment Checkout
+    createCheckout: build.mutation<any, string>({
+      query: (courseId) => ({
+        url: `/payments/checkout`,
+        method: "POST",
+        body: { courseId }
+      }),
+    }),
+
     // Complete Lesson
     completeLesson: build.mutation<IApiResponse<{ message: string }>, { courseId: string; lessonId: string }>({
       query: ({ courseId, lessonId }) => ({
@@ -99,6 +108,7 @@ export const {
   useUpdateCourseMutation,
   useDeleteCourseMutation,
   useEnrollCourseMutation,
+  useCreateCheckoutMutation,
   useGetMyCoursesQuery,
   useCompleteLessonMutation
 } = courseApi;

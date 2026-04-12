@@ -22,7 +22,7 @@ export default function AssignmentsPage() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingAssignment, setEditingAssignment] = useState<any>(null);
-  const [formData, setFormData] = useState({ description: "", submissionType: "text", moduleId: "" });
+  const [formData, setFormData] = useState({ description: "", moduleId: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const openModal = (assignment?: any) => {
@@ -30,12 +30,11 @@ export default function AssignmentsPage() {
       setEditingAssignment(assignment);
       setFormData({
         description: assignment.description,
-        submissionType: assignment.submissionType,
         moduleId: assignment.moduleId
       });
     } else {
       setEditingAssignment(null);
-      setFormData({ description: "", submissionType: "text", moduleId: "" });
+      setFormData({ description: "", moduleId: "" });
     }
     setIsModalOpen(true);
   };
@@ -50,7 +49,7 @@ export default function AssignmentsPage() {
     setIsSubmitting(true);
     try {
       if (editingAssignment) {
-        await updateAssignment({ id: editingAssignment.id, data: { description: formData.description, submissionType: formData.submissionType } }).unwrap();
+        await updateAssignment({ id: editingAssignment.id, data: { description: formData.description } }).unwrap();
         toast.success("Assignment updated successfully!");
       } else {
         await createAssignment(formData).unwrap();
@@ -138,8 +137,8 @@ export default function AssignmentsPage() {
                         </div>
                       </td>
                       <td className="px-8 py-6 text-center">
-                         <div className={`inline-flex items-center justify-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${assignment.submissionType === 'link' ? 'bg-purple-500/10 text-purple-500 border border-purple-500/20' : 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'}`}>
-                            {assignment.submissionType}
+                         <div className={`inline-flex items-center justify-center px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-emerald-500/10 text-emerald-500 border border-emerald-500/20`}>
+                            Standard
                          </div>
                       </td>
                       <td className="px-8 py-6 text-right">
@@ -207,19 +206,6 @@ export default function AssignmentsPage() {
                   onChange={e => setFormData({...formData, description: e.target.value})}
                   className="w-full px-6 py-4 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50 resize-none"
                 />
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Submission Type</label>
-                <select 
-                  required
-                  value={formData.submissionType} 
-                  onChange={e => setFormData({...formData, submissionType: e.target.value})}
-                  className="w-full h-14 px-6 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-sm cursor-pointer"
-                >
-                  <option value="text">Rich Text</option>
-                  <option value="link">URL / Link</option>
-                </select>
               </div>
 
               <div className="pt-6 flex justify-end gap-3 flex-col sm:flex-row">
