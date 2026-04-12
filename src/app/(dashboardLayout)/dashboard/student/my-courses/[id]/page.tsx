@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import Link from "next/link";
 
 // Flatten all navigable items from modules into a single ordered list
-type NavItem = { id: string; type: 'lesson' | 'quiz' | 'assignment'; data: any; moduleId: string };
+type NavItem = { id: string; type: 'lesson'  | 'assignment'; data: any; moduleId: string };
 
 export default function CoursePlayerPage() {
   const params = useParams();
@@ -26,6 +26,7 @@ export default function CoursePlayerPage() {
   const [submitQuiz, { isLoading: isSubmittingQuiz }] = useSubmitQuizMutation();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [isCourseCompletedMode, setIsCourseCompletedMode] = useState(false);
   const [expandedModules, setExpandedModules] = useState<string[]>([]);
 
   // Quiz state
@@ -51,9 +52,7 @@ export default function CoursePlayerPage() {
       if (mod.assignment) {
         items.push({ id: mod.assignment.id, type: 'assignment', data: mod.assignment, moduleId: mod.id });
       }
-      if (mod.quiz) {
-        items.push({ id: mod.quiz.id, type: 'quiz', data: mod.quiz, moduleId: mod.id });
-      }
+    
     }
     return items;
   }, [course]);
@@ -96,24 +95,32 @@ export default function CoursePlayerPage() {
       return;
     }
     setActiveIndex(index);
+    setIsCourseCompletedMode(false);
   };
 
-  const goNext = () => {
-    if (activeIndex < navItems.length - 1) goToItem(activeIndex + 1);
+  const goNextAndComplete = async () => {
+    if (!activeItem) return;
+
+    if (activeItem.type === 'lesson' && !activeItem.data.isCompleted) {
+      try {
+        await completeLesson({ courseId, lessonId: activeItem.id }).unwrap();
+        toast.success("Lesson completed! 🎉");
+        refetch();
+      } catch (err: any) {
+         toast.error(err?.data?.message || "Failed to mark complete");
+         return;
+      }
+    }
+
+    if (activeIndex < navItems.length - 1) {
+       goToItem(activeIndex + 1);
+    } else {
+       setIsCourseCompletedMode(true);
+    }
   };
+
   const goPrev = () => {
     if (activeIndex > 0) goToItem(activeIndex - 1);
-  };
-
-  const handleMarkComplete = async () => {
-    if (!activeItem || activeItem.type !== 'lesson') return;
-    try {
-      await completeLesson({ courseId, lessonId: activeItem.id }).unwrap();
-      toast.success("Lesson completed! 🎉");
-      refetch();
-    } catch (err: any) {
-      toast.error(err?.data?.message || "Failed to mark complete");
-    }
   };
 
   const handleSubmitAssignment = async () => {
@@ -131,24 +138,7 @@ export default function CoursePlayerPage() {
     }
   };
 
-  const handleSubmitQuiz = async () => {
-    if (!activeItem || activeItem.type !== 'quiz') return;
-    const questions = activeItem.data.questions || [];
-    const answers = questions.map((_: any, i: number) => quizAnswers[i] ?? -1);
 
-    if (answers.includes(-1)) {
-      toast.error("Please answer all questions before submitting.");
-      return;
-    }
-
-    try {
-      const res = await submitQuiz({ quizId: activeItem.id, answers }).unwrap();
-      setQuizResult(res.data);
-      toast.success(`Quiz submitted! Score: ${res.data.score}/${res.data.total}`);
-    } catch (err: any) {
-      toast.error(err?.data?.message || "Failed to submit quiz");
-    }
-  };
 
   // Embed URL helper
   const getEmbedUrl = (url: string) => {
@@ -295,7 +285,17 @@ export default function CoursePlayerPage() {
 
       {/* ========== MAIN CONTENT ========== */}
       <div className="flex-1 flex flex-col bg-background overflow-hidden">
-        {activeItem ? (
+        {isCourseCompletedMode ? (
+           <div className="flex flex-col flex-1 items-center justify-center text-center p-10 bg-background">
+             <div className="w-24 h-24 bg-emerald-500/10 border border-emerald-500/30 rounded-full flex items-center justify-center mb-6 shadow-xl shadow-emerald-500/20">
+               <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+             </div>
+             <h3 className="text-3xl font-black text-foreground mb-4">Course Completed!</h3>
+             <p className="text-muted-foreground max-w-md font-medium">
+               Congratulations on completing the entire course successfully! You have unlocked all lessons. You can re-watch any lesson from the curriculum on the left.
+             </p>
+           </div>
+        ) : activeItem ? (
           <>
             <div className="flex-1 overflow-y-auto">
 
@@ -332,74 +332,13 @@ export default function CoursePlayerPage() {
                         </div>
                       </div>
 
-                      <button
-                        onClick={handleMarkComplete}
-                        disabled={activeItem.data.isCompleted || isCompleting}
-                        className={`px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 whitespace-nowrap transition-all text-sm ${activeItem.data.isCompleted ? 'bg-secondary text-muted-foreground cursor-not-allowed' : 'bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/20'}`}
-                      >
-                        {isCompleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <CheckCircle className="w-4 h-4" />}
-                        {activeItem.data.isCompleted ? 'Completed' : 'Mark Complete'}
-                      </button>
+                      {/* Button Removed per user request */}
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* ===== QUIZ VIEW ===== */}
-              {activeItem.type === 'quiz' && (
-                <div className="max-w-3xl w-full mx-auto p-6 md:p-10 space-y-8">
-                  <div className="flex items-center gap-4 bg-amber-500/10 p-4 rounded-2xl border border-amber-500/20">
-                    <div className="w-14 h-14 rounded-xl bg-amber-500 flex items-center justify-center text-white shadow-lg shadow-amber-500/30">
-                      <Award className="w-7 h-7" />
-                    </div>
-                    <div>
-                      <h1 className="text-2xl font-black text-foreground">Module Quiz</h1>
-                      <p className="text-sm text-amber-600 font-bold">{activeItem.data.questions?.length || 0} Questions</p>
-                    </div>
-                  </div>
-
-                  {quizResult ? (
-                    <div className="bg-card border rounded-2xl p-8 text-center space-y-4">
-                      <div className={`text-6xl font-black ${quizResult.percentage >= 70 ? 'text-emerald-500' : 'text-red-500'}`}>
-                        {quizResult.percentage}%
-                      </div>
-                      <p className="text-lg font-bold">You scored {quizResult.score} out of {quizResult.total}</p>
-                      <p className="text-muted-foreground">{quizResult.percentage >= 70 ? "Great job! You passed the quiz! 🎉" : "Keep studying and try again."}</p>
-                    </div>
-                  ) : (
-                    <div className="space-y-6">
-                      {activeItem.data.questions?.map((q: any, qIdx: number) => (
-                        <div key={q.id} className="bg-card border rounded-2xl p-6 space-y-4">
-                          <h3 className="font-bold text-foreground">
-                            <span className="text-primary mr-2">Q{qIdx + 1}.</span>
-                            {q.question}
-                          </h3>
-                          <div className="grid grid-cols-1 gap-2">
-                            {q.options?.map((opt: string, optIdx: number) => (
-                              <button
-                                key={optIdx}
-                                onClick={() => setQuizAnswers(prev => ({ ...prev, [qIdx]: optIdx }))}
-                                className={`p-3 rounded-xl text-left text-sm font-medium border transition-all ${quizAnswers[qIdx] === optIdx ? 'bg-primary text-white border-primary' : 'bg-background border-border hover:border-primary/50 text-foreground'}`}
-                              >
-                                <span className="font-bold mr-2">{String.fromCharCode(65 + optIdx)}.</span> {opt}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-
-                      <button
-                        onClick={handleSubmitQuiz}
-                        disabled={isSubmittingQuiz}
-                        className="w-full py-4 bg-amber-500 text-white rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-amber-600 transition-all shadow-lg shadow-amber-500/20"
-                      >
-                        {isSubmittingQuiz ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
-                        Submit Quiz
-                      </button>
-                    </div>
-                  )}
-                </div>
-              )}
+         
 
               {/* ===== ASSIGNMENT VIEW ===== */}
               {activeItem.type === 'assignment' && (
@@ -464,11 +403,12 @@ export default function CoursePlayerPage() {
               </span>
 
               <button
-                onClick={goNext}
-                disabled={activeIndex >= navItems.length - 1}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all ${activeIndex >= navItems.length - 1 ? 'opacity-30 cursor-not-allowed bg-secondary text-muted-foreground' : 'bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/20'}`}
+                onClick={goNextAndComplete}
+                disabled={isCourseCompletedMode || (activeItem?.type === 'lesson' && isCompleting)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm transition-all bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/20`}
               >
-                Next <ArrowRight className="w-4 h-4" />
+                {activeItem?.type === 'lesson' && isCompleting ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+                {activeIndex >= navItems.length - 1 ? "Finish Course" : "Next"} <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </>

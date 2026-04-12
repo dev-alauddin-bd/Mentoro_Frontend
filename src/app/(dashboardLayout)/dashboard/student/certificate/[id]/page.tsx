@@ -45,94 +45,134 @@ export default function CertificatePage() {
       window.print();
    };
 
-   return (
-      <div className="min-h-screen pb-20">
+    return (
+      <div className="min-h-screen pb-20 bg-zinc-50 dark:bg-zinc-950/20">
 
          {/* Actions Bar (Hidden on Print) */}
-         <div className="print:hidden flex items-center justify-between mb-8 pb-4 border-b border-border/50">
-            <button onClick={() => router.push("/dashboard/student/my-courses")} className="flex items-center gap-2 text-sm font-bold text-muted-foreground hover:text-foreground transition-colors">
-               <ChevronLeft className="w-4 h-4" /> Back
+         <div className="print:hidden max-w-5xl mx-auto px-4 pt-10 flex items-center justify-between mb-12">
+            <button onClick={() => router.push("/dashboard/student/my-courses")} className="h-12 px-6 flex items-center gap-2 text-sm font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-all bg-card border border-border rounded-xl shadow-sm">
+               <ChevronLeft className="w-4 h-4" /> Back to Workspace
             </button>
-            <button
-               onClick={handlePrint}
-               className="flex items-center gap-2 h-10 px-6 bg-primary text-white rounded-lg text-sm font-black uppercase tracking-widest shadow-md hover:scale-105 transition-transform"
-            >
-               <Download className="w-4 h-4" /> Download PDF
-            </button>
+            <div className="flex gap-4">
+               <button
+                  onClick={handlePrint}
+                  className="flex items-center gap-2 h-12 px-8 bg-black dark:bg-white text-white dark:text-black rounded-xl text-xs font-black uppercase tracking-[0.2em] shadow-xl hover:scale-105 active:scale-95 transition-all"
+               >
+                  <Download className="w-4 h-4" /> Export as PDF
+               </button>
+            </div>
          </div>
 
          {/* Certificate Container */}
-         <div className="flex justify-center overflow-x-auto pb-10 print:pb-0 print:overflow-visible">
+         <div className="flex justify-center px-4 pb-20 print:p-0">
             <div
                ref={certificateRef}
-               className="relative w-[1000px] h-[700px] bg-white text-zinc-900 shadow-2xl flex-shrink-0 print:shadow-none print:w-[297mm] print:h-[210mm]"
+               className="relative w-[1100px] h-[780px] bg-[#fffdfa] text-zinc-900 shadow-[0_50px_100px_rgba(0,0,0,0.15)] flex-shrink-0 print:shadow-none print:w-[297mm] print:h-[210mm] border-[20px] border-zinc-900 overflow-hidden"
                style={{ pageBreakAfter: "always" }}
             >
-               {/* Decorative Borders */}
-               <div className="absolute inset-x-8 inset-y-8 border-4 border-double border-amber-600/30"></div>
-               <div className="absolute inset-x-10 inset-y-10 border border-amber-600/20"></div>
+               {/* Guilloche / Ornate Border Patterns */}
+               <div className="absolute inset-0 border-[2px] border-amber-600/20 m-2 pointer-events-none"></div>
+               
+               {/* Ornate Corners */}
+               <div className="absolute top-0 left-0 w-32 h-32 border-t-4 border-l-4 border-amber-600/40 m-6"></div>
+               <div className="absolute top-0 right-0 w-32 h-32 border-t-4 border-r-4 border-amber-600/40 m-6"></div>
+               <div className="absolute bottom-0 left-0 w-32 h-32 border-b-4 border-l-4 border-amber-600/40 m-6"></div>
+               <div className="absolute bottom-0 right-0 w-32 h-32 border-b-4 border-r-4 border-amber-600/40 m-6"></div>
 
-               {/* Corner Ribbons */}
-               <div className="absolute top-0 left-0 w-32 h-32 bg-primary/5 rounded-br-full"></div>
-               <div className="absolute bottom-0 right-0 w-32 h-32 bg-amber-600/5 rounded-tl-full"></div>
+               {/* Background Texture / Watermark */}
+               <div className="absolute inset-0 opacity-[0.03] pointer-events-none flex items-center justify-center">
+                   <Award className="w-[500px] h-[500px] rotate-12" />
+               </div>
 
-               {/* Inner Content */}
-               <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-20 z-10">
-
-                  <div className="mb-8 flex items-center justify-center gap-3">
-                     <div className="w-12 h-12 bg-primary rounded flex items-center justify-center transform rotate-12">
-                        <Award className="w-6 h-6 text-white" />
+               {/* Inner Content Wrapper */}
+               <div className="absolute inset-12 border-2 border-zinc-900/5 flex flex-col items-center py-20 px-24 text-center">
+                  
+                  {/* Platform Branding */}
+                  <div className="mb-10 flex flex-col items-center gap-2">
+                     <div className="flex items-center gap-2 mb-2">
+                        <div className="w-2 h-2 bg-amber-600 rounded-full"></div>
+                        <div className="w-10 h-0.5 bg-amber-600/30"></div>
+                        <Award className="w-8 h-8 text-amber-600" />
+                        <div className="w-10 h-0.5 bg-amber-600/30"></div>
+                        <div className="w-2 h-2 bg-amber-600 rounded-full"></div>
                      </div>
-                     <h1 className="text-2xl font-black uppercase tracking-[0.3em] text-primary">CourseMaster</h1>
+                     <h1 className="text-xl font-black uppercase tracking-[0.5em] text-zinc-800">CourseMaster</h1>
+                     <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-amber-700">Academy of Professional Excellence</p>
                   </div>
 
-                  <p className="text-sm font-bold uppercase tracking-[0.4em] text-zinc-500 mb-6">Certificate of Completion</p>
-                  <h2 className="text-6xl font-serif text-amber-600 mb-10" style={{ fontFamily: "Georgia, serif" }}>
-                     Certificate of Excellence
-                  </h2>
+                  {/* Recognition Text */}
+                  <div className="space-y-4 mb-12">
+                     <p className="text-sm font-black uppercase tracking-[0.4em] text-zinc-400">This Official Certificate is Awarded to</p>
+                     
+                     <div className="relative py-6">
+                        <h2 className="text-7xl font-serif italic text-zinc-900 leading-tight underline decoration-amber-600/20 underline-offset-8" style={{ fontFamily: "Georgia, serif" }}>
+                           {user?.name || "Distinguished Student"}
+                        </h2>
+                     </div>
 
-                  <p className="text-lg text-zinc-600 mb-6 font-medium">This is proudly presented to</p>
+                     <p className="max-w-2xl mx-auto text-lg text-zinc-500 font-medium leading-relaxed">
+                        In recognition of the successful completion of all academic requirements, demonstrating mastery and dedication in the field of:
+                     </p>
+                  </div>
 
-                  <div className="relative mb-10 w-full max-w-2xl">
-                     <h3 className="text-5xl font-black italic text-zinc-800 pb-4 border-b-2 border-zinc-200">
-                        {user?.name || "Student Name"}
+                  {/* Course Name */}
+                  <div className="mb-16">
+                     <h3 className="text-4xl font-black text-zinc-900 tracking-tight px-10 relative inline-block">
+                        <span className="relative z-10">{course.title}</span>
+                        <div className="absolute -bottom-2 inset-x-0 h-4 bg-amber-600/10 -z-10"></div>
                      </h3>
                   </div>
 
-                  <p className="text-lg text-zinc-600 mb-4 max-w-3xl">
-                     in recognition of successfully completing all the requirements and mastering the curriculum for the online course:
+                  <p className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-16">
+                     Issued on {currentDate} • Certificate ID: CM-{courseId.slice(0, 8).toUpperCase()}
                   </p>
 
-                  <h4 className="text-3xl font-black text-primary mb-16 px-8 leading-tight">
-                     {course.title}
-                  </h4>
-
-                  {/* Signatures & Dates */}
-                  <div className="w-full max-w-3xl flex justify-between items-end mt-auto px-12">
+                  {/* Bottom Verification Section */}
+                  <div className="w-full mt-auto flex justify-between items-end">
+                     
+                     {/* Signature 1 */}
                      <div className="flex flex-col items-center">
-                        <div className="w-48 border-b-2 border-zinc-400 pb-2 mb-2 text-center">
-                           <span className="font-serif italic text-2xl text-zinc-800">{course.instructor || "Platform Instructor"}</span>
+                        <div className="w-56 mb-2 flex flex-col items-center">
+                           <span className="font-serif italic text-3xl text-zinc-800 leading-none mb-2">{(course?.instructor?.name || "Platform Lead")}</span>
+                           <div className="w-full h-px bg-zinc-300"></div>
                         </div>
-                        <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">Instructor</span>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Head of Curriculum</p>
                      </div>
 
-                     <div className="w-32 h-32 bg-amber-500/10 rounded-full border border-amber-500/30 flex items-center justify-center mb-4">
-                        {/* Seal Decoration */}
-                        <div className="w-28 h-28 bg-amber-500/20 rounded-full border border-dashed border-amber-600/50 flex flex-col items-center justify-center">
-                           <Award className="w-8 h-8 text-amber-600 mb-1" />
-                           <span className="text-[8px] font-black uppercase text-amber-700 tracking-widest">Verified</span>
+                     {/* Official Seal */}
+                     <div className="relative flex items-center justify-center">
+                        <div className="w-32 h-32 rounded-full border-4 border-double border-amber-600/40 p-1">
+                           <div className="w-full h-full rounded-full bg-amber-600 flex flex-col items-center justify-center shadow-lg transform -rotate-12">
+                              <Award className="w-10 h-10 text-amber-100 mb-1" />
+                              <span className="text-[8px] font-black uppercase text-amber-950 tracking-widest">Official</span>
+                              <span className="text-[8px] font-black uppercase text-amber-950 tracking-widest leading-none">Verified</span>
+                           </div>
+                        </div>
+                        {/* Seal Ribbons */}
+                        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex gap-1 -z-10 opacity-60">
+                            <div className="w-4 h-12 bg-amber-600 rotate-12"></div>
+                            <div className="w-4 h-12 bg-amber-700 -rotate-12"></div>
                         </div>
                      </div>
 
+                     {/* Signature 2 */}
                      <div className="flex flex-col items-center">
-                        <div className="w-48 border-b-2 border-zinc-400 pb-2 mb-2 text-center text-zinc-800 font-bold">
-                           {currentDate}
+                        <div className="w-56 mb-2 flex flex-col items-center">
+                            <div className="h-10 flex items-center">
+                                <span className="font-serif italic text-2xl text-zinc-800">Management Team</span>
+                            </div>
+                           <div className="w-full h-px bg-zinc-300"></div>
                         </div>
-                        <span className="text-xs font-bold uppercase tracking-widest text-zinc-500">Date Completed</span>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Director of Academy</p>
                      </div>
+
                   </div>
 
                </div>
+
+               {/* Outer Decorative Elements */}
+               <div className="absolute top-[-50px] right-[-50px] w-64 h-64 border-2 border-amber-600/5 rounded-full"></div>
+               <div className="absolute bottom-[-50px] left-[-50px] w-64 h-64 border-2 border-amber-600/5 rounded-full"></div>
             </div>
          </div>
 
@@ -154,7 +194,6 @@ export default function CertificatePage() {
                left: 0;
                top: 0;
             }
-            /* Make sure to print backgrounds */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -166,5 +205,5 @@ export default function CertificatePage() {
          }
        `}} />
       </div>
-   );
+    );
 }

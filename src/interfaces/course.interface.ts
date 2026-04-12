@@ -10,7 +10,10 @@ export interface ICourse {
   thumbnail: string;
   previewVideo: string;
   price: number;
-  instructor?: string | null;
+  instructor?: {
+    name: string;
+    avatar?: string | null;
+  } | null;
   isPublished: boolean;
   categoryId: string;
   category?: ICategory;
@@ -75,7 +78,10 @@ export interface IMyCourse {
   id: string;
   title: string;
   thumbnail: string;
-  instructor: string | null;
+  instructor: {
+    name: string;
+    avatar?: string | null;
+  } | null;
   totalLessons: number;
   completedLessonsCount: number;
   progressPercentage: number;

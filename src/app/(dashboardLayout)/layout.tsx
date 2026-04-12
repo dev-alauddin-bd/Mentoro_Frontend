@@ -1,8 +1,21 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { Bell, Search } from "lucide-react";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isCertificatePage = pathname.includes("/certificate/");
+
+  if (isCertificatePage) {
+    return (
+      <main className="min-h-screen bg-zinc-50 dark:bg-zinc-950">
+        {children}
+      </main>
+    );
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -27,9 +40,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </span>
             </div>
           </div>
-
-
-       
         </div>
 
         {/* ================= CONTENT ================= */}
