@@ -47,10 +47,7 @@ export function HeroAnimated() {
               </div>
             </div>
 
-            <h1 className={`text-5xl sm:text-6xl lg:text-8xl font-black tracking-tighter text-foreground leading-[0.9] transition-all duration-1000 delay-100 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-              {t("extra.unlock_potential") || "Launch Your"} <br/>
-              <span className="text-primary italic">Learning SaaS</span>
-            </h1>
+       
 
             <p className={`text-lg md:text-xl text-muted-foreground max-w-lg leading-relaxed font-medium transition-all duration-1000 delay-200 ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
               {t("hero.subtitle") || "The all-in-one infrastructure to host, market and sell your courses worldwide with a premium experience."}
