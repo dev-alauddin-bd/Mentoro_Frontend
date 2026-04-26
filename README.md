@@ -52,7 +52,7 @@ Whether you are looking to monetize your expertise or upskill with new knowledge
 
 ### 1. Clone & Install
 ```bash
-git clone <repo-url>
+git clone https://github.com/dev-alauddin-bd/Course_Master_Frontend.git
 cd Course_Master_Frontend
 pnpm install
 ```
