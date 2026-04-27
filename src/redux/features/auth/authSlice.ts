@@ -25,7 +25,7 @@ const initialState: AuthState = {
   user: null,
   token: null,
   isAuthenticated: false,
-  loading: false,
+  loading: true, // Initialized to true to wait for auth check
   error: null,
 };
 
@@ -59,10 +59,14 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
+
+    setLoading(state, action: PayloadAction<boolean>) {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { authStart, setUser, authFailure, logout } = authSlice.actions;
+export const { authStart, setUser, authFailure, logout, setLoading } = authSlice.actions;
 
 export default authSlice.reducer;
 

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { auth } from '@/lib/firebase';
-import { setUser, logout, authStart } from '@/redux/features/auth/authSlice';
+import { setUser, logout, authStart, setLoading } from '@/redux/features/auth/authSlice';
 import { useSyncFirebaseMutation } from '@/redux/features/auth/authApi';
 
 export default function FirebaseAuthProvider({ children }: { children: React.ReactNode }) {
@@ -12,7 +12,8 @@ export default function FirebaseAuthProvider({ children }: { children: React.Rea
   const [syncFirebase] = useSyncFirebaseMutation();
 
   useEffect(() => {
-    dispatch(authStart());
+    // We don't need authStart() here if initialState loading is true, 
+    // but it doesn't hurt. However, let's keep it simple.
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         const payload = {
@@ -27,8 +28,6 @@ export default function FirebaseAuthProvider({ children }: { children: React.Rea
           dispatch(setUser({ user, token: accessToken }));
         } catch (error) {
           console.error("❌ Firebase sync error:", error);
-          // If sync fails, we still set the user from firebase to allow frontend access
-          // but they might face issues with backend APIs
           const fallbackUser = {
             id: firebaseUser.uid,
             name: payload.name,
@@ -42,7 +41,9 @@ export default function FirebaseAuthProvider({ children }: { children: React.Rea
           dispatch(setUser({ user: fallbackUser, token: '' }));
         }
       } else {
-        dispatch(logout());
+        // If no firebase user, we just stop the loading state.
+        // We don't call logout() because the user might be logged in via email/password (non-firebase).
+        dispatch(setLoading(false));
       }
     });
 
