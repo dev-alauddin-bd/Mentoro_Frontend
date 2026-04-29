@@ -13,18 +13,34 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // localStorage
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+
+const createNoopStorage = () => {
+  return {
+    getItem(_key: string) {
+      return Promise.resolve(null);
+    },
+    setItem(_key: string, value: any) {
+      return Promise.resolve(value);
+    },
+    removeItem(_key: string) {
+      return Promise.resolve();
+    },
+  };
+};
+
+const storage = typeof window !== "undefined" ? createWebStorage("local") : createNoopStorage();
 
 // 1️⃣ combine reducers
 const rootReducer = combineReducers({
   cmAuth,
-  progress: progressReducer, // ✅ add pro
+  progress: progressReducer, 
   [baseApi.reducerPath]: baseApi.reducer,
 });
 
 // 2️⃣ persist config
 const persistConfig = {
-  key: "root",
+  key: "course-master-v1", // Changed key to v1 to clear old state like 'AFAuth'
   storage,
   whitelist: ["cmAuth","progress"], 
 };

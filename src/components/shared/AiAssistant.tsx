@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { Bot, Send, X, MessageSquare, Sparkles } from "lucide-react";
-import axios from "axios";
+import ReactMarkdown from "react-markdown";
 import { useAppSelector } from "@/redux/hooks";
 
 const AiAssistant = () => {
@@ -23,23 +23,61 @@ const AiAssistant = () => {
     if (!message.trim()) return;
 
     const userMessage = { role: "user", content: message };
+    const currentMessage = message; // Keep a copy for the API call
     setChatHistory((prev) => [...prev, userMessage]);
     setMessage("");
     setIsLoading(true);
 
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/ai/chat`,
-        { message, history: chatHistory },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/ai/chat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ message: currentMessage, history: chatHistory }),
+      });
 
-      const aiMessage = { role: "assistant", content: response.data.data };
-      setChatHistory((prev) => [...prev, aiMessage]);
+      if (!response.body) throw new Error("No response body");
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let aiContent = "";
+
+      // Add a placeholder for the AI message
+      setChatHistory((prev) => [...prev, { role: "assistant", content: "" }]);
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value);
+        const lines = chunk.split("\n");
+
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            const dataStr = line.slice(6).trim();
+            if (dataStr === "[DONE]") continue;
+
+            try {
+              const data = JSON.parse(dataStr);
+              if (data.chunk) {
+                aiContent += data.chunk;
+                setChatHistory((prev) => {
+                  const newHistory = [...prev];
+                  const lastIndex = newHistory.length - 1;
+                  newHistory[lastIndex] = { ...newHistory[lastIndex], content: aiContent };
+                  return newHistory;
+                });
+              } else if (data.error) {
+                throw new Error(data.error);
+              }
+            } catch (e) {
+              console.error("Parse error:", e, dataStr);
+            }
+          }
+        }
+      }
     } catch (error) {
       console.error("AI Chat Error:", error);
       const errorMessage = {
@@ -102,7 +140,15 @@ const AiAssistant = () => {
                       : "bg-secondary text-foreground border border-border rounded-tl-none"
                   }`}
                 >
-                  {chat.content}
+                  {chat.role === "assistant" ? (
+                    <div className="prose prose-sm dark:prose-invert max-w-none prose-p:leading-relaxed prose-pre:bg-background/50 prose-pre:p-2 prose-pre:rounded-lg">
+                      <ReactMarkdown>
+                        {chat.content}
+                      </ReactMarkdown>
+                    </div>
+                  ) : (
+                    chat.content
+                  )}
                 </div>
               </div>
             ))}

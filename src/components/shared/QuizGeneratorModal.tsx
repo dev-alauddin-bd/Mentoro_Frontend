@@ -14,7 +14,7 @@ import { useAppSelector } from "@/redux/hooks";
 interface QuizQuestion {
   question: string;
   options: string[];
-  answer: string;
+  correctAnswer: string;
 }
 
 const QuizGeneratorModal = ({ lessonId, isOpen, onClose }: { lessonId: string; isOpen: boolean; onClose: () => void }) => {
@@ -60,7 +60,7 @@ const QuizGeneratorModal = ({ lessonId, isOpen, onClose }: { lessonId: string; i
   const handleAnswer = (option: string) => {
     if (selectedAnswer) return;
     setSelectedAnswer(option);
-    if (option === quiz[currentQuestion].answer) {
+    if (option === quiz[currentQuestion].correctAnswer) {
       setScore(score + 1);
     }
   };
@@ -76,44 +76,44 @@ const QuizGeneratorModal = ({ lessonId, isOpen, onClose }: { lessonId: string; i
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] bg-white dark:bg-slate-900 rounded-3xl overflow-hidden p-0 border-none shadow-2xl">
-        <div className="bg-gradient-to-r from-amber-500 to-orange-600 p-6 text-white">
+      <DialogContent className="sm:max-w-[500px] bg-card dark:bg-card rounded-3xl overflow-hidden p-0 border-none shadow-2xl">
+        <div className="bg-gradient-to-r from-primary to-orange-600 p-6 text-primary-foreground">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-2xl font-black">
               <Sparkles className="animate-pulse" /> AI Quiz Generator
             </DialogTitle>
           </DialogHeader>
-          <p className="text-amber-100 text-sm mt-1">Test your knowledge for this lesson!</p>
+          <p className="opacity-80 text-sm mt-1">Test your knowledge for this lesson!</p>
         </div>
 
         <div className="p-8">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-12 space-y-4">
               <div className="relative">
-                <div className="w-16 h-16 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin"></div>
-                <Sparkles className="absolute inset-0 m-auto text-amber-600 animate-bounce" size={24} />
+                <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                <Sparkles className="absolute inset-0 m-auto text-primary animate-bounce" size={24} />
               </div>
-              <p className="text-slate-500 font-medium animate-pulse">AI is crafting your quiz...</p>
+              <p className="text-muted-foreground font-medium animate-pulse">AI is crafting your quiz...</p>
             </div>
           ) : isFinished ? (
             <div className="text-center py-6 space-y-6">
-              <div className="w-24 h-24 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center mx-auto">
-                <span className="text-4xl font-black text-amber-600">{Math.round((score / quiz.length) * 100)}%</span>
+              <div className="w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
+                <span className="text-4xl font-black text-primary">{Math.round((score / quiz.length) * 100)}%</span>
               </div>
               <div>
-                <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-100">Quiz Completed!</h3>
-                <p className="text-slate-500">You scored {score} out of {quiz.length}</p>
+                <h3 className="text-2xl font-bold text-foreground">Quiz Completed!</h3>
+                <p className="text-muted-foreground">You scored {score} out of {quiz.length}</p>
               </div>
               <div className="flex gap-3 justify-center">
                 <button
                   onClick={generateQuiz}
-                  className="flex items-center gap-2 px-6 py-3 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-xl font-bold hover:bg-slate-200 transition-all"
+                  className="flex items-center gap-2 px-6 py-3 bg-secondary text-secondary-foreground rounded-xl font-bold hover:opacity-80 transition-all"
                 >
                   <RefreshCw size={18} /> Retry
                 </button>
                 <button
                   onClick={onClose}
-                  className="px-6 py-3 bg-amber-600 text-white rounded-xl font-bold hover:bg-amber-700 transition-all shadow-lg shadow-amber-500/30"
+                  className="px-6 py-3 bg-primary text-primary-foreground rounded-xl font-bold hover:opacity-90 transition-all shadow-lg shadow-primary/30"
                 >
                   Done
                 </button>
@@ -121,18 +121,18 @@ const QuizGeneratorModal = ({ lessonId, isOpen, onClose }: { lessonId: string; i
             </div>
           ) : quiz.length > 0 ? (
             <div className="space-y-6">
-              <div className="flex justify-between items-center text-xs font-bold uppercase tracking-widest text-slate-400">
+              <div className="flex justify-between items-center text-xs font-bold uppercase tracking-widest text-muted-foreground">
                 <span>Question {currentQuestion + 1} of {quiz.length}</span>
-                <span className="text-amber-600">Score: {score}</span>
+                <span className="text-primary">Score: {score}</span>
               </div>
               
-              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100 leading-tight">
+              <h3 className="text-lg font-bold text-foreground leading-tight">
                 {quiz[currentQuestion].question}
               </h3>
 
               <div className="grid gap-3">
                 {quiz[currentQuestion].options.map((option, idx) => {
-                  const isCorrect = option === quiz[currentQuestion].answer;
+                  const isCorrect = option === quiz[currentQuestion].correctAnswer;
                   const isSelected = selectedAnswer === option;
                   const showResult = selectedAnswer !== null;
 
@@ -144,11 +144,11 @@ const QuizGeneratorModal = ({ lessonId, isOpen, onClose }: { lessonId: string; i
                       className={`w-full p-4 rounded-2xl text-left font-medium transition-all border-2 ${
                         showResult
                           ? isCorrect
-                            ? "bg-emerald-50 border-emerald-500 text-emerald-700"
+                            ? "bg-emerald-500/10 border-emerald-500 text-emerald-600"
                             : isSelected
-                            ? "bg-red-50 border-red-500 text-red-700"
-                            : "bg-slate-50 border-slate-100 text-slate-400 opacity-50"
-                          : "bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-amber-500 hover:bg-amber-50/50 text-slate-700 dark:text-slate-200 shadow-sm"
+                            ? "bg-red-500/10 border-red-500 text-red-600"
+                            : "opacity-50 border-border"
+                          : "bg-background border-border hover:border-primary hover:bg-primary/5 text-foreground shadow-sm"
                       } flex items-center justify-between`}
                     >
                       {option}
@@ -162,14 +162,14 @@ const QuizGeneratorModal = ({ lessonId, isOpen, onClose }: { lessonId: string; i
               {selectedAnswer && (
                 <button
                   onClick={nextQuestion}
-                  className="w-full py-4 bg-slate-900 dark:bg-amber-600 text-white rounded-2xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-xl"
+                  className="w-full py-4 bg-primary text-primary-foreground rounded-2xl font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-all shadow-xl"
                 >
                   {currentQuestion < quiz.length - 1 ? "Next Question" : "View Result"} <ArrowRight size={18} />
                 </button>
               )}
             </div>
           ) : (
-            <div className="text-center py-10 text-slate-500">
+            <div className="text-center py-10 text-muted-foreground">
               Something went wrong. Please try again.
             </div>
           )}

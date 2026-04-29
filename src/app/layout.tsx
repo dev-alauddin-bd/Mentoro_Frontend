@@ -22,8 +22,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   // Read lang from cookie (set by i18n on client)
   const lang = (await cookies()).get('i18next')?.value || 'en';
 
+  const isRtl = lang === 'ar';
+
   return (
-    <html lang={lang} suppressHydrationWarning>
+    <html lang={lang} dir={isRtl ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <body>
     <Providers>
       <FirebaseAuthProvider>
