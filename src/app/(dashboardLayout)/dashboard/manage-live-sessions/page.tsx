@@ -24,9 +24,14 @@ import { Card } from "@/components/ui/card"
 import toast from "react-hot-toast"
 import { format } from "date-fns"
 
+import { LiveSessionModal } from "@/components/live-session/LiveSessionModal"
+
 export default function LiveSessionManagement() {
   const { data: response, isLoading, refetch } = useGetAllSessionsQuery({})
   const [deleteSession] = useDeleteSessionMutation()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedSession, setSelectedSession] = useState<any>(null)
+  
   const sessions = response?.data || []
 
   const handleDelete = async (id: string) => {
@@ -41,6 +46,16 @@ export default function LiveSessionManagement() {
     }
   }
 
+  const handleCreate = () => {
+    setSelectedSession(null)
+    setIsModalOpen(true)
+  }
+
+  const handleEdit = (session: any) => {
+    setSelectedSession(session)
+    setIsModalOpen(true)
+  }
+
   return (
     <div className="p-6 lg:p-10 space-y-10">
       {/* Header */}
@@ -49,7 +64,10 @@ export default function LiveSessionManagement() {
           <h1 className="text-3xl font-black tracking-tight">Live Session Management</h1>
           <p className="text-muted-foreground text-sm font-medium">Create and manage upcoming workshops and live events.</p>
         </div>
-        <Button className="h-12 px-6 rounded-xl gap-2 font-bold shadow-lg shadow-primary/20">
+        <Button 
+          onClick={handleCreate}
+          className="h-12 px-6 rounded-xl gap-2 font-bold shadow-lg shadow-primary/20"
+        >
           <Plus className="w-4 h-4" />
           Create New Session
         </Button>
@@ -153,7 +171,12 @@ export default function LiveSessionManagement() {
                   </td>
                   <td className="p-6 text-right">
                     <div className="flex items-center justify-end gap-2">
-                       <Button variant="ghost" size="icon" className="w-9 h-9 rounded-xl hover:bg-primary/10 hover:text-primary transition-all">
+                       <Button 
+                         onClick={() => handleEdit(session)}
+                         variant="ghost" 
+                         size="icon" 
+                         className="w-9 h-9 rounded-xl hover:bg-primary/10 hover:text-primary transition-all"
+                       >
                           <Edit2 className="w-4 h-4" />
                        </Button>
                        <Button 
@@ -175,6 +198,13 @@ export default function LiveSessionManagement() {
           </table>
         </div>
       </Card>
+
+      <LiveSessionModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        session={selectedSession}
+        onSuccess={() => refetch()}
+      />
     </div>
   )
 }

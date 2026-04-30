@@ -4,9 +4,11 @@ const liveSessionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllSessions: builder.query({
       query: () => "/live-sessions",
+      providesTags: ["LiveSession"] as any,
     }),
     getSessionById: builder.query({
       query: (id: string) => `/live-sessions/${id}`,
+      providesTags: ["LiveSession"] as any,
     }),
     registerForSession: builder.mutation({
       query: (data) => ({
@@ -14,6 +16,7 @@ const liveSessionApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["LiveSession"] as any,
     }),
     createSession: builder.mutation({
       query: (data) => ({
@@ -21,7 +24,7 @@ const liveSessionApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Reviews"] as any, // Reuse a tag or create new one
+      invalidatesTags: ["LiveSession"] as any,
     }),
     updateSession: builder.mutation({
       query: ({ id, ...data }) => ({
@@ -29,14 +32,14 @@ const liveSessionApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data,
       }),
-      invalidatesTags: ["Reviews"] as any,
+      invalidatesTags: ["LiveSession"] as any,
     }),
     deleteSession: builder.mutation({
       query: (id) => ({
         url: `/live-sessions/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Reviews"] as any,
+      invalidatesTags: ["LiveSession"] as any,
     }),
     getRegistrants: builder.query({
       query: (id) => `/live-sessions/${id}/registrants`,
