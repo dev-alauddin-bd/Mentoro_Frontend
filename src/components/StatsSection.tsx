@@ -32,7 +32,7 @@ export function StatsSection() {
   return (
     <section className="py-24 bg-secondary/20 relative overflow-hidden">
 
-      <div className="container mx-auto px-4">
+ <div className="container mx-auto space-y-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
           {stats.map((stat, idx) => (
             <div key={idx} className="flex flex-col items-center text-center space-y-6 group relative z-10">

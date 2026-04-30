@@ -32,7 +32,11 @@
     "management_pro": "Pro de gestion",
     "how_it_works_step": "Étape par Étape",
     "how_it_works_subtitle": "Workflow Simplifié",
-    "live_workshops": "Ateliers en direct"
+    "live_workshops": "Ateliers en direct",
+    "manage_users": "Gérer les utilisateurs",
+    "manage_courses": "Gérer les cours",
+    "profile": "Mon profil",
+    "explore_courses": "Explorer les cours"
   },
   "home": {
     "title": "Apprendre tout, tout le temps",
@@ -638,5 +642,20 @@
       "investment": "Investissement",
       "view_details": "Voir les détails du cours"
     }
+  },
+  "faq": {
+    "badge": "Questions fréquentes",
+    "title": "Foires aux questions",
+    "subtitle": "Tout ce que vous devez savoir sur la plateforme et votre parcours d'apprentissage.",
+    "q1": "Comment commencer avec CourseMaster ?",
+    "a1": "Inscrivez-vous pour un compte, explorez notre bibliothèque de cours et inscrivez-vous à tout cours qui vous intéresse. Vous pouvez commencer à apprendre immédiatement.",
+    "q2": "Les cours sont-ils à rythme auto ou en direct ?",
+    "a2": "Nous offrons les deux options. La plupart des cours sont à rythme auto, vous pouvez donc apprendre à votre propre rythme, ainsi que des sessions et ateliers en direct animés par des experts du secteur.",
+    "q3": "Recevrai-je un certificat après avoir terminé un cours ?",
+    "a3": "Oui, vous recevrez un certificat numérique après avoir terminé avec succès un cours. Vous pouvez le partager sur LinkedIn ou avec les employeurs potentiels.",
+    "q4": "Puis-je devenir instructeur sur CourseMaster ?",
+    "a4": "Oui, vous le pouvez. Si vous avez une expertise dans un sujet, vous pouvez postuler pour devenir instructeur depuis votre tableau de bord et commencer à enseigner.",
+    "q5": "Quelle est la politique de remboursement ?",
+    "a5": "Nous offrons une garantie de remboursement de 30 jours sur la plupart des cours. Si vous n'êtes pas satisfait, vous pouvez demander un remboursement dans les 30 jours suivant l'achat."
   }
 }

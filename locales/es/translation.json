@@ -32,7 +32,11 @@
     "management_pro": "Administración Pro",
     "how_it_works_step": "Paso a paso",
     "how_it_works_subtitle": "Flujo de trabajo simplificado",
-    "live_workshops": "Talleres en vivo"
+    "live_workshops": "Talleres en vivo",
+    "manage_users": "Gestionar Usuarios",
+    "manage_courses": "Gestionar Cursos",
+    "profile": "Mi Perfil",
+    "explore_courses": "Explorar Cursos"
   },
   "home": {
     "title": "Aprende cualquier cosa, en cualquier momento",
@@ -638,5 +642,20 @@
       "investment": "Inversión",
       "view_details": "Ver detalles del curso"
     }
+  },
+  "faq": {
+    "badge": "Preguntas comunes",
+    "title": "Preguntas frecuentes",
+    "subtitle": "Todo lo que necesitas saber sobre la plataforma y tu viaje de aprendizaje.",
+    "q1": "¿Cómo comienzo con CourseMaster!",
+    "a1": "Registra una cuenta, explora nuestra biblioteca de cursos y matricúlate en cualquier curso que te interese. Puedes empezar a aprender de inmediato.",
+    "q2": "¿Los cursos son auto-ritmo o en vivo!",
+    "a2": "Ofrecemos ambas opciones. La mayoría de los cursos son auto-ritmo para que puedas aprender a tu propio ritmo, junto con sesiones en vivo y talleres dirigidos por expertos de la industria.",
+    "q3": "¿Recibiré un certificado después de completar un curso!",
+    "a3": "Sí, recibirás un certificado digital al completar con éxito un curso. Puedes compartirlo en LinkedIn o con posibles empleadores.",
+    "q4": "¿Puedo convertirme en instructor en CourseMaster!",
+    "a4": "Sí, puedes. Si tienes experiencia en un tema, puedes solicitar convertirte en instructor desde tu panel de control y empezar a enseñar.",
+    "q5": "¿Cuál es la política de reembolso!",
+    "a5": "Ofrecemos una garantía de devolución de dinero de 30 días para la mayoría de los cursos. Si no está satisfecho, puede solicitar un reembolso dentro de los 30 días posteriores a la compra."
   }
 }

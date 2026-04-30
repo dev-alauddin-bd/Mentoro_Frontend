@@ -32,7 +32,12 @@
     "console": "{{role}} Console",
     "management_pro": "Management Pro",
     "how_it_works_step": "Step by Step",
-    "how_it_works_subtitle": "Simplified Workflow"
+    "how_it_works_subtitle": "Simplified Workflow",
+    "manage_users": "Manage Users",
+    "manage_courses": "Manage Courses",
+    "profile": "My Profile",
+    "explore_courses": "Explore Courses"
+    
   },
   "about": {
     "title": "Revolutionizing Learning.",
@@ -50,6 +55,27 @@
     "value3_desc": "You're not just a student; you're part of a global collective of creators.",
     "value4_title": "Passion",
     "value4_desc": "We care deeply about human potential and the impact of quality education."
+  },
+
+  "faq": {
+    "badge": "Common Questions",
+    "title": "Frequently Asked Questions",
+    "subtitle": "Everything you need to know about the platform and your learning journey.",
+
+    "q1": "How do I get started with CourseMaster?",
+    "a1": "Sign up for an account, explore our course library, and enroll in any course that interests you. You can start learning right away.",
+
+    "q2": "Are the courses self-paced or live?",
+    "a2": "We offer both options. Most courses are self-paced so you can learn at your own pace, along with live sessions and workshops led by industry experts.",
+
+    "q3": "Will I receive a certificate after completing a course?",
+    "a3": "Yes, you will receive a digital certificate upon successfully completing a course. You can share it on LinkedIn or with potential employers.",
+
+    "q4": "Can I become an instructor on CourseMaster?",
+    "a4": "Yes, you can. If you have expertise in a subject, you can apply to become an instructor from your dashboard and start teaching.",
+
+    "q5": "What is the refund policy?",
+    "a5": "We offer a 30-day money-back guarantee on most courses. If you're not satisfied, you can request a refund within 30 days of purchase."
   },
   "how_it_works": {
     "title": "How it works",

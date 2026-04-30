@@ -10,7 +10,7 @@ export function InstructorCTA() {
 
   return (
     <section className="py-24 ">
-      <div className="container mx-auto px-4">
+   <div className="container mx-auto space-y-12 px-4 sm:px-6 lg:px-8">
         {/* Main Boxed Container - Using OKLCH based colors */}
         <div className="relative overflow-hidden bg-card/40 rounded-[3rem] border border-primary/10  p-8 md:p-20" >
 

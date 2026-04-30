@@ -66,13 +66,7 @@ export function Header() {
               <Link href="/contact" className="text-[11px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
                 {t("nav.contact") || "Support"}
               </Link>
-              <div className="flex items-center gap-2 px-2 py-0.5 bg-primary/10 rounded-full border border-primary/20">
-                <span className="relative flex h-1.5 w-1.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary"></span>
-                </span>
-                <span className="text-[9px] font-black text-primary uppercase tracking-tighter">{t("nav.live_updates") || "Live Updates"}</span>
-              </div>
+             
             </div>
 
             <div className="flex items-center gap-4">
@@ -93,14 +87,14 @@ export function Header() {
           {/* 1. Logo Section (Left) */}
           <div className="flex-shrink-0">
             <Link href="/" className="group flex items-center gap-2.5 transition-all duration-300">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-tr from-primary to-indigo-500 shadow-lg shadow-primary/25 group-hover:rotate-6 group-hover:scale-110 transition-all duration-500">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary">
                 <span className="text-2xl font-black text-white italic">C</span>
               </div>
               <div className="hidden flex-col sm:flex">
                 <span className="text-xl font-black tracking-tighter text-foreground leading-none">
-                  Course<span className="text-primary italic">Master</span>
+                  Course
                 </span>
-                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground/60 leading-none mt-1.5">{t("nav.academy_pro") || "Academy Pro"}</span>
+                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground/60 leading-none mt-1.5">Master</span>
               </div>
             </Link>
           </div>

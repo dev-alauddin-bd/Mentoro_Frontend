@@ -53,7 +53,7 @@ export function AppSidebar() {
     { title: t("nav.my_courses") || "Manage Courses", url: "/dashboard/instructor/manage-courses", icon: FolderKanban },
     { title: t("nav.curriculum") || "Curriculum", url: "/dashboard/instructor/modules", icon: Files },
     { title: t("nav.revenue") || "Revenue", url: "/dashboard/instructor/revenue", icon: Zap },
-    { title: "Live Workshops", url: "/dashboard/manage-live-sessions", icon: Video },
+    { title: t("nav.live_workshops") || "Live Workshops", url: "/dashboard/manage-live-sessions", icon: Video },
   ];
 
   const adminItems = [
@@ -61,7 +61,6 @@ export function AppSidebar() {
     { title: t("nav.manage_users") || "Manage Users", url: "/dashboard/admin/users", icon: Users },
     { title: t("nav.manage_courses") || "Manage Courses", url: "/dashboard/admin/courses", icon: BookOpen },
     { title: t("nav.categories") || "Categories", url: "/dashboard/admin/manage-categories", icon: FolderKanban },
-    { title: "Live Workshops", url: "/dashboard/manage-live-sessions", icon: Video },
     { title: t("nav.revenue") || "Revenue", url: "/dashboard/admin/revenue", icon: BarChart3 },
     { title: t("nav.legal") || "Legal Policy", url: "/dashboard/admin/refund-policy", icon: History },
   ];
@@ -92,17 +91,20 @@ export function AppSidebar() {
 
         {/* --- BRAND SECTION --- */}
         <div className="p-8">
-          <Link href="/" className="group flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-primary to-indigo-500 shadow-lg shadow-primary/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-              <span className="text-xl font-black text-white italic">C</span>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-black tracking-tighter text-foreground leading-none">
-                Course<span className="text-primary italic">Master</span>
-              </span>
-              <span className="text-[8px] font-black uppercase tracking-[0.2em] text-muted-foreground/60 mt-1">{t("nav.management_pro") || "Management Pro"}</span>
-            </div>
-          </Link>
+        {/* 1. Logo Section (Left) */}
+          <div className="flex-shrink-0">
+            <Link href="/" className="group flex items-center gap-2.5 transition-all duration-300">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary">
+                <span className="text-2xl font-black text-white italic">C</span>
+              </div>
+              <div className="hidden flex-col sm:flex">
+                <span className="text-xl font-black tracking-tighter text-foreground leading-none">
+                  Course
+                </span>
+                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground/60 leading-none mt-1.5">Master</span>
+              </div>
+            </Link>
+          </div>
         </div>
 
         {/* --- NAVIGATION SECTION --- */}

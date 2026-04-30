@@ -15,12 +15,12 @@ export function TrustBar() {
   ];
 
   return (
-    <section className="py-12 bg-background ">
+    <section className="py-20 bg-card/40 ">
       <div className="container mx-auto px-4">
         <p className="text-center text-xs font-black uppercase tracking-[0.3em] text-muted-foreground mb-10 opacity-50">
           Trusted by the world&apos;s leading teams
         </p>
-        <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20  dark:invert opacity-40 grayscale-0 dark:hover:invert-0 hover:opacity-100 transition-all duration-700">
+        <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20  transition-all duration-700">
           {companies.map((company) => (
             <img 
               key={company.name} 

@@ -17,14 +17,20 @@ export function Footer() {
           {/* Brand & Newsletter Column */}
           <div className="lg:col-span-5 space-y-12">
             <div className="space-y-6">
-                <Link href="/" className="flex items-center gap-3 group">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-tr from-primary to-indigo-500 shadow-lg shadow-primary/30 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">
-                      <span className="text-2xl font-black text-white italic">C</span>
-                  </div>
-                  <span className="text-2xl font-black tracking-tighter text-foreground">
-                      Course<span className="text-primary italic">Master</span>
-                  </span>
-                </Link>
+                 {/* 1. Logo Section (Left) */}
+          <div className="flex-shrink-0">
+            <Link href="/" className="group flex items-center gap-2.5 transition-all duration-300">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary">
+                <span className="text-2xl font-black text-white italic">C</span>
+              </div>
+              <div className="hidden flex-col sm:flex">
+                <span className="text-xl font-black tracking-tighter text-foreground leading-none">
+                  Course
+                </span>
+                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground/60 leading-none mt-1.5">Master</span>
+              </div>
+            </Link>
+          </div>
                 
                 <p className="max-w-xs text-muted-foreground text-sm font-medium leading-relaxed">
                   {t("auth.create_account_desc") || "Transforming expertise into digital experiences. Join our global network of top-tier instructors and ambitious students."}

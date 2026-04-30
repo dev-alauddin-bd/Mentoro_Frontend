@@ -51,10 +51,8 @@ export function UpcomingLiveCourses() {
 
   return (
     <section className="py-32 px-4 bg-background overflow-hidden relative">
-      {/* Decorative Blur */}
-      <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-primary/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto">
+  
+ <div className="container mx-auto space-y-12 px-4 sm:px-6 lg:px-8">
         <div className="space-y-20">
           {/* Header */}
           <div className="flex flex-col md:flex-row justify-between items-end gap-10">
@@ -71,12 +69,12 @@ export function UpcomingLiveCourses() {
               </p>
             </div>
 
-            <Link href="/live" className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-primary hover:translate-x-2 transition-all">
+            {/* <Link href="/live" className="group flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-primary hover:translate-x-2 transition-all">
               {t("upcoming.explore")}
               <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
                 <ArrowRight className="w-4 h-4" />
               </div>
-            </Link>
+            </Link> */}
           </div>
 
           {/* Grid */}

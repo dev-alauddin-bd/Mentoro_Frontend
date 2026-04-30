@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import Link from "next/link";
-import { Star } from "lucide-react";
+import { ArrowRight, Star } from "lucide-react";
 
 import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi";
 import { useGetCategoriesQuery } from "@/redux/features/category/categoriesApi";
@@ -91,7 +91,7 @@ export function FeaturedCourses() {
               className="hidden md:flex items-center gap-2 group text-sm font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors"
             >
               {t("home.view_all")}
-              <div className="w-8 h-[1px] bg-muted-foreground group-hover:bg-primary transition-all group-hover:w-12" />
+             <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>

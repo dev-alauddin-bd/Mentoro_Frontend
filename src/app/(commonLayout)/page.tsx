@@ -26,7 +26,7 @@ export default function Home() {
 
       <HeroAnimated />
       <TrustBar />
-      <StatsSection />
+      {/* <StatsSection /> */}
       <FeaturedCourses />
       <UpcomingLiveCourses />
       <InstructorCTA />
