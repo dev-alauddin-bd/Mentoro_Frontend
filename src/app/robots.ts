@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin', '/dashboard', '/api'],
     },
-    sitemap: 'https://course-master-frontend.vercel.app/sitemap.xml', // Replace with your domain if different
+    sitemap: 'https://course-master-frontend-flax.vercel.app/sitemap.xml',
   }
 }

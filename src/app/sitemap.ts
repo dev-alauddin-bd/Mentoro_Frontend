@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Base URL of your frontend
-  const baseUrl = 'https://course-master-frontend.vercel.app' 
+  const baseUrl = 'https://course-master-frontend-flax.vercel.app' 
 
   // Fetch courses from your API to make the sitemap dynamic
   let courseUrls: MetadataRoute.Sitemap = []
