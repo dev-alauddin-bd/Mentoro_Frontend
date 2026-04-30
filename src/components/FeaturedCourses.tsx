@@ -48,7 +48,7 @@ export function FeaturedCourses() {
         {/* ================= HEADER ================= */}
         <div className="space-y-6 border-b border-primary/10 pb-0">
           {/* ================= TITLE ================= */}
-          <div className="flex flex-col md:flex-row justify-between items-end gap-6">
+          <div className="flex flex-col md:flex-row justify-between  gap-6">
             <div className="space-y-4 text-center md:text-left">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full border border-primary/20 text-xs font-black uppercase text-primary tracking-widest">
                 <Star className="w-3 h-3 fill-primary" />

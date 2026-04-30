@@ -111,10 +111,10 @@ export function Header() {
           </div>
 
           {/* 3. User Actions (Right) */}
-          <div className="flex items-center justify-end gap-3">
+          <div className="flex items-center justify-end gap-3 ">
       
             {isAuthenticated ? (
-              <div className="relative" ref={dropdownRef}>
+              <div className="relative hidden lg:block" ref={dropdownRef}>
                 <button
                   onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
                   className="flex items-center gap-3 hover:opacity-80 transition-all"
@@ -181,7 +181,7 @@ export function Header() {
 
             {/* Mobile Actions Container */}
             <div className="flex items-center gap-2 lg:hidden">
-              <div className="sm:hidden flex items-center gap-2">
+              <div className="hidden lg:flex items-center gap-2">
                 <ThemeSwitcher />
               </div>
               <button
