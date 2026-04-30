@@ -11,8 +11,6 @@ import { RootState, AppDispatch } from "@/redux/store";
 import { logout } from "@/redux/features/auth/authSlice";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { LanguageSwitcher } from "./LanguageSwitcher";
-import { Search, Sparkles } from "lucide-react";
-import AiSearchModal from "./AiSearchModal";
 
 // --- Types & Constants ---
 const languages = [
@@ -45,7 +43,7 @@ export function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const [isAiSearchOpen, setIsAiSearchOpen] = useState(false);
+
   const pathname = usePathname();
 
   const handleLogout = async () => {
@@ -120,13 +118,7 @@ export function Header() {
 
           {/* 3. User Actions (Right) */}
           <div className="flex items-center justify-end gap-3">
-            <button
-              onClick={() => setIsAiSearchOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-xl font-bold text-[10px] uppercase tracking-widest hover:bg-primary hover:text-primary-foreground transition-all border border-primary/20"
-            >
-              <Sparkles size={14} className="animate-pulse" />
-              AI Search
-            </button>
+      
             {isAuthenticated ? (
               <div className="relative" ref={dropdownRef}>
                 <button
@@ -218,16 +210,7 @@ export function Header() {
           <MobileNavLink href="/contact" label={t("nav.contact")} onClick={() => setIsMenuOpen(false)} />
           <MobileNavLink href="/how-it-works" label={t("nav.platform_guide") || "Platform Guide"} onClick={() => setIsMenuOpen(false)} />
 
-          <button
-            onClick={() => {
-              setIsAiSearchOpen(true);
-              setIsMenuOpen(false);
-            }}
-            className="flex items-center justify-center gap-3 w-full p-4 mt-2 bg-primary/10 text-primary border border-primary/20 rounded-2xl font-black text-xs uppercase tracking-widest animate-in fade-in slide-in-from-right-4 duration-300"
-          >
-            <Sparkles size={18} className="animate-pulse" />
-            AI Search Assistant
-          </button>
+         
 
           <div className="flex items-center gap-3 p-2 mt-2 bg-secondary/50 rounded-2xl border border-border/50">
             <div className="flex-1">
@@ -268,10 +251,7 @@ export function Header() {
           )}
         </div>
       )}
-      <AiSearchModal
-        isOpen={isAiSearchOpen}
-        onClose={() => setIsAiSearchOpen(false)}
-      />
+      
     </header>
   );
 }

@@ -30,8 +30,8 @@ export default function Home() {
       <FeaturedCourses />
       <UpcomingLiveCourses />
       <InstructorCTA />
-      <FAQ />
       <ContactSection />
+      <FAQ />
       <Testimonials />
     </main>
   );

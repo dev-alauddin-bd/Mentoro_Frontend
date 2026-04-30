@@ -18,8 +18,9 @@ import {
 import { RootState } from "@/redux/store";
 import { ProgressBar } from "./progress-bar";
 import { WelcomeHeroSkeleton, StatCardSkeleton, CourseCardSkeleton } from "./dashboard/skeletons";
-import { CourseRecommendation } from "./dashboard/CourseRecommendation";
+
 import { useGetMyCoursesQuery } from "@/redux/features/course/courseAPi";
+import { CourseRecommendation } from "./dashboard/CourseRecommendation";
 
 export function StudentDashboard() {
   const { t } = useTranslation();

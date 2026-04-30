@@ -3,8 +3,9 @@
 import React from "react";
 import Link from "next/link";
 import { Sparkles, ArrowRight, Star, Users, BookOpen } from "lucide-react";
-import { useGetRecommendationsQuery } from "@/redux/features/ai/aiApi";
+
 import { CourseCardSkeleton } from "./skeletons";
+import { useGetRecommendationsQuery } from "@/redux/features/course/courseAPi";
 
 export const CourseRecommendation = () => {
   const { data, isLoading, isError } = useGetRecommendationsQuery(undefined);

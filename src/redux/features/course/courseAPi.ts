@@ -37,6 +37,14 @@ export const courseApi = baseApi.injectEndpoints({
   providesTags: ["Course"],
 }),
 
+   getRecommendations: build.query({
+      query: () => ({
+        url: "/ai/recommendations",
+        method: "GET",
+      }),
+      providesTags: ["Course"],
+    }),
+
     // Get Single Course
     getCourseById: build.query<ICourseResponse, string>({
       query: (id) => `/courses/${id}`,
@@ -121,5 +129,6 @@ export const {
   useCreateCheckoutMutation,
   useGetMyCoursesQuery,
   useCompleteLessonMutation,
-  useTogglePublishMutation
+  useTogglePublishMutation,
+  useGetRecommendationsQuery
 } = courseApi;

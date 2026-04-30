@@ -29,11 +29,18 @@ export function LiveSessionModal({ isOpen, onClose, session, onSuccess }: LiveSe
 
   const handleSubmit = async (data: any) => {
     try {
+      // Ensure date fields are properly formatted as full ISO-8601 DateTime strings for Prisma
+      const payload = {
+        ...data,
+        sessionDate: new Date(data.sessionDate).toISOString(),
+        registrationDeadline: new Date(data.registrationDeadline).toISOString(),
+      }
+
       if (session) {
-        await updateSession({ id: session.id, ...data }).unwrap()
+        await updateSession({ id: session.id, ...payload }).unwrap()
         toast.success(t("live_sessions.modal.success_update"))
       } else {
-        await createSession(data).unwrap()
+        await createSession(payload).unwrap()
         toast.success(t("live_sessions.modal.success_create"))
       }
       onSuccess?.()
