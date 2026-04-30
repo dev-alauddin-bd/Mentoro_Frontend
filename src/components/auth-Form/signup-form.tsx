@@ -7,17 +7,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { User, Mail, Lock, Eye, EyeOff, CheckCircle, GraduationCap, Briefcase } from "lucide-react";
+import { User, Mail, Lock, Eye, EyeOff, GraduationCap, Briefcase } from "lucide-react";
 import {
-  authStart,
   setUser,
-  authFailure,
 } from "@/redux/features/auth/authSlice";
 import type { AppDispatch } from "@/redux/store";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import { useSignUpMutation, useSyncFirebaseMutation } from "@/redux/features/auth/authApi";
 import toast from "react-hot-toast";
+import { Button } from "@/components/ui/button";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupText } from "@/components/ui/input-group";
+import { Checkbox } from "@/components/ui/checkbox";
+import { cn } from "@/lib/utils";
 
 // ---------------- Zod Schema ----------------
 const signupSchema = z
@@ -26,6 +28,9 @@ const signupSchema = z
     email: z.string().email("Invalid email"),
     password: z.string().min(6, "Password must be at least 6 characters"),
     role: z.enum(["student", "instructor"]),
+    terms: z.literal(true, {
+      message: "You must accept the terms and conditions",
+    }),
   })
 
 
@@ -51,6 +56,7 @@ export function SignupForm() {
     resolver: zodResolver(signupSchema),
     defaultValues: {
       role: "student" as const,
+      terms: false as any,
     }
   });
 
@@ -105,25 +111,27 @@ export function SignupForm() {
             <button
               type="button"
               onClick={() => setValue("role", "student")}
-              className={`flex flex-col items-center justify-center gap-2 py-4 px-2 rounded-2xl border-2 transition-all duration-300 ${
+              className={cn(
+                "flex flex-col items-center justify-center gap-2 py-4 px-2 rounded-2xl border-2 transition-all duration-300",
                 role === "student" 
                 ? "border-primary bg-primary/5 text-primary shadow-lg shadow-primary/10" 
                 : "border-border text-muted-foreground hover:border-primary/20 hover:bg-muted/30 opacity-60"
-              }`}
+              )}
             >
-              <GraduationCap className={`w-8 h-8 ${role === "student" ? "animate-pulse" : ""}`} />
+              <GraduationCap className={cn("w-8 h-8", role === "student" && "animate-pulse")} />
               <span className="text-[10px] font-black uppercase tracking-widest leading-none">Student</span>
             </button>
             <button
               type="button"
               onClick={() => setValue("role", "instructor")}
-              className={`flex flex-col items-center justify-center gap-2 py-4 px-2 rounded-2xl border-2 transition-all duration-300 ${
+              className={cn(
+                "flex flex-col items-center justify-center gap-2 py-4 px-2 rounded-2xl border-2 transition-all duration-300",
                 role === "instructor" 
                 ? "border-primary bg-primary/5 text-primary shadow-lg shadow-primary/10" 
                 : "border-border text-muted-foreground hover:border-primary/20 hover:bg-muted/30 opacity-60"
-              }`}
+              )}
             >
-              <Briefcase className={`w-8 h-8 ${role === "instructor" ? "animate-pulse" : ""}`} />
+              <Briefcase className={cn("w-8 h-8", role === "instructor" && "animate-pulse")} />
               <span className="text-[10px] font-black uppercase tracking-widest leading-none">Instructor</span>
             </button>
           </div>
@@ -133,60 +141,104 @@ export function SignupForm() {
         <div className="space-y-4 text-left">
           {/* Full Name */}
           <div className="space-y-2">
-            <label className="text-sm font-bold text-foreground ml-1">Full Name</label>
-            <div className="relative group">
-              <User className="absolute left-3 top-3 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-              <input
+            <label htmlFor="name" className="text-sm font-bold text-foreground ml-1">Full Name</label>
+            <InputGroup>
+              <InputGroupAddon align="inline-start">
+                <InputGroupText>
+                  <User className="w-5 h-5" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <InputGroupInput
                 {...register("name")}
+                id="name"
                 placeholder="Ex. Alauddin Ali"
-                className="w-full pl-10 pr-4 py-3 bg-muted/30 border border-border rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium"
+                className="h-12"
               />
-            </div>
+            </InputGroup>
             {errors.name && (
-              <p className="text-red-500 text-xs font-bold mt-1 ml-1">{errors.name.message}</p>
+              <p className="text-destructive text-xs font-bold mt-1 ml-1">{errors.name.message}</p>
             )}
           </div>
 
           {/* Email */}
           <div className="space-y-2">
-            <label className="text-sm font-bold text-foreground ml-1">Email Address</label>
-            <div className="relative group">
-              <Mail className="absolute left-3 top-3 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-              <input
+            <label htmlFor="email" className="text-sm font-bold text-foreground ml-1">Email Address</label>
+            <InputGroup>
+              <InputGroupAddon align="inline-start">
+                <InputGroupText>
+                  <Mail className="w-5 h-5" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <InputGroupInput
                 {...register("email")}
+                id="email"
                 type="email"
                 placeholder="name@example.com"
-                className="w-full pl-10 pr-4 py-3 bg-muted/30 border border-border rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium"
+                className="h-12"
               />
-            </div>
+            </InputGroup>
             {errors.email && (
-              <p className="text-red-500 text-xs font-bold mt-1 ml-1">{errors.email.message}</p>
+              <p className="text-destructive text-xs font-bold mt-1 ml-1">{errors.email.message}</p>
             )}
           </div>
 
           {/* Password */}
           <div className="space-y-2">
-            <label className="text-sm font-bold text-foreground ml-1">Secure Password</label>
-            <div className="relative group">
-              <Lock className="absolute left-3 top-3 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-              <input
+            <label htmlFor="password" className="text-sm font-bold text-foreground ml-1">Secure Password</label>
+            <InputGroup>
+              <InputGroupAddon align="inline-start">
+                <InputGroupText>
+                  <Lock className="w-5 h-5" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <InputGroupInput
                 {...register("password")}
+                id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-12 py-3 bg-muted/30 border border-border rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium"
+                className="h-12"
               />
-              <button
-                type="button"
-                className="absolute right-4 top-3.5 text-muted-foreground hover:text-foreground transition-colors"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="hover:bg-transparent"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
             {errors.password && (
-              <p className="text-red-500 text-xs font-bold mt-1 ml-1">{errors.password.message}</p>
+              <p className="text-destructive text-xs font-bold mt-1 ml-1">{errors.password.message}</p>
             )}
           </div>
+        </div>
+
+        {/* Terms & Conditions */}
+        <div className="space-y-2">
+          <div className="flex items-center space-x-2 ml-1">
+            <Checkbox 
+              id="terms" 
+              {...register("terms")}
+              className="mt-0.5"
+            />
+            <label
+              htmlFor="terms"
+              className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-muted-foreground"
+            >
+              I agree to the{" "}
+              <a href="/terms" className="text-primary hover:underline font-bold">
+                Terms of Service
+              </a>{" "}
+              and{" "}
+              <a href="/privacy" className="text-primary hover:underline font-bold">
+                Privacy Policy
+              </a>
+            </label>
+          </div>
+          {errors.terms && (
+            <p className="text-destructive text-xs font-bold mt-1 ml-1">{errors.terms.message}</p>
+          )}
         </div>
 
         <div className="relative">
@@ -198,25 +250,25 @@ export function SignupForm() {
           </div>
         </div>
 
-        <button
+        <Button
           onClick={onGoogleLogin}
           type="button"
-          className="w-full flex items-center justify-center gap-3 py-4 bg-background border border-border rounded-xl font-bold text-sm hover:bg-muted transition-all shadow-sm"
+          variant="outline"
+          className="w-full h-12 gap-3 font-bold text-sm"
         >
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5 h-5" alt="Google" />
           Continue with Google
-        </button>
+        </Button>
 
         {/* Submit */}
-        <button
+        <Button
           type="submit"
           disabled={isSubmitting}
-          className="w-full py-4 bg-primary text-primary-foreground rounded-xl font-black text-sm uppercase tracking-[0.2em] hover:shadow-xl hover:shadow-primary/30 transition-all active:scale-[0.98] disabled:opacity-50 mt-2 shadow-lg shadow-primary/20"
+          className="w-full h-14 font-black text-sm uppercase tracking-[0.2em] hover:shadow-xl hover:shadow-primary/30 transition-all active:scale-[0.98] shadow-lg shadow-primary/20"
         >
           {isSubmitting ? "Generating Profile..." : "Create My Account"}
-        </button>
+        </Button>
       </form>
-
     </>
   );
 }

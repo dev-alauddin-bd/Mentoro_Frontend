@@ -15,6 +15,7 @@ import {
 import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi";
 import { useGetCategoriesQuery } from "@/redux/features/category/categoriesApi";
 import { CourseCard } from "@/components/shared/CourseCard";
+import { CourseSkeleton } from "@/components/ui/course-skeleton";
 
 export default function CoursesPage() {
   const { t } = useTranslation();
@@ -117,15 +118,14 @@ export default function CoursesPage() {
           </div>
         </div>
 
+
         {/* ================= CONTENT GRID ================= */}
         <div className="min-h-[600px] relative">
           {isLoading ? (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-background/50 backdrop-blur-sm z-30">
-              <div className="relative w-16 h-16">
-                 <div className="absolute inset-0 rounded-2xl border-4 border-primary/20 animate-pulse"></div>
-                 <div className="absolute inset-0 rounded-2xl border-4 border-t-primary animate-spin"></div>
-              </div>
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Discovering Excellence...</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8">
+              {Array.from({ length: 8 }).map((_, i) => (
+                <CourseSkeleton key={i} />
+              ))}
             </div>
           ) : courses.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8">

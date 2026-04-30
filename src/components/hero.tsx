@@ -21,7 +21,7 @@ export function HeroAnimated() {
 
   return (
     // min-h-screen ebong flex layout add kora hoyeche centering-er jonno
-    <section ref={ref} className="relative min-h-screen w-full overflow-hidden bg-background flex items-center pt-16 lg:pt-10">
+    <section ref={ref} className="relative min-h-[70vh] w-full overflow-hidden bg-background flex items-center pt-16 lg:pt-10">
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 

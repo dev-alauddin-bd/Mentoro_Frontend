@@ -243,6 +243,39 @@ export default function ProfilePage() {
             </div>
           </div>
 
+          <hr />
+
+          {/* PASSWORD UPDATE */}
+          <div className="space-y-6">
+            <h3 className="text-2xl font-black">Security & Password</h3>
+            
+            <form className="space-y-4 bg-secondary/30 p-6 rounded-2xl border border-border">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-xs font-bold text-muted-foreground uppercase mb-1">New Password</label>
+                  <input 
+                    type="password"
+                    placeholder="Min 6 characters" 
+                    className="w-full bg-background border rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary outline-none" 
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-muted-foreground uppercase mb-1">Confirm Password</label>
+                  <input 
+                    type="password"
+                    placeholder="Repeat new password" 
+                    className="w-full bg-background border rounded-xl py-3 px-4 focus:ring-2 focus:ring-primary outline-none" 
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end pt-2">
+                <button type="button" onClick={() => toast.success("Password update feature coming soon!")} className="bg-zinc-900 text-white px-6 py-3 rounded-xl font-bold uppercase text-xs hover:bg-zinc-800 transition-all flex items-center gap-2">
+                  Update Password <Shield className="w-4 h-4" />
+                </button>
+              </div>
+            </form>
+          </div>
+
           {/* BUTTON */}
           <button className="w-full h-14 bg-secondary hover:bg-secondary/70 rounded-2xl flex items-center justify-center gap-2 font-bold uppercase text-xs">
             Connect External Accounts <ExternalLink className="w-4 h-4" />

@@ -27,13 +27,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang={lang} dir={isRtl ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <body>
-    <Providers>
-      <FirebaseAuthProvider>
-        <LenisProvider>{children}</LenisProvider>
-        <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
-        <AiAssistant />
-      </FirebaseAuthProvider>
-  </Providers>
+        <Providers>
+          <FirebaseAuthProvider>
+            <LenisProvider>{children}</LenisProvider>
+            <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
+            <AiAssistant />
+          </FirebaseAuthProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -29,6 +29,11 @@ export function Footer() {
                 <p className="max-w-xs text-muted-foreground text-sm font-medium leading-relaxed">
                   {t("auth.create_account_desc") || "Transforming expertise into digital experiences. Join our global network of top-tier instructors and ambitious students."}
                 </p>
+
+                <div className="space-y-2 text-xs font-bold text-muted-foreground">
+                  <p>Email: <a href="mailto:support@coursemaster.com" className="text-primary hover:underline">support@coursemaster.com</a></p>
+                  <p>Location: Dhaka, Bangladesh</p>
+                </div>
             </div>
 
             {/* Newsletter Input */}

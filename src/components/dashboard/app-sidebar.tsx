@@ -18,6 +18,8 @@ import {
   History,
   ShieldCheck,
   Zap,
+  Users,
+  Video,
 } from "lucide-react";
 import {
   Sidebar,
@@ -43,25 +45,29 @@ export function AppSidebar() {
     { title: t("nav.overview") || "Overview", url: "/dashboard", icon: LayoutDashboard },
     { title: t("nav.my_courses") || "My Courses", url: "/dashboard/student/my-courses", icon: BookOpen },
     { title: t("nav.payments") || "Payments", url: "/dashboard/student/payments", icon: History },
+    { title: t("nav.profile") || "My Profile", url: "/dashboard/settings", icon: GraduationCap },
   ];
 
   const instructorItems = [
     { title: t("nav.overview") || "Overview", url: "/dashboard", icon: BarChart3 },
-    { title: t("nav.my_courses") || "My Courses", url: "/dashboard/instructor/manage-courses", icon: FolderKanban },
+    { title: t("nav.my_courses") || "Manage Courses", url: "/dashboard/instructor/manage-courses", icon: FolderKanban },
     { title: t("nav.curriculum") || "Curriculum", url: "/dashboard/instructor/modules", icon: Files },
-    { title: t("nav.lessons") || "Lessons", url: "/dashboard/instructor/lessons", icon: Files },
-    { title: t("nav.assignments") || "Assignments", url: "/dashboard/instructor/assignments", icon: Files },
     { title: t("nav.revenue") || "Revenue", url: "/dashboard/instructor/revenue", icon: Zap },
+    { title: "Live Workshops", url: "/dashboard/manage-live-sessions", icon: Video },
   ];
 
   const adminItems = [
     { title: t("nav.platform_hub") || "Platform Hub", url: "/dashboard", icon: ShieldCheck },
+    { title: t("nav.manage_users") || "Manage Users", url: "/dashboard/admin/users", icon: Users },
+    { title: t("nav.manage_courses") || "Manage Courses", url: "/dashboard/admin/courses", icon: BookOpen },
     { title: t("nav.categories") || "Categories", url: "/dashboard/admin/manage-categories", icon: FolderKanban },
+    { title: "Live Workshops", url: "/dashboard/manage-live-sessions", icon: Video },
     { title: t("nav.revenue") || "Revenue", url: "/dashboard/admin/revenue", icon: BarChart3 },
-    { title: t("nav.legal") || "Legal", url: "/dashboard/admin/refund-policy", icon: History },
+    { title: t("nav.legal") || "Legal Policy", url: "/dashboard/admin/refund-policy", icon: History },
   ];
 
   const commonItems = [
+    { title: t("nav.explore_courses") || "Explore Courses", url: "/courses", icon: BookOpen },
     { title: t("nav.settings") || "Settings", url: "/dashboard/settings", icon: Settings },
   ];
 

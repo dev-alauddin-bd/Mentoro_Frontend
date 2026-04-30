@@ -10,13 +10,13 @@ import { Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { AppDispatch } from "@/redux/store";
 import {
   setUser,
-  authFailure,
-  authStart,
 } from "@/redux/features/auth/authSlice";
 import { signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "@/lib/firebase";
 import { useLoginMutation, useSyncFirebaseMutation } from "@/redux/features/auth/authApi";
 import toast from "react-hot-toast";
+import { Button } from "@/components/ui/button";
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput, InputGroupText } from "@/components/ui/input-group";
 
 // Zod schema
 const loginSchema = z.object({
@@ -117,14 +117,15 @@ export function LoginForm() {
           </div>
         </div>
 
-        <button
+        <Button
           onClick={onGoogleLogin}
           type="button"
-          className="w-full flex items-center justify-center gap-3 py-4 bg-background border border-border rounded-xl font-bold text-sm hover:bg-muted transition-all shadow-sm"
+          variant="outline"
+          className="w-full h-14 gap-3 font-bold text-sm"
         >
           <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5 h-5" alt="Google" />
           Continue with Google
-        </button>
+        </Button>
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
@@ -139,18 +140,23 @@ export function LoginForm() {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
           {/* Email */}
           <div className="space-y-2">
-            <label className="text-sm font-bold text-foreground">Email Address</label>
-            <div className="relative group">
-              <Mail className="absolute left-3 top-3 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-              <input
+            <label htmlFor="email" className="text-sm font-bold text-foreground ml-1">Email Address</label>
+            <InputGroup>
+              <InputGroupAddon align="inline-start">
+                <InputGroupText>
+                  <Mail className="w-5 h-5" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <InputGroupInput
                 {...register("email")}
+                id="email"
                 type="email"
                 placeholder="name@example.com"
-                className="w-full pl-10 pr-4 py-3 bg-muted/30 border border-border rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium"
+                className="h-12"
               />
-            </div>
+            </InputGroup>
             {errors.email && (
-              <p className="text-red-500 text-xs font-bold mt-1 ml-1 tracking-tight">
+              <p className="text-destructive text-xs font-bold mt-1 ml-1 tracking-tight">
                 {errors.email.message}
               </p>
             )}
@@ -158,44 +164,50 @@ export function LoginForm() {
 
           {/* Password */}
           <div className="space-y-2">
-            <div className="flex justify-between items-center">
-                <label className="text-sm font-bold text-foreground">Password</label>
+            <div className="flex justify-between items-center px-1">
+                <label htmlFor="password" className="text-sm font-bold text-foreground">Password</label>
                 <button type="button" className="text-xs font-bold text-primary hover:underline">Forgot password?</button>
             </div>
-            <div className="relative group">
-              <Lock className="absolute left-3 top-3 w-5 h-5 text-muted-foreground group-focus-within:text-primary transition-colors" />
-              <input
+            <InputGroup>
+              <InputGroupAddon align="inline-start">
+                <InputGroupText>
+                  <Lock className="w-5 h-5" />
+                </InputGroupText>
+              </InputGroupAddon>
+              <InputGroupInput
                 {...register("password")}
+                id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                className="w-full pl-10 pr-12 py-3 bg-muted/30 border border-border rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium"
+                className="h-12"
               />
-              <button
-                type="button"
-                className="absolute right-3 top-3.5 text-muted-foreground hover:text-foreground transition-colors"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
+              <InputGroupAddon align="inline-end">
+                <InputGroupButton
+                  onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                  className="hover:bg-transparent"
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </InputGroupButton>
+              </InputGroupAddon>
+            </InputGroup>
             {errors.password && (
-              <p className="text-red-500 text-xs font-bold mt-1 ml-1 tracking-tight">
+              <p className="text-destructive text-xs font-bold mt-1 ml-1 tracking-tight">
                 {errors.password.message}
               </p>
             )}
           </div>
 
           {/* Submit */}
-          <button
+          <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-4 bg-primary text-primary-foreground rounded-xl font-black text-sm uppercase tracking-widest hover:opacity-90 active:scale-[0.98] disabled:opacity-50 transition-all shadow-lg shadow-primary/20"
+            className="w-full h-14 font-black text-sm uppercase tracking-widest hover:opacity-90 active:scale-[0.98] shadow-lg shadow-primary/20"
           >
             {isSubmitting ? "Authenticating..." : "Sign In"}
-          </button>
+          </Button>
         </form>
       </div>
-
     </>
   );
 }
