@@ -50,6 +50,7 @@ export function AppSidebar() {
 
   const instructorItems = [
     { title: t("nav.overview") || "Overview", url: "/dashboard", icon: BarChart3 },
+    { title: t("nav.categories") || "Categories", url: "/dashboard/admin/manage-categories", icon: FolderKanban },
     { title: t("nav.my_courses") || "Manage Courses", url: "/dashboard/instructor/manage-courses", icon: FolderKanban },
     { title: t("nav.curriculum") || "Curriculum", url: "/dashboard/instructor/modules", icon: Files },
     { title: t("nav.revenue") || "Revenue", url: "/dashboard/instructor/revenue", icon: Zap },
@@ -58,7 +59,7 @@ export function AppSidebar() {
 
   const adminItems = [
     { title: t("nav.platform_hub") || "Platform Hub", url: "/dashboard", icon: ShieldCheck },
-    { title: t("nav.manage_users") || "Manage Users", url: "/dashboard/admin/users", icon: Users },
+    // { title: t("nav.manage_users") || "Manage Users", url: "/dashboard/admin/users", icon: Users },
     { title: t("nav.manage_courses") || "Manage Courses", url: "/dashboard/admin/courses", icon: BookOpen },
     { title: t("nav.categories") || "Categories", url: "/dashboard/admin/manage-categories", icon: FolderKanban },
     { title: t("nav.revenue") || "Revenue", url: "/dashboard/admin/revenue", icon: BarChart3 },
