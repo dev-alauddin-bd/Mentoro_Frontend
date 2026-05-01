@@ -94,7 +94,7 @@ export function GlobalSearch() {
               {isLoading || isFetching ? (
                 <div className="flex flex-col items-center justify-center py-20 gap-4">
                   <Loader2 className="w-10 h-10 animate-spin text-primary" />
-                  <p className="text-xs font-black uppercase tracking-widest text-muted-foreground animate-pulse">Scanning Platform Library...</p>
+                  <p className="text-xs font-black uppercase tracking-widest text-muted-foreground animate-pulse">{t("common.scanning")}</p>
                 </div>
               ) : searchTerm.length < 2 ? (
                 <div className="py-20 text-center space-y-4">
@@ -103,7 +103,7 @@ export function GlobalSearch() {
                    </div>
                    <div className="space-y-1">
                       <p className="text-sm font-black italic">{t("common.start_typing") || "Start Typing to Explore"}</p>
-                      <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Find your next educational milestone</p>
+                      <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">{t("common.find_next_milestone")}</p>
                    </div>
                 </div>
               ) : results.length > 0 ? (
@@ -149,7 +149,7 @@ export function GlobalSearch() {
                    </div>
                    <div className="space-y-1">
                       <p className="text-sm font-black italic">{t("common.no_results") || "No Courses Found"}</p>
-                      <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">Try adjusting your search query</p>
+                      <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-bold">{t("common.no_results_adjust")}</p>
                    </div>
                 </div>
               )}

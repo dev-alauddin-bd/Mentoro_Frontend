@@ -234,22 +234,23 @@ export function PlatformAnalytics({
         </div>
 
         {/* Course Distribution */}
-        <div className="bg-zinc-950 rounded-[3rem] p-10 text-white shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center gap-10">
+        <div className="bg-card border border-border/60 rounded-[3rem] p-10 shadow-2xl relative overflow-hidden flex flex-col md:flex-row items-center gap-10">
+           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] -mr-32 -mt-32"></div>
            <div className="relative w-48 h-48 flex-shrink-0">
               <DonutChart data={courseDistribution} />
               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <span className="text-3xl font-black italic tracking-tighter">{courses.length}</span>
-                  <span className="text-[8px] font-black uppercase tracking-widest opacity-40">{t("admin.analytics.total_assets")}</span>
+                  <span className="text-3xl font-black italic tracking-tighter text-foreground">{courses.length}</span>
+                  <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground opacity-60">{t("admin.analytics.total_assets")}</span>
               </div>
            </div>
 
            <div className="flex-1 space-y-6 w-full">
               <div className="space-y-1 mb-8">
-                 <h3 className="text-xl font-black italic flex items-center gap-2 text-white">
+                 <h3 className="text-xl font-black italic flex items-center gap-2">
                     <PieChartIcon className="w-5 h-5 text-primary" />
                     {t('admin.course_categories')}
                  </h3>
-                 <p className="text-[10px] font-black uppercase tracking-widest text-white/40">
+                 <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground opacity-60">
                     {t("admin.analytics.strategic_allocation")}
                  </p>
               </div>
@@ -261,7 +262,7 @@ export function PlatformAnalytics({
                           <span className="opacity-60">{item.label}</span>
                           <span style={{ color: item.color }}>{item.value}%</span>
                        </div>
-                       <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-1.5 w-full bg-secondary rounded-full overflow-hidden">
                           <div 
                             className="h-full rounded-full transition-all duration-1000" 
                             style={{ width: `${item.value}%`, backgroundColor: item.color }}
@@ -303,22 +304,23 @@ export function PlatformAnalytics({
             </div>
 
             <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Insights Card */}
-                <div className="p-8 bg-zinc-950 rounded-[2rem] text-white flex flex-col justify-between gap-8 border border-white/5 shadow-inner">
+                 {/* Insights Card */}
+                <div className="p-8 bg-card border border-primary/20 rounded-[2rem] flex flex-col justify-between gap-8 shadow-xl relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/0 via-primary/50 to-primary/0"></div>
                     <div className="flex items-center gap-6">
                         <div className="w-16 h-16 bg-primary/20 rounded-2xl flex items-center justify-center border border-primary/30">
                             <Zap className="w-8 h-8 text-primary" />
                         </div>
                         <div className="space-y-1">
                             <h4 className="text-lg font-black italic">{t('admin.insights')}</h4>
-                            <p className="text-xs text-white/50 max-w-md">
+                             <p className="text-xs text-muted-foreground max-w-md">
                                 <Trans i18nKey="admin.analytics.insights_desc" values={{ count: courses.length, category: courseDistribution[0]?.label || 'General', percent: courseDistribution[0]?.value || 0 }}>
                                     Based on your <span className="text-primary font-bold">0 courses</span>, the most successful category is <span className="text-primary font-bold">General</span> with <span className="text-primary font-bold">0%</span> market share.
                                 </Trans>
                             </p>
                         </div>
                     </div>
-                    <button className="w-full py-4 bg-white text-black rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-primary hover:text-white transition-all">
+                     <button className="w-full py-4 bg-primary text-white rounded-2xl text-xs font-black uppercase tracking-widest hover:scale-[1.02] active:scale-[0.98] transition-all shadow-lg shadow-primary/20">
                         {t("admin.analytics.view_full_report")}
                     </button>
                 </div>

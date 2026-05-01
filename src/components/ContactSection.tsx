@@ -71,8 +71,6 @@ export function ContactSection() {
 
           {/* --- Contact Form --- */}
           <div className="p-10 bg-card border border-border rounded-[3rem] shadow-xl shadow-primary/5 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[5rem] -z-0"></div>
-
             <form className="space-y-6 relative z-10">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">

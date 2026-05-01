@@ -332,7 +332,13 @@
     "more": "Mehr Seiten",
     "sidebar": "Seitenleiste",
     "toggle_sidebar": "Seitenleiste umschalten",
-    "operations": "Operationen"
+    "operations": "Operationen",
+    "search_placeholder": "Kurse suchen...",
+    "search_courses": "Geben Sie Kursnamen, Dozenten oder Kategorie ein...",
+    "start_typing": "Tippen Sie, um zu erkunden",
+    "find_next_milestone": "Finden Sie Ihren nächsten Bildungsweg",
+    "scanning": "Plattformbibliothek wird gescannt...",
+    "no_results_adjust": "Versuchen Sie, Ihre Suchabfrage anzupassen"
   },
   "live_sessions": {
     "management_title": "Live-Sitzungsverwaltung",

@@ -334,7 +334,13 @@
     "more": "Más páginas",
     "sidebar": "Barra lateral",
     "toggle_sidebar": "Alternar barra lateral",
-    "operations": "Operaciones"
+    "operations": "Operaciones",
+    "search_placeholder": "Buscar Cursos...",
+    "search_courses": "Ingrese el nombre del curso, instructor o categoría...",
+    "start_typing": "Comience a escribir para explorar",
+    "find_next_milestone": "Encuentra tu próximo hito educativo",
+    "scanning": "Escaneando la biblioteca de la plataforma...",
+    "no_results_adjust": "Intente ajustar su consulta de búsqueda"
   },
   "contact": {
     "badge": "Pontese en contacto con nosotros",

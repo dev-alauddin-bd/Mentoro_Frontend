@@ -332,7 +332,13 @@
     "more": " ",
     "sidebar": " ",
     "toggle_sidebar": " ",
-    "operations": " "
+    "operations": " ",
+    "search_placeholder": "コース検索...",
+    "search_courses": "コース名前、生業者、成析・切りを入力...",
+    "start_typing": "トィプスタートにして検索",
+    "find_next_milestone": "あなたの下の教育ミラストーンを検索",
+    "scanning": "プラトフォームライブラリを検索...",
+    "no_results_adjust": "検索ケアリを伭張して試慢してほして"
   },
   "live_sessions": {
     "management_title": " ",

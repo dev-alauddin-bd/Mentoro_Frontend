@@ -13,6 +13,7 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
 import { auth } from "@/lib/firebase";
+import { GlobalSearch } from "./GlobalSearch";
 
 // --- Main Component: Header ---
 export function Header() {
@@ -106,6 +107,9 @@ export function Header() {
 
           {/* 3. User Actions (Right) */}
           <div className="flex items-center justify-end gap-3 ">
+            <div className="hidden md:block mr-2">
+               <GlobalSearch />
+            </div>
       
             {isAuthenticated ? (
               <div className="relative hidden lg:block" ref={dropdownRef}>
@@ -192,6 +196,9 @@ export function Header() {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden animate-in slide-in-from-top-4 duration-200 border-t bg-background p-4 grid gap-2 shadow-2xl relative z-[60]">
+          <div className="mb-4">
+             <GlobalSearch />
+          </div>
           <MobileNavLink href="/" label={t("nav.home")} onClick={() => setIsMenuOpen(false)} />
           <MobileNavLink href="/courses" label={t("nav.courses")} onClick={() => setIsMenuOpen(false)} />
           <MobileNavLink href="/about" label={t("nav.about")} onClick={() => setIsMenuOpen(false)} />

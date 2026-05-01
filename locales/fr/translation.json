@@ -334,7 +334,13 @@
     "more": "Plus de pages",
     "sidebar": "Barre latérale",
     "toggle_sidebar": "Basculer la barre latérale",
-    "operations": "Opérations"
+    "operations": "Opérations",
+    "search_placeholder": "Rechercher des cours...",
+    "search_courses": "Entrez le nom du cours, l'enseignant ou la catégorie...",
+    "start_typing": "Commencez à saisir pour explorer",
+    "find_next_milestone": "Trouvez votre prochain jalon éducatif",
+    "scanning": "Analyse de la bibliothèque de plateforme...",
+    "no_results_adjust": "Essayez d'ajuster votre requête de recherche"
   },
   "contact": {
     "badge": "Contactez-nous",

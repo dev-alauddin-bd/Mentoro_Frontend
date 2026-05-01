@@ -56,7 +56,7 @@ export default function CareersPage() {
     { id: "Content", label: t("careers.categories.content") },
     { id: "Customer Success", label: t("careers.categories.customer_success") }
   ]
-  const jobs = jobsData?.data || []
+  const jobs = jobsData?.data?.jobs || jobsData?.data || []
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm<ApplicationForm>({
     resolver: zodResolver(applicationSchema)

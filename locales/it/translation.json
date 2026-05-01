@@ -332,7 +332,13 @@
     "more": "Altre Pagine",
     "sidebar": "Barra laterale",
     "toggle_sidebar": "Attiva/Disattiva barra laterale",
-    "operations": "Operazioni"
+    "operations": "Operazioni",
+    "search_placeholder": "Cerca corsi...",
+    "search_courses": "Inserisci nome del corso, istruttore o categoria...",
+    "start_typing": "Inizia a digitare per esplorare",
+    "find_next_milestone": "Trova il tuo prossimo traguardo educativo",
+    "scanning": "Scansiona la libreria della piattaforma...",
+    "no_results_adjust": "Prova a regolare la tua query di ricerca"
   },
   "live_sessions": {
     "management_title": "Gestione Sessioni Live",

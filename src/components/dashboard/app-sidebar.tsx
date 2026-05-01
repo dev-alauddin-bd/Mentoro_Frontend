@@ -22,6 +22,7 @@ import {
   Video,
   Activity,
   Briefcase,
+  ClipboardList,
 } from "lucide-react";
 import {
   Sidebar,
@@ -57,6 +58,7 @@ export function AppSidebar() {
     { title: t("nav.curriculum"), url: "/dashboard/instructor/modules", icon: Files },
     { title: t("nav.revenue"), url: "/dashboard/instructor/revenue", icon: Zap },
     { title: t("nav.live_workshops"), url: "/dashboard/manage-live-sessions", icon: Video },
+    { title: t("nav.assignments"), url: "/dashboard/instructor/assignments", icon: ClipboardList },
     { title: t("nav.analytics"), url: "/dashboard/instructor/analytics", icon: Activity },
   ];
 

@@ -334,7 +334,13 @@
     "more": "مزيد من الصفحات",
     "sidebar": "酒店",
     "toggle_sidebar": "切换侧边栏",
-    "operations": "العمليات"
+    "operations": "العمليات",
+    "search_placeholder": "ابحث عن الدورات...",
+    "search_courses": "أدخل اسم الدورة، المحاضر، أو الفئة...",
+    "start_typing": "ابدأ بالكتابة لاستكشاف",
+    "find_next_milestone": "اكتشف هدفك التعليمي التالي",
+    "scanning": "مُ扫 платформа المكتبة...",
+    "no_results_adjust": "جرب تعديل استفسار البحث"
   },
   "contact": {
     "badge": "اتصل بنا",

@@ -332,7 +332,13 @@
     "more": "مزید پیجز",
     "sidebar": "سائیڈ بار",
     "toggle_sidebar": "سائیڈ بار کو ٹوگل کریں",
-    "operations": "اوپریشنز"
+    "operations": "اوپریشنز",
+    "search_placeholder": "کورسز کی تلاش کریں...",
+    "search_courses": "کورس کا نام، انسٹرکٹر، یا زمرہ درج کریں...",
+    "start_typing": " سورہ کی تلاش کے لیے ٹائپ کرنا شروع کریں",
+    "find_next_milestone": "اپنی اگلی تعلیمی معیار کو دریافت کریں",
+    "scanning": "پلیٹ فارم لائبریری کا جائزہ لے رہا ہے...",
+    "no_results_adjust": "اپنی تلاش کی_PRI کو درست کرنے کی کوشش کریں"
   },
   "live_sessions": {
     "management_title": "لائیو سیشن منیجمنٹ",

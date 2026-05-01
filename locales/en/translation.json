@@ -332,7 +332,13 @@
     "more": "More Pages",
     "sidebar": "Sidebar",
     "toggle_sidebar": "Toggle Sidebar",
-    "operations": "Operations"
+    "operations": "Operations",
+    "search_placeholder": "Search Courses...",
+    "search_courses": "Enter course name, instructor, or category...",
+    "start_typing": "Start Typing to Explore",
+    "find_next_milestone": "Find your next educational milestone",
+    "scanning": "Scanning Platform Library...",
+    "no_results_adjust": "Try adjusting your search query"
   },
   "live_sessions": {
     "management_title": "Live Session Management",

@@ -332,7 +332,13 @@
     "more": "Mais Páginas",
     "sidebar": "Barra Lateral",
     "toggle_sidebar": "Alternar Barra Lateral",
-    "operations": "Operações"
+    "operations": "Operações",
+    "search_placeholder": "Pesquisar Cursos...",
+    "search_courses": "Insira o nome do curso, instrutor ou categoria...",
+    "start_typing": "Comece a digitar para explorar",
+    "find_next_milestone": "Encontre o seu próximo marco educacional",
+    "scanning": "Biblioteca da Plataforma de Scanner...",
+    "no_results_adjust": "Tente ajustar sua consulta de pesquisa"
   },
   "live_sessions": {
     "management_title": "Gerenciamento de Sessões ao Vivo",

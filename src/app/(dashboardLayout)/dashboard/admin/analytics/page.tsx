@@ -21,11 +21,11 @@ function AdminAnalyticsContent() {
   const { t } = useTranslation()
   const { data: analyticsData, isLoading: analyticsLoading } = useGetDashboardAnalyticsQuery()
   const { data: coursesData, isLoading: coursesLoading } = useGetAllCoursesQuery({ limit: 1000 })
-  const { data: usersData, isLoading: usersLoading } = useGetAllUsersQuery()
+  const { data: usersData, isLoading: usersLoading } = useGetAllUsersQuery({ limit: 1000 })
   
   const stats = analyticsData?.data?.statistics || {}
   const courses = coursesData?.data?.courses || []
-  const users = usersData?.data?.users || usersData?.data || []
+  const users = usersData?.data?.users || []
 
   if (analyticsLoading || coursesLoading || usersLoading) {
     return (

@@ -332,7 +332,13 @@
     "more": "더보기",
     "sidebar": "사이드바",
     "toggle_sidebar": "사이드바 토글",
-    "operations": "작업"
+    "operations": "작업",
+    "search_placeholder": "입력 프롔는...",
+    "search_courses": "프롔는 이름, 네른했, 총대 번호...",
+    "start_typing": "입력하면 신호한 었부",
+    "find_next_milestone": "필드를 수 었부 완료 모드리트",
+    "scanning": "옥대 유형 테목...",
+    "no_results_adjust": "입력 총대 를 설봈를 없는면"
   },
   "live_sessions": {
     "management_title": "라이브 세션 관리",
