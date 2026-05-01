@@ -74,7 +74,7 @@ export const courseApi = baseApi.injectEndpoints({
     }),
 
     // ⬇⬇⬇ *** GET MY COURSES (Student enrolled courses) ***
-    getMyCourses: build.query<IApiResponse<IMyCourse[]>, void>({
+    getMyCourses: build.query<IApiResponse<any>, void>({
       query: () => `/courses/my-courses`,
       providesTags: ["Course"],
     }),

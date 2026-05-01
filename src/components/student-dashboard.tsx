@@ -21,13 +21,14 @@ import { WelcomeHeroSkeleton, StatCardSkeleton, CourseCardSkeleton } from "./das
 
 import { useGetMyCoursesQuery } from "@/redux/features/course/courseAPi";
 import { CourseRecommendation } from "./dashboard/CourseRecommendation";
+import { IMyCourse } from "@/interfaces/course.interface";
 
 export function StudentDashboard() {
   const { t } = useTranslation();
   const { user } = useSelector((state: RootState) => state.cmAuth);
   const { data, isLoading, isError } = useGetMyCoursesQuery();
 
-  const myCourses = useMemo(() => Array.isArray(data?.data) ? data.data : [], [data]);
+  const myCourses: IMyCourse[] = useMemo(() => Array.isArray(data?.data?.courses) ? data.data.courses : (Array.isArray(data?.data) ? data.data : []), [data]);
 
   // ================= MEMOIZED STATS =================
   const stats = useMemo(() => {
@@ -137,16 +138,16 @@ export function StudentDashboard() {
                 <PlayCircle className="w-8 h-8" />
               </div>
               <div className="space-y-1">
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Resume Learning</span>
-                <h2 className="text-2xl font-black tracking-tight line-clamp-1">Next up: {continueCourses[0].title}</h2>
-                <p className="text-muted-foreground text-sm font-medium">Continue where you left off in this course.</p>
+                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">{t("student.resume_learning")}</span>
+                <h2 className="text-2xl font-black tracking-tight line-clamp-1">{t("student.next_up")} {continueCourses[0].title}</h2>
+                <p className="text-muted-foreground text-sm font-medium">{t("student.resume_desc")}</p>
               </div>
             </div>
             <Link
               href={`/dashboard/student/my-courses/${continueCourses[0].id}`}
               className="w-full md:w-auto h-14 px-10 bg-primary text-white rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 transition-all"
             >
-              Start Lesson
+              {t("student.start_lesson")}
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>

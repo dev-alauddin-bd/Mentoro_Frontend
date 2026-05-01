@@ -5,7 +5,7 @@ export const enrollApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
 
     // Get all enrollments for current user
-    getMyEnrollments: build.query<IApiResponse<any[]>, void>({
+    getMyEnrollments: build.query<IApiResponse<any>, void>({
       query: () => "/enrollments/me",
       providesTags: ["Enroll"],
     }),

@@ -1,8 +1,10 @@
 "use client";
 
+import { useTranslation } from "react-i18next";
 import { Cookie, Info, Settings, ShieldCheck, ArrowDown, Fingerprint } from "lucide-react";
 
 export default function CookiePolicyPage() {
+  const { t } = useTranslation();
   return (
     <main className="min-h-screen bg-background pb-32">
       
@@ -15,16 +17,16 @@ export default function CookiePolicyPage() {
           <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-background border border-border rounded-full shadow-sm text-primary">
               <Cookie className="w-4 h-4" />
-              <span className="text-[10px] font-black uppercase tracking-widest">Cookie Usage</span>
+              <span className="text-[10px] font-black uppercase tracking-widest">{t("cookie_policy.badge")}</span>
             </div>
             
             <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-[0.9]">
-              Managing Your <br />
-              <span className="text-primary italic font-serif">Digital Crumbs</span>
+              {t("cookie_policy.title")} <br />
+              <span className="text-primary italic font-serif">{t("cookie_policy.title_italic")}</span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground font-medium">
-              We use cookies to enhance your journey through our academy. Learn how we use them and how you can control your preferences.
+              {t("cookie_policy.subtitle")}
             </p>
 
             <div className="flex justify-center pt-8">
@@ -43,37 +45,37 @@ export default function CookiePolicyPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <CookieCard 
                icon={<ShieldCheck />}
-               title="Essential Cookies"
-               desc="Required for core platform functionality like authentication, security, and session management. These cannot be disabled."
+               title={t("cookie_policy.card1_title")}
+               desc={t("cookie_policy.card1_desc")}
             />
             <CookieCard 
                icon={<Fingerprint />}
-               title="Preference Cookies"
-               desc="Allow us to remember your language choices, theme settings, and regional preferences for a consistent experience."
+               title={t("cookie_policy.card2_title")}
+               desc={t("cookie_policy.card2_desc")}
             />
             <CookieCard 
                icon={<Info />}
-               title="Analytics Cookies"
-               desc="Help us understand how you interact with our courses so we can improve content delivery and platform performance."
+               title={t("cookie_policy.card3_title")}
+               desc={t("cookie_policy.card3_desc")}
             />
             <CookieCard 
                icon={<Settings />}
-               title="Marketing Cookies"
-               desc="Used to track the effectiveness of our outreach campaigns and provide relevant news about upcoming course launches."
+               title={t("cookie_policy.card4_title")}
+               desc={t("cookie_policy.card4_desc")}
             />
           </div>
 
           <div className="p-12 bg-card border border-border rounded-[3rem] space-y-8">
-             <h2 className="text-3xl font-black tracking-tight">How to Manage Cookies</h2>
+             <h2 className="text-3xl font-black tracking-tight">{t("cookie_policy.manage_title")}</h2>
              <p className="text-muted-foreground text-lg font-medium leading-relaxed">
-               Most web browsers allow you to control cookies through their settings preferences. However, if you limit the ability of websites to set cookies, you may worsen your overall user experience, since it will no longer be personalized.
+               {t("cookie_policy.manage_desc")}
              </p>
              <div className="flex flex-wrap gap-4 pt-4">
                 <button className="h-12 px-8 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">
-                  Accept All Cookies
+                  {t("cookie_policy.accept_all")}
                 </button>
                 <button className="h-12 px-8 border border-border bg-background text-foreground text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-secondary transition-all">
-                  Reject Non-Essential
+                  {t("cookie_policy.reject_non")}
                 </button>
              </div>
           </div>

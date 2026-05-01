@@ -24,7 +24,7 @@ export function InstructorDashboard() {
   const { data: usersData } = useGetAllUsersQuery();
 
   const courses = coursesData?.data?.courses || [];
-  const users = usersData?.data || [];
+  const users = usersData?.data?.users || usersData?.data || [];
 
   if (isLoading) {
     return (

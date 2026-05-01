@@ -86,13 +86,13 @@ export default function HowItWorks() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
               <h2 className="text-3xl md:text-5xl font-black tracking-tight text-foreground">
-                Engineered for <br/> <span className="text-primary">Modern Education</span>
+                {t("how_it_works.engineered_title")} <br/> <span className="text-primary">{t("how_it_works.engineered_subtitle")}</span>
               </h2>
               <div className="space-y-6">
                 {[
-                  { t: "White-label Branding", d: "Your logo, your colors, your domain. It's your academy.", i: <ShieldCheck className="text-primary"/> },
-                  { t: "Seamless Payments", d: "Integrate with Stripe, PayPal, and more for instant payouts.", i: <CheckCircle2 className="text-primary"/> },
-                  { t: "Student Community", d: "Build engaged communities with built-in discussion forums.", i: <Users className="text-primary"/> }
+                  { t: t("how_it_works.feature1_title"), d: t("how_it_works.feature1_desc"), i: <ShieldCheck className="text-primary"/> },
+                  { t: t("how_it_works.feature2_title"), d: t("how_it_works.feature2_desc"), i: <CheckCircle2 className="text-primary"/> },
+                  { t: t("how_it_works.feature3_title"), d: t("how_it_works.feature3_desc"), i: <Users className="text-primary"/> }
                 ].map((feature, i) => (
                   <div key={i} className="flex gap-4">
                     <div className="mt-1">{feature.i}</div>
@@ -118,7 +118,7 @@ export default function HowItWorks() {
                        <div className="h-4 bg-muted rounded-full w-3/4 animate-pulse" />
                        <div className="h-4 bg-muted rounded-full w-1/2 animate-pulse" />
                        <div className="h-24 bg-primary/5 border border-primary/20 rounded-xl border-dashed flex items-center justify-center">
-                          <p className="text-[10px] font-bold text-primary tracking-widest uppercase">Drag & Drop Builder</p>
+                          <p className="text-[10px] font-bold text-primary tracking-widest uppercase">{t("how_it_works.drag_drop")}</p>
                        </div>
                     </div>
                  </div>
@@ -130,15 +130,15 @@ export default function HowItWorks() {
         {/* --- Final CTA --- */}
         <div className="mt-32 text-center space-y-8">
           <h2 className="text-4xl md:text-6xl font-black tracking-tighter">
-            Ready to start <span className="italic text-primary">teaching?</span>
+            {t("how_it_works.ready_teaching")} <span className="italic text-primary">{t("how_it_works.teaching_italic")}</span>
           </h2>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/signup" className="h-16 px-10 bg-primary text-primary-foreground rounded-2xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-2 hover:shadow-[0_20px_50px_rgba(var(--primary),0.3)] transition-all">
-              Launch Your Course
+              {t("how_it_works.cta_button")}
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link href="/contact" className="h-16 px-10 border-2 border-border bg-background text-foreground rounded-2xl font-black uppercase tracking-widest text-sm flex items-center justify-center hover:bg-secondary transition-all">
-              Contact Sales
+              {t("how_it_works.contact_sales")}
             </Link>
           </div>
         </div>

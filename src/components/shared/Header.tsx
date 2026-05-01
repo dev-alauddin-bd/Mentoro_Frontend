@@ -61,13 +61,13 @@ export function Header() {
           <div className="flex h-10 items-center justify-between">
             <div className="flex items-center gap-6">
               <Link href="/about" className="text-[11px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
-                {t("nav.about") || "About Us"}
+                {t("nav.about")}
               </Link>
               <Link href="/contact" className="text-[11px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
-                {t("nav.contact") || "Support"}
+                {t("nav.contact")}
               </Link>
               <Link href="/careers" className="text-[11px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
-                {t("nav.careers") || "Careers"}
+                {t("nav.careers")}
               </Link>
              
             </div>
@@ -105,11 +105,11 @@ export function Header() {
           {/* 2. Main Navigation (Center - Desktop Only) */}
           <div className="hidden lg:flex flex-1 justify-center max-w-2xl">
             <nav className="flex items-center gap-2 p-2 bg-card/40 backdrop-blur-xl rounded-[1.5rem] border border-primary/10 shadow-sm px-6">
-              <NavLink href="/" label={t("nav.home") || "Home"} active={pathname === "/"} />
-              <NavLink href="/courses" label={t("nav.courses") || "Courses"} active={pathname === "/courses"} />
-              <NavLink href="/about" label={t("nav.about") || "About Us"} active={pathname === "/about"} />
-              <NavLink href="/contact" label={t("nav.contact") || "Contact"} active={pathname === "/contact"} />
-              <NavLink href="/how-it-works" label={t("nav.how_it_works") || "How it works"} active={pathname === "/how-it-works"} />
+              <NavLink href="/" label={t("nav.home")} active={pathname === "/"} />
+              <NavLink href="/courses" label={t("nav.courses")} active={pathname === "/courses"} />
+              <NavLink href="/about" label={t("nav.about")} active={pathname === "/about"} />
+              <NavLink href="/contact" label={t("nav.contact")} active={pathname === "/contact"} />
+              <NavLink href="/how-it-works" label={t("nav.how_it_works")} active={pathname === "/how-it-works"} />
             </nav>
           </div>
 
@@ -149,7 +149,7 @@ export function Header() {
                         onClick={() => setIsUserDropdownOpen(false)}
                         className="flex items-center gap-2 w-full px-4 py-3 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:bg-primary/5 hover:text-primary rounded-xl transition-all"
                       >
-                        Dashboard
+                        {t("nav.dashboard")}
                       </Link>
                     
                     </div>
@@ -205,20 +205,20 @@ export function Header() {
           <MobileNavLink href="/courses" label={t("nav.courses")} onClick={() => setIsMenuOpen(false)} />
           <MobileNavLink href="/about" label={t("nav.about")} onClick={() => setIsMenuOpen(false)} />
           <MobileNavLink href="/contact" label={t("nav.contact")} onClick={() => setIsMenuOpen(false)} />
-          <MobileNavLink href="/how-it-works" label={t("nav.platform_guide") || "Platform Guide"} onClick={() => setIsMenuOpen(false)} />
+          <MobileNavLink href="/how-it-works" label={t("nav.platform_guide")} onClick={() => setIsMenuOpen(false)} />
 
          
 
           <div className="flex items-center gap-3 p-2 mt-2 bg-secondary/50 rounded-2xl border border-border/50">
             <div className="flex-1">
-              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-2">{t("nav.regional") || "Regional"}</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-2">{t("nav.regional")}</span>
               <div className="mt-1">
                 <LanguageSwitcher />
               </div>
             </div>
             <div className="h-10 w-px bg-border/60" />
             <div className="flex-1 flex flex-col items-end px-2">
-              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mr-2">{t("nav.display") || "Display"}</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mr-2">{t("nav.display")}</span>
               <div className="mt-1">
                 <ThemeSwitcher />
               </div>

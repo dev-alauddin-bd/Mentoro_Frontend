@@ -8,23 +8,23 @@ export function StatsSection() {
 
   const stats = [
     { 
-        label: t("info.students") || "Students", 
-        value: t("info.students_val") || "50k+", 
+        label: t("info.students"), 
+        value: t("info.students_val"), 
         icon: <Users className="w-6 h-6" /> 
     },
     { 
-        label: t("nav.courses") || "Courses", 
-        value: "1.2k+", 
+        label: t("nav.courses"), 
+        value: t("stats.courses_val"), 
         icon: <BookOpen className="w-6 h-6" /> 
     },
     { 
-        label: t("nav.instructors") || "Instructors", 
-        value: "450+", 
+        label: t("nav.instructors"), 
+        value: t("stats.instructors_val"), 
         icon: <Award className="w-6 h-6" /> 
     },
     { 
-        label: t("info.global_reach") || "Countries Reached", 
-        value: "120+", 
+        label: t("stats.countries_label"), 
+        value: t("stats.countries_val"), 
         icon: <Globe className="w-6 h-6" /> 
     },
   ];

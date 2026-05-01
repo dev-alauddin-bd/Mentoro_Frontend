@@ -8,7 +8,7 @@ export function Footer() {
   const { t } = useTranslation();
 
   return (
-    <footer className="footer-gradient relative overflow-hidden pt-32 pb-12 bg-card/30 shadow-[0_-20px_80px_-20px_rgba(0,0,0,0.1)] border-t border-primary/5">
+    <footer className="footer-gradient relative overflow-hidden pt-20 lg:pt-32 pb-12 bg-card/30 shadow-[0_-20px_80px_-20px_rgba(0,0,0,0.1)] border-t border-primary/5">
 
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -33,7 +33,7 @@ export function Footer() {
           </div>
                 
                 <p className="max-w-xs text-muted-foreground text-sm font-medium leading-relaxed">
-                  {t("auth.create_account_desc") || "Transforming expertise into digital experiences. Join our global network of top-tier instructors and ambitious students."}
+                  {t("auth.create_account_desc")}
                 </p>
 
                 <div className="space-y-2 text-xs font-bold text-muted-foreground">
@@ -45,13 +45,13 @@ export function Footer() {
             {/* Newsletter Input */}
             <div className="max-w-sm space-y-5">
               <div className="space-y-1">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">{t("footer.stay_in_orbit") || "Stay in the orbit"}</p>
-                <h3 className="text-lg font-black tracking-tight text-foreground">{t("footer.subscribe_newsletter") || "Subscribe to our newsletter"}</h3>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">{t("footer.stay_in_orbit")}</p>
+                <h3 className="text-lg font-black tracking-tight text-foreground">{t("footer.subscribe_newsletter")}</h3>
               </div>
               <div className="relative group">
                 <input 
                   type="email" 
-                  placeholder={t("footer.newsletter_placeholder") || "name@email.com"} 
+                  placeholder={t("footer.newsletter_placeholder")} 
                   className="w-full h-16 pl-6 pr-16 bg-background/50 border border-primary/10 rounded-2xl text-xs font-bold focus:ring-2 focus:ring-primary/20 focus:border-primary/30 focus:bg-background outline-none transition-all shadow-sm"
                 />
                 <button className="absolute right-2 top-2 h-12 w-12 bg-primary text-primary-foreground rounded-xl flex items-center justify-center hover:shadow-lg hover:shadow-primary/40 transition-all active:scale-95 group-hover:rotate-6">
@@ -70,27 +70,27 @@ export function Footer() {
 
           {/* Links Columns */}
           <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-10 lg:gap-6 pt-4">
-            <FooterColumn title={t("footer.links") || "Platform"}>
-                <li><Link href="/" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.home") || "Home"}</Link></li>
-                <li><Link href="/courses" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.explore") || "All Courses"}</Link></li>
-                <li><Link href="/about" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.about") || "About Us"}</Link></li>
-                <li><Link href="/contact" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.contact") || "Contact"}</Link></li>
-                <li><Link href="/how-it-works" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.learning_path") || "Methodology"}</Link></li>
-                <li><Link href="/careers" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.careers") || "Careers"}</Link></li>
+            <FooterColumn title={t("footer.links")}>
+                <li><Link href="/" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.home")}</Link></li>
+                <li><Link href="/courses" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.explore")}</Link></li>
+                <li><Link href="/about" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.about")}</Link></li>
+                <li><Link href="/contact" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.contact")}</Link></li>
+                <li><Link href="/how-it-works" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.learning_path")}</Link></li>
+                <li><Link href="/careers" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.careers")}</Link></li>
             </FooterColumn>
 
-            <FooterColumn title={t("extra.for_instructors") || "Educators"}>
-                <li><Link href="/signup" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("extra.become_instructor") || "Teach on CourseMaster"}</Link></li>
-                <li><Link href="/dashboard" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.dashboard") || "Instructor Dash"}</Link></li>
-                <li><Link href="/how-it-works" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.platform_guide") || "Platform Guide"}</Link></li>
-                <li><Link href="/contact" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.help") || "Support Center"}</Link></li>
+            <FooterColumn title={t("extra.for_instructors")}>
+                <li><Link href="/signup" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("extra.become_instructor")}</Link></li>
+                <li><Link href="/dashboard" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.dashboard")}</Link></li>
+                <li><Link href="/how-it-works" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.platform_guide")}</Link></li>
+                <li><Link href="/contact" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.help")}</Link></li>
             </FooterColumn>
 
-            <FooterColumn title={t("footer.legal") || "Legal"}>
-                <li><Link href="/refund-policy" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.refund_policy") || "Refund Policy"}</Link></li>
-                <li><Link href="/privacy-policy" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.privacy") || "Privacy Policy"}</Link></li>
-                <li><Link href="/terms-of-service" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.terms") || "Terms of Service"}</Link></li>
-                <li><Link href="/cookie-policy" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.cookie") || "Cookie Policy"}</Link></li>
+            <FooterColumn title={t("footer.legal")}>
+                <li><Link href="/refund-policy" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.refund_policy")}</Link></li>
+                <li><Link href="/privacy-policy" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.privacy")}</Link></li>
+                <li><Link href="/terms-of-service" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.terms")}</Link></li>
+                <li><Link href="/cookie-policy" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.cookie")}</Link></li>
             </FooterColumn>
           </div>
         </div>
@@ -98,15 +98,15 @@ export function Footer() {
         {/* --- Bottom Bar --- */}
         <div className="pt-10 border-t border-primary/10 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-[11px] font-black uppercase tracking-widest text-muted-foreground/60">
-            © {new Date().getFullYear()} CourseMaster. {t("footer.copyright") || "All rights reserved."}
+            © {new Date().getFullYear()} CourseMaster. {t("footer.copyright")}
           </p>
           <div className="flex items-center gap-8">
              <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                <span className="text-[10px] font-black uppercase tracking-tighter text-muted-foreground">{t("footer.systems_active") || "Systems Active"}</span>
+                <span className="text-[10px] font-black uppercase tracking-tighter text-muted-foreground">{t("footer.systems_active")}</span>
              </div>
              <p className="text-[11px] font-black uppercase tracking-widest text-muted-foreground/60">
-               {t("footer.handcrafted") || "Handcrafted with ❤️ for Educators"}
+               {t("footer.handcrafted")}
              </p>
           </div>
         </div>

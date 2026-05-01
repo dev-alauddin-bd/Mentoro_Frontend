@@ -39,7 +39,7 @@ export default function CoursesContent() {
   const courses: any = data?.data?.courses || [];
   const totalCount = data?.data?.total || 0;
   const { data: categoriesData } = useGetCategoriesQuery();
-  const categories = categoriesData?.data || [];
+  const categories = categoriesData?.data?.categories || categoriesData?.data || [];
   const totalPages = Math.ceil(totalCount / 12) || 1;
 
   return (
@@ -72,7 +72,7 @@ export default function CoursesContent() {
                 }}
                 className="w-full h-14 pl-14 pr-6 bg-background/50 border border-primary/5 rounded-2xl text-sm font-black uppercase tracking-widest appearance-none outline-none focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer"
               >
-                <option value="">{t("courses.category.all") || "All Subjects"}</option>
+                <option value="">{t("courses.category.all")}</option>
                 {categories.map((cat: any) => (
                   <option key={cat.id} value={cat.id}>
                     {cat.name}
@@ -94,9 +94,9 @@ export default function CoursesContent() {
                 }}
                 className="w-full h-14 pl-14 pr-6 bg-background/50 border border-primary/5 rounded-2xl text-sm font-black uppercase tracking-widest appearance-none outline-none focus:ring-2 focus:ring-primary/20 transition-all cursor-pointer"
               >
-                <option value="newest">New Arrivals</option>
-                <option value="price:asc">Price: Low to High</option>
-                <option value="price:desc">Price: High to Low</option>
+                <option value="newest">{t("courses.sort.newest")}</option>
+                <option value="price:asc">{t("courses.sort.price_asc")}</option>
+                <option value="price:desc">{t("courses.sort.price_desc")}</option>
               </select>
               <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
                 <ChevronRight className="w-4 h-4 text-muted-foreground rotate-90" />
@@ -104,7 +104,7 @@ export default function CoursesContent() {
             </div>
 
             <div className="lg:col-span-1 hidden lg:flex flex-col items-center justify-center border-l border-primary/10">
-               <span className="text-[10px] font-black text-muted-foreground uppercase tracking-tighter">Results</span>
+               <span className="text-[10px] font-black text-muted-foreground uppercase tracking-tighter">{t("courses.results")}</span>
                <span className="text-xl font-black text-primary leading-none">{totalCount}</span>
             </div>
           </div>
@@ -135,14 +135,14 @@ export default function CoursesContent() {
                 <BookOpen className="w-10 h-10 text-primary/40" />
               </div>
               <div className="space-y-2">
-                <h3 className="text-2xl font-black tracking-tight">{t("courses.no_results") || "End of Search"}</h3>
-                <p className="text-muted-foreground font-medium">Try adjusting your filters or search terms.</p>
+                <h3 className="text-2xl font-black tracking-tight">{t("courses.no_results")}</h3>
+                <p className="text-muted-foreground font-medium">{t("courses.no_results_desc")}</p>
               </div>
               <button 
                 onClick={() => { setSearch(""); setCategory(""); setSortBy("newest"); }}
                 className="px-8 py-3 bg-secondary border border-border rounded-xl text-xs font-black uppercase tracking-widest hover:bg-primary hover:text-white transition-all"
               >
-                Clear All Filter
+                {t("courses.clear_filters")}
               </button>
             </div>
           )}
@@ -200,7 +200,7 @@ export default function CoursesContent() {
           )}
           
           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground/60">
-            Showing Page <span className="text-primary">{page}</span> of {totalPages}
+            {t("courses.showing_page")} <span className="text-primary">{page}</span> {t("courses.of")} {totalPages}
           </p>
         </div>
       </div>

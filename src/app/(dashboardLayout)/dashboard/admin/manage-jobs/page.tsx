@@ -49,8 +49,8 @@ export default function ManageJobsPage() {
 
   const { register, handleSubmit, reset, setValue } = useForm()
 
-  const jobs = jobsData?.data || []
-  const applications = appsData?.data || []
+  const jobs = jobsData?.data?.jobs || jobsData?.data || []
+  const applications = appsData?.data?.applications || appsData?.data || []
   const filteredApps = viewingAppsJobId 
     ? applications.filter((app: any) => app.jobId === viewingAppsJobId)
     : applications

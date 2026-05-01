@@ -1,6 +1,7 @@
 "use client"
 
 import { useTranslation } from "react-i18next";
+import { Section } from "./ui/section";
 
 export function TrustBar() {
   const { t } = useTranslation();
@@ -15,22 +16,20 @@ export function TrustBar() {
   ];
 
   return (
-    <section className="py-20 bg-card/40 ">
-      <div className="container mx-auto px-4">
-        <p className="text-center text-xs font-black uppercase tracking-[0.3em] text-muted-foreground mb-10 opacity-50">
-          Trusted by the world&apos;s leading teams
-        </p>
-        <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20  transition-all duration-700">
-          {companies.map((company) => (
-            <img 
-              key={company.name} 
-              src={company.logo} 
-              alt={company.name} 
-              className="h-6 md:h-8 w-auto object-contain cursor-pointer transition-transform hover:scale-110" 
-            />
-          ))}
-        </div>
+    <Section className="bg-card/40" containerClassName="space-y-10">
+      <p className="text-center text-xs font-black uppercase tracking-[0.3em] text-muted-foreground opacity-50">
+        {t("extra.trust_title")}
+      </p>
+      <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 transition-all duration-700">
+        {companies.map((company) => (
+          <img 
+            key={company.name} 
+            src={company.logo} 
+            alt={company.name} 
+            className="h-6 md:h-8 w-auto object-contain cursor-pointer transition-transform hover:scale-110 grayscale hover:grayscale-0 opacity-50 hover:opacity-100" 
+          />
+        ))}
       </div>
-    </section>
+    </Section>
   );
 }

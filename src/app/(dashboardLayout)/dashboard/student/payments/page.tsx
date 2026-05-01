@@ -9,7 +9,7 @@ import { TableSkeleton } from "@/components/dashboard/skeletons";
 export default function StudentPaymentsPage() {
   const { t } = useTranslation();
   const { data, isLoading } = useGetMyEnrollmentsQuery();
-  const enrollments = useMemo(() => Array.isArray(data?.data) ? data.data : [], [data]);
+  const enrollments: any[] = useMemo(() => Array.isArray(data?.data?.enrollments) ? data.data.enrollments : (Array.isArray(data?.data) ? data.data : []), [data]);
 
   const totalInvestment = useMemo(() => 
     enrollments.reduce((sum, item) => sum + (item.course?.price || 0), 0), 

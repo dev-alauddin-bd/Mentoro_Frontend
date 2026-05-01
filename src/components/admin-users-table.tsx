@@ -3,11 +3,10 @@
 import { useMemo } from "react";
 import { useGetAllUsersQuery } from "@/redux/features/user/userApi";
 import { TableSkeleton } from "./dashboard/skeletons";
-import { IUser } from "@/interfaces/user.interface";
 
 export function AdminUsersTable() {
   const { data, isLoading } = useGetAllUsersQuery();
-  const users = useMemo(() => data?.data || [], [data]);
+  const users = useMemo(() => data?.data?.users || data?.data || [], [data]);
 
   if (isLoading) {
     return <TableSkeleton rows={5} />;

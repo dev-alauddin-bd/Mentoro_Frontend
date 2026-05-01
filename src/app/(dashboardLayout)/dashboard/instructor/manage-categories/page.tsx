@@ -14,7 +14,7 @@ export default function CategoryPage() {
   const [deleteCategory] = useDeleteCategoryMutation();
   const [editingCategory, setEditingCategory] = useState<ICategory | null>(null);
 
-  const categories = response?.data || [];
+  const categories = response?.data?.categories || response?.data || [];
 
   const { register, handleSubmit, reset, setValue } = useForm<ICategory>();
 

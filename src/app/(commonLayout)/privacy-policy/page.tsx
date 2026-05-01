@@ -1,8 +1,10 @@
 "use client";
 
+import { useTranslation } from "react-i18next";
 import { Shield, Lock, Eye, FileText, Sparkles, ArrowDown } from "lucide-react";
 
 export default function PrivacyPolicyPage() {
+  const { t } = useTranslation();
   return (
     <main className="min-h-screen bg-background pb-32">
       
@@ -15,16 +17,16 @@ export default function PrivacyPolicyPage() {
           <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-background border border-border rounded-full shadow-sm text-primary">
               <Shield className="w-4 h-4" />
-              <span className="text-[10px] font-black uppercase tracking-widest">Privacy First</span>
+              <span className="text-[10px] font-black uppercase tracking-widest">{t("privacy_policy.badge")}</span>
             </div>
             
             <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-[0.9]">
-              Your Data. <br />
-              <span className="text-primary italic font-serif">Your Sovereignty.</span>
+              {t("privacy_policy.title_start")} <br />
+              <span className="text-primary italic font-serif">{t("privacy_policy.title_end")}</span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground font-medium">
-              Last updated: April 13, 2026. We believe transparency is the foundation of trust. Here's how we protect your digital footprint.
+              {t("privacy_policy.subtitle")}
             </p>
 
             <div className="flex justify-center pt-8">
@@ -42,26 +44,26 @@ export default function PrivacyPolicyPage() {
           
           <PolicySection 
             icon={<Eye />}
-            title="1. Information We Collect"
-            content="We collect information that helps us provide a premium learning experience. This includes account details (name, email), profile information, and learning progress. We never collect sensitive personal data without your explicit consent."
+            title={t("privacy_policy.section1_title")}
+            content={t("privacy_policy.section1_desc")}
           />
 
           <PolicySection 
             icon={<Lock />}
-            title="2. How We Use Data"
-            content="Your data is used to personalize your curriculum, process transactions securely via our payment partners, and send important platform updates. We analyze anonymous usage patterns to constantly refine our interface and content quality."
+            title={t("privacy_policy.section2_title")}
+            content={t("privacy_policy.section2_desc")}
           />
 
           <PolicySection 
             icon={<Sparkles />}
-            title="3. Data Security"
-            content="CourseMaster employs industry-leading encryption and decentralized security protocols to ensure your data remains inaccessible to unauthorized parties. All payment processing is handled by Level 1 PCI-compliant service providers."
+            title={t("privacy_policy.section3_title")}
+            content={t("privacy_policy.section3_desc")}
           />
 
           <PolicySection 
             icon={<FileText />}
-            title="4. Your Rights"
-            content="You retain full ownership of your data. At any time, you can request a full export of your personal information or ask for permanent account deletion. We honor all GDPR and CCPA requests with immediate priority."
+            title={t("privacy_policy.section4_title")}
+            content={t("privacy_policy.section4_desc")}
           />
 
         </div>

@@ -175,30 +175,30 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <ContactInfoCard
                   icon={<Mail className="w-6 h-6" />}
-                  title={t("contact.email_us") || "Email Us"}
+                  title={t("contact.email_us")}
                   value="support@coursemaster.com"
-                  subtitle={t("contact.official_support") || "24/7 Support"}
+                  subtitle={t("contact.official_support")}
                 />
 
                 <ContactInfoCard
                   icon={<Headphones className="w-6 h-6" />}
-                  title={t("contact.live_support") || "Live Support"}
+                  title={t("contact.live_support")}
                   value="+880 1234 567890"
-                  subtitle={t("contact.mon_fri") || "Mon-Fri, 9am-6pm"}
+                  subtitle={t("contact.mon_fri")}
                 />
 
                 <ContactInfoCard
                   icon={<MapPin className="w-6 h-6" />}
-                  title={t("contact.our_studio") || "Location"}
-                  value={t("contact.location") || "Barishal, Bangladesh"}
-                  subtitle={t("contact.address") || "Global Academy Hub"}
+                  title={t("contact.our_studio")}
+                  value={t("contact.location")}
+                  subtitle={t("contact.address")}
                 />
 
                 <ContactInfoCard
                   icon={<Globe className="w-6 h-6" />}
-                  title={t("contact.socials") || "Social"}
+                  title={t("contact.socials")}
                   value="@CourseMasterHQ"
-                  subtitle={t("contact.social_platforms") || "Twitter / Instagram"}
+                  subtitle={t("contact.social_platforms")}
                 />
               </div>
 
@@ -209,9 +209,9 @@ export default function ContactPage() {
                         <Clock className="w-7 h-7" />
                     </div>
                     <div className="space-y-2">
-                        <h4 className="text-xl font-black tracking-tight text-foreground italic">{t("contact.rapid_response") || "Rapid Response Team"}</h4>
+                        <h4 className="text-xl font-black tracking-tight text-foreground italic">{t("contact.rapid_response")}</h4>
                         <p className="text-muted-foreground text-sm font-medium leading-relaxed">
-                          {t("contact.sla_desc") || "Our global team ensures that no message goes unanswered."}
+                          {t("contact.sla_desc")}
                         </p>
                     </div>
                   </div>

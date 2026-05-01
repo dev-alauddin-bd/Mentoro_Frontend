@@ -34,7 +34,7 @@ export default function AboutPage() {
                     </div>
                     <div className="px-6 py-3 bg-primary text-white rounded-2xl shadow-lg shadow-primary/20">
                         <span className="block text-2xl font-black">98%</span>
-                        <span className="text-[10px] uppercase font-black tracking-widest opacity-80">Success Rate</span>
+                        <span className="text-[10px] uppercase font-black tracking-widest opacity-80">{t("about.success_rate")}</span>
                     </div>
                 </div>
             </div>

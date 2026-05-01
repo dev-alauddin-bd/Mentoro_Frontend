@@ -34,7 +34,7 @@ export default function LiveSessionManagement() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedSession, setSelectedSession] = useState<any>(null)
   
-  const sessions = response?.data || []
+  const sessions = response?.data?.sessions || response?.data || []
 
   const handleDelete = async (id: string) => {
     if (window.confirm(t("live_sessions.modal.confirm_delete"))) {

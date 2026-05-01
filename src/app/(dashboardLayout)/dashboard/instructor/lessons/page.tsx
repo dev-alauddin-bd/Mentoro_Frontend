@@ -14,8 +14,8 @@ import { useAddLessonMutation } from "@/redux/features/lesson/lessonApi";
 export default function LessonsPage() {
   const { data: lessonsData, isLoading: queriesLoading } = useGetAllLessonsQuery();
   const { data: modulesData } = useGetAllModulesQuery();
-  const lessons = lessonsData?.data || [];
-  const modules = modulesData?.data || [];
+  const lessons = lessonsData?.data?.lessons || lessonsData?.data || [];
+  const modules = modulesData?.data?.modules || modulesData?.data || [];
 
   const [addLesson] = useAddLessonMutation();
   const [updateLesson] = useUpdateLessonMutation();

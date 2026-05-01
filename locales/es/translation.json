@@ -36,7 +36,9 @@
     "manage_users": "Gestionar Usuarios",
     "manage_courses": "Gestionar Cursos",
     "profile": "Mi Perfil",
-    "explore_courses": "Explorar Cursos"
+    "explore_courses": "Explorar Cursos",
+    "careers": "Carreras",
+    "analytics": "Análisis"
   },
   "home": {
     "title": "Aprende cualquier cosa, en cualquier momento",
@@ -92,7 +94,9 @@
     "sort": {
       "newest": "Más nuevos",
       "priceLow": "Precio: De menor a mayor",
-      "priceHigh": "Precio: De mayor a menor"
+      "priceHigh": "Precio: De mayor a menor",
+      "price_asc": "Precio: De menor a mayor",
+      "price_desc": "Precio: De mayor a menor"
     },
     "category": {
       "all": "Todas las categorías",
@@ -103,7 +107,12 @@
       "business": "Negocios"
     },
     "loading": "Cargando cursos...",
-    "no_results": "No se encontraron cursos."
+    "no_results": "No se encontraron cursos.",
+    "results": "Resultados",
+    "no_results_desc": "Intenta ajustar tus filtros o términos de búsqueda.",
+    "clear_filters": "Borrar todo el filtro",
+    "showing_page": "Mostrando página",
+    "of": "de"
   },
   "pagination": {
     "previous": "Anterior",
@@ -334,7 +343,17 @@
       "email_invalid": "Dirección de correo electrónico inválida",
       "subject_min": "El asunto debe tener al menos 3 caracteres",
       "message_min": "El mensaje debe tener al menos 10 caracteres"
-    }
+    },
+    "email_label": "Contáctanos por correo electrónico",
+    "email_sub": "Respuesta dentro de 24 horas",
+    "call_label": "Línea directa",
+    "call_sub": "Disponible de 10am a 8pm",
+    "address_label": "Sede central global",
+    "form_name": "Tu nombre",
+    "form_email": "Dirección de correo electrónico",
+    "form_subject": "¿En qué podemos ayudarte?",
+    "form_message": "Detalles del mensaje",
+    "form_submit": "Iniciar conversación"
   },
   "student": {
     "achievement_unlocked": "Logro Desbloqueado",
@@ -447,7 +466,12 @@
       "verified": "Verificado",
       "management": "Equipo de Gestión",
       "director": "Director de Academia"
-    }
+    },
+    "resume_learning": "Reanudar aprendizaje",
+    "next_up": "Siguiente:",
+    "resume_desc": "Continúa donde lo dejaste en este curso.",
+    "start_lesson": "Comenzar lección",
+    "all_categories": "Todas las categorías"
   },
   "instructor": {
     "revenue_title": "Ganancias y Regalías.",
@@ -512,7 +536,8 @@
     "value3_title": "Comunidad",
     "value3_desc": "No eres solo un estudiante; eres parte de una colectiva global de creadores.",
     "value4_title": "Pasión",
-    "value4_desc": "Nos importa profundamente el potencial humano y el impacto de la educación de calidad."
+    "value4_desc": "Nos importa profundamente el potencial humano y el impacto de la educación de calidad.",
+    "success_rate": "Tasa de éxito"
   },
   "how_it_works": {
     "title": "Cómo funciona",
@@ -526,7 +551,19 @@
     "step4_title": "Escalada con Datos",
     "step4_desc": "Utilice análisis avanzados para rastrear el progreso de los estudiantes, la participación y las ventas. Optimice para un crecimiento máximo.",
     "cta_title": "¿Listo para empezar a enseñar?",
-    "cta_button": "Lanzar Curso"
+    "cta_button": "Lanzar Curso",
+    "engineered_title": "Diseñado para la educación moderna",
+    "engineered_subtitle": "Educación moderna",
+    "feature1_title": "Marca blanca",
+    "feature1_desc": "Tu logotipo, tus colores, tu dominio. Es tu academia.",
+    "feature2_title": "Pagos sin problemas",
+    "feature2_desc": "Integrarse con Stripe, PayPal y más para pagos instantáneos.",
+    "feature3_title": "Comunidad de estudiantes",
+    "feature3_desc": "Construir comunidades comprometidas con foros de discusión integrados.",
+    "drag_drop": "Constructor de arrastrar y soltar",
+    "ready_teaching": "Listo para empezar",
+    "teaching_italic": "¿enseñando?",
+    "contact_sales": "Contacta con las Ventas"
   },
   "seo": {
     "home_title": "CourseMaster | La plataforma de aprendizaje definitiva",
@@ -754,5 +791,128 @@
       "status_success": "Estado de usuario actualizado con éxito",
       "error": "Error al actualizar el usuario"
     }
+  },
+  "careers": {
+    "badge": "Únete a nuestra Misión",
+    "title_start": "Construye el futuro de",
+    "title_end": "Aprendizaje Global.",
+    "subtitle": "Estamos buscando pensadores, creadores y soñadores que quieran redefinir la forma en que el mundo comparte conocimientos. Únete a un equipo de trabajo remoto que está construyendo el LMS más premium del planeta.",
+    "culture1_title": "Crecimiento Hiperbólico",
+    "culture1_desc": "Estamos creciendo rápidamente. Tendrás la autonomía para encargarte de proyectos desde el primer día y verás tu impacto de inmediato.",
+    "culture2_title": "Primero Remoto",
+    "culture2_desc": "Trabaja desde cualquier lugar. Valoramos los resultados sobre las horas pasadas en una oficina. Nuestro equipo abarca múltiples zonas horarias.",
+    "culture3_title": "Tutoría",
+    "culture3_desc": "Aprende de los mejores. Proporcionamos un presupuesto de aprendizaje para cada empleado para asegurarnos de que nunca dejes de crecer.",
+    "open_positions": "Puestos Abiertos",
+    "positions_subtitle": "Encuentra tu próximo rol en tecnología educativa",
+    "scanning": "Escaneando puestos abiertos...",
+    "location": "Ubicación",
+    "budget": "Presupuesto",
+    "apply_now": "Aplicar ahora",
+    "no_positions": "No hay puestos abiertos en esta categoría en este momento.",
+    "applying_for": "Solicitando para",
+    "full_name": "Nombre completo",
+    "email_address": "Dirección de correo electrónico",
+    "resume_link": "Enlace de currículum (Google Drive/Dropbox)",
+    "cover_letter": "Carta de presentación (Opcional)",
+    "submit_app": "Enviar solicitud",
+    "perks_title": "Ventajas de ser un mastermind",
+    "perks_subtitle": "Creemos en cuidar a nuestras personas para que puedan cuidar a nuestros estudiantes. Nuestros beneficios están diseñados para apoyar tu vida, no solo tu trabajo.",
+    "benefit1_title": "Trabajar en cualquier lugar",
+    "benefit1_desc": "Puestos 100% remotos.",
+    "benefit2_title": "Crédito para coworking",
+    "benefit2_desc": "Subvención mensual para espacio.",
+    "benefit3_title": "Presupuesto de equipo",
+    "benefit3_desc": "Equipo de última generación.",
+    "benefit4_title": "Retiros pagados",
+    "benefit4_desc": "Reuniones de equipo dos veces al año.",
+    "ready_join": "¿Listo para unirse al Equipo A?",
+    "testimonial_text": "\"Unirse a Course Master fue el mejor movimiento de carrera que hice. La cultura de pensamiento e innovación es real.\"",
+    "testimonial_author": "Alex Rivera",
+    "testimonial_role": "Desarrollador líder",
+    "no_role_title": "¿No ves tu función?",
+    "no_role_desc": "Siempre estamos buscando talentos excepcionales. Si estás apasionado por la educación y la tecnología, queremos escucharte.",
+    "send_app": "Enviar solicitud abierta"
+  },
+  "privacy_policy": {
+    "badge": "Privacidad primera",
+    "title_start": "Sus datos.",
+    "title_end": "Su soberanía.",
+    "subtitle": "Última actualización: 13 de abril de 2026. Creemos que la transparencia es la base de la confianza. Aquí está cómo protegemos su huella digital.",
+    "section1_title": "1. Información que recopilamos",
+    "section1_desc": "Recopilamos información que nos ayuda a proporcionar una experiencia de aprendizaje de alta calidad. Esto incluye detalles de cuenta (nombre, correo electrónico), información de perfil y progreso de aprendizaje. Nunca recopilamos datos personales sensibles sin su consentimiento explícito.",
+    "section2_title": "2. Cómo utilizamos los datos",
+    "section2_desc": "Sus datos se utilizan para personalizar su currículum, procesar transacciones de manera segura a través de nuestros socios de pago, y enviar actualizaciones importantes de la plataforma. Analizamos patrones de uso anónimos para refinar constantemente nuestra interfaz y la calidad del contenido.",
+    "section3_title": "3. Seguridad de los datos",
+    "section3_desc": "CourseMaster emplea cifrado líder en la industria y protocolos de seguridad descentralizados para garantizar que sus datos permanezcan inaccesibles para partes no autorizadas. Todo el procesamiento de pagos es realizado por proveedores de servicios conformes con el nivel 1 de PCI.",
+    "section4_title": "4. Tus Derechos",
+    "section4_desc": "Mantienes la propiedad total de tus datos. En cualquier momento, puedes solicitar una exportación completa de tu información personal o solicitar la eliminación permanente de tu cuenta. Honramos todas las solicitudes de GDPR y CCPA con prioridad inmediata."
+  },
+  "terms_of_service": {
+    "badge": "Marco Legal",
+    "title": "Términos de Servicio de la Plataforma",
+    "subtitle": "Vigente a partir del 13 de abril de 2026. Al acceder a CourseMaster, aceptas estos estándares profesionales y obligaciones legales.",
+    "section1_title": "1. Aceptación de Términos",
+    "section1_desc": "Al crear una cuenta en CourseMaster, entras en un acuerdo legalmente vinculante. Certificas que tienes al menos 18 años de edad (o tienes el consentimiento de un tutor legal) y proporcionarás información de registro precisa.",
+    "section2_title": "2. Licencia de Usuario",
+    "section2_desc": "Otorgamos una licencia limitada, no transferible y personal para acceder y ver contenido de cursos por el cual ha pagado todas las tarifas requeridas. Esta licencia es solo para uso educativo personal y no comercial.",
+    "section3_title": "3. Propiedad Intelectual",
+    "section3_desc": "Todo el contenido proporcionado en la plataforma, incluyendo videos, transcripciones y activos descargables, remains la propiedad exclusiva de CourseMaster o sus instructores. La reproducción o distribución no autorizada está estrictamente prohibida.",
+    "section4_title": "4. Código de Conducta",
+    "section4_desc": "Los usuarios deben mantener un entorno profesional y respetuoso. Cualquier forma de acoso, discurso de odio o intento de comprometer la seguridad de la plataforma resultará en la terminación inmediata del acceso sin reembolso."
+  },
+  "refund_policy": {
+    "badge": "Satisfacción Garantizada",
+    "title_start": "Reembolso &",
+    "title_end": "Política de Cancelación",
+    "subtitle": "Queremos que estés completamente satisfecho con tu inversión. Aquí te presentamos una descripción clara de nuestro proceso de reembolso justo.",
+    "feature1_title": "Ventana de 14 días",
+    "feature1_desc": "Solicita un reembolso total dentro de los 14 días posteriores a la fecha de tu compra, sin hacer preguntas si se cumplen los requisitos de elegibilidad.",
+    "feature2_title": "< 20% Visto",
+    "feature2_desc": "Para prevenir el abuso, los reembolsos solo están disponibles si has consumido menos del 20% del contenido del curso.",
+    "feature3_title": "No se permiten descargas",
+    "feature3_desc": "El acceso a descargas de material del curso o a recursos anula la elegibilidad para el reembolso para proteger nuestra propiedad intelectual.",
+    "standards_title": "Estándares profesionales",
+    "standards_subtitle": "Estándares",
+    "standards_desc": "Nuestra política de reembolsos está diseñada para equilibrar la satisfacción del estudiante con la protección del arduo trabajo de nuestros instructores. Procesamos todas las solicitudes válidas dentro de los 3-5 días hábiles.",
+    "list_item1": "Tiempo de procesamiento estándar: 3-5 días hábiles",
+    "list_item2": "Fondos devueltos al método de pago original",
+    "list_item3": "Los paquetes promocionales pueden tener términos específicos",
+    "list_item4": "El acceso de por vida permanece hasta que se procesa el reembolso",
+    "request_title": "Cómo solicitar",
+    "request_subtitle": "Sigue estos pasos para una resolución rápida.",
+    "step1": "Prepara tu recibo de compra o ID de pedido de tu correo electrónico de confirmación.",
+    "step2": "Redacta un correo electrónico a nuestro equipo de soporte con una breve explicación de la solicitud."
+  },
+  "cookie_policy": {
+    "badge": "Uso de cookies",
+    "title": "Administrar tus",
+    "title_italic": "Migas digitales",
+    "subtitle": "Usamos cookies para mejorar tu experiencia en nuestra academia. Aprende cómo las usamos y cómo puedes controlar tus preferencias.",
+    "card1_title": "Cookies esenciales",
+    "card1_desc": "Requerido para la funcionalidad básica de la plataforma, como autenticación, seguridad y gestión de sesiones. Estos no se pueden deshabilitar.",
+    "card2_title": "Cookies de preferencias",
+    "card2_desc": "Nos permiten recordar sus opciones de idioma, configuraciones de tema y preferencias regionales para una experiencia consistente.",
+    "card3_title": "Cookies de análisis",
+    "card3_desc": "Nos ayudan a entender cómo interactúa con nuestros cursos para que podamos mejorar la entrega de contenido y el rendimiento de la plataforma.",
+    "card4_title": "Cookies de marketing",
+    "card4_desc": "Se utilizan para seguir la efectividad de nuestras campañas de divulgación y proporcionar noticias relevantes sobre los lanzamientos de cursos próximos.",
+    "manage_title": "Cómo administrar cookies",
+    "manage_desc": "La mayoría de los navegadores web permiten controlar las cookies a través de sus preferencias de configuración. Sin embargo, si limita la capacidad de los sitios web para establecer cookies, puede empeorar su experiencia general del usuario, ya que ya no estará personalizada.",
+    "accept_all": "Aceptar todas las cookies",
+    "reject_non": "Rechazar no esenciales"
+  },
+  "trust_bar": {
+    "text": "Confiado por equipos líderes de todo el mundo"
+  },
+  "testimonials": {
+    "anonymous": "Estudiante anónimo",
+    "verified": "Estudiante verificado"
+  },
+  "stats": {
+    "courses_val": "1.2k+",
+    "instructors_val": "450+",
+    "countries_val": "120+",
+    "countries_label": "Países alcanzados"
   }
 }

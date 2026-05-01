@@ -18,7 +18,8 @@ export default function CertificatePage() {
    const { data, isLoading } = useGetMyCoursesQuery();
    const user = useSelector(selectCurrentUser);
 
-   const course = data?.data?.find((c: any) => c.id === courseId);
+   const coursesList = data?.data?.courses || data?.data || [];
+   const course = coursesList.find((c: any) => c.id === courseId);
    const certificateRef = useRef<HTMLDivElement>(null);
 
    if (isLoading) {

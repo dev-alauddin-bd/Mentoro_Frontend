@@ -13,8 +13,8 @@ import { Loader2, Plus, Edit, Trash2, X, Edit2, FileText } from "lucide-react";
 export default function AssignmentsPage() {
   const { data: assignmentsData, isLoading: queriesLoading } = useGetAllAssignmentsQuery();
   const { data: modulesData } = useGetAllModulesQuery();
-  const assignments = assignmentsData?.data || [];
-  const modules = modulesData?.data || [];
+  const assignments = assignmentsData?.data?.assignments || assignmentsData?.data || [];
+  const modules = modulesData?.data?.modules || modulesData?.data || [];
 
   const [createAssignment] = useCreateAssignmentMutation();
   const [updateAssignment] = useUpdateAssignmentMutation();

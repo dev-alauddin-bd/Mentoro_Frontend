@@ -31,7 +31,7 @@ export default function ManageUsersPage() {
   const [updateStatus, { isLoading: isUpdatingStatus }] = useUpdateUserStatusMutation();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const users = response?.data || [];
+  const users = response?.data?.users || response?.data || [];
 
   const filteredUsers = users.filter((user: IUser) => 
     user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||

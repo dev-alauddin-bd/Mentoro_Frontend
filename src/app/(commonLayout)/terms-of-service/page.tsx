@@ -1,8 +1,10 @@
 "use client";
 
+import { useTranslation } from "react-i18next";
 import { Scale, Gavel, Book, FileCheck, ArrowDown, Zap } from "lucide-react";
 
 export default function TermsOfServicePage() {
+  const { t } = useTranslation();
   return (
     <main className="min-h-screen bg-background pb-32">
       
@@ -15,16 +17,15 @@ export default function TermsOfServicePage() {
           <div className="max-w-3xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-6 duration-700">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-background border border-border rounded-full shadow-sm text-primary">
               <Scale className="w-4 h-4" />
-              <span className="text-[10px] font-black uppercase tracking-widest">Legal Framework</span>
+              <span className="text-[10px] font-black uppercase tracking-widest">{t("terms_of_service.badge")}</span>
             </div>
             
             <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-[0.9]">
-              Platform <br />
-              <span className="text-primary italic font-serif">Terms of Service</span>
+              {t("terms_of_service.title")}
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground font-medium">
-              Effective as of April 13, 2026. By accessing CourseMaster, you agree to these professional standards and legal obligations.
+              {t("terms_of_service.subtitle")}
             </p>
 
             <div className="flex justify-center pt-8">
@@ -42,26 +43,26 @@ export default function TermsOfServicePage() {
           
           <TermsCard 
             icon={<Gavel />}
-            title="1. Acceptance of Terms"
-            content="By creating an account on CourseMaster, you enter into a legally binding agreement. You certify that you are at least 18 years of age (or have legal guardian consent) and will provide accurate registration information."
+            title={t("terms_of_service.section1_title")}
+            content={t("terms_of_service.section1_desc")}
           />
 
           <TermsCard 
             icon={<Book />}
-            title="2. User License"
-            content="We grant you a limited, non-transferable, personal license to access and view course content for which you have paid all required fees. This license is for personal, non-commercial educational use only."
+            title={t("terms_of_service.section2_title")}
+            content={t("terms_of_service.section2_desc")}
           />
 
           <TermsCard 
             icon={<Zap />}
-            title="3. Intellectual Property"
-            content="All content provided on the platform—including videos, transcripts, and downloadable assets—remains the exclusive property of CourseMaster or its instructors. Unauthorized reproduction or distribution is strictly prohibited."
+            title={t("terms_of_service.section3_title")}
+            content={t("terms_of_service.section3_desc")}
           />
 
           <TermsCard 
             icon={<FileCheck />}
-            title="4. Code of Conduct"
-            content="Users must maintain a professional and respectful environment. Any form of harassment, hate speech, or attempt to compromise platform security will result in immediate termination of access without refund."
+            title={t("terms_of_service.section4_title")}
+            content={t("terms_of_service.section4_desc")}
           />
 
         </div>

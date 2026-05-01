@@ -33,7 +33,7 @@ export default function MyCoursesPage() {
     }
   }, [success]);
 
-  const courses: any[] = data?.data || [];
+  const courses: any[] = data?.data?.courses || data?.data || [];
 
   if (isLoading) {
     return (

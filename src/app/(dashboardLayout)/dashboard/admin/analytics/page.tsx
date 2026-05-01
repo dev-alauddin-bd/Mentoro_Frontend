@@ -25,7 +25,7 @@ function AdminAnalyticsContent() {
   
   const stats = analyticsData?.data?.statistics || {}
   const courses = coursesData?.data?.courses || []
-  const users = usersData?.data || []
+  const users = usersData?.data?.users || usersData?.data || []
 
   if (analyticsLoading || coursesLoading || usersLoading) {
     return (
