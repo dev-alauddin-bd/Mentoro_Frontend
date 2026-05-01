@@ -95,6 +95,7 @@ const baseApi = createApi({
     "Lesson",
     "Reviews",
     "LiveSession",
+    "Job"
   ],
   endpoints: () => ({}),
 });

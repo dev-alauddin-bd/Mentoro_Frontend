@@ -85,8 +85,6 @@ export function StudentDashboard() {
 
       {/* ================= PREMIUM WELCOME HERO ================= */}
       <section className="relative overflow-hidden rounded-[3rem] bg-card border border-primary/10 p-10 md:p-16">
-        <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-primary/5 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-[30rem] h-[30rem] bg-indigo-500/5 blur-[100px] rounded-full pointer-events-none translate-y-1/2 -translate-x-1/2"></div>
 
         <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-12">
           <div className="space-y-8 max-w-2xl text-center md:text-left">
@@ -133,7 +131,6 @@ export function StudentDashboard() {
       {/* ================= NEXT LESSON HIGHLIGHT ================= */}
       {continueCourses.length > 0 && (
         <section className="relative group">
-          <div className="absolute -inset-1 bg-gradient-to-r from-primary to-indigo-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
           <div className="relative flex flex-col md:flex-row items-center justify-between p-8 bg-card border border-primary/20 rounded-[2.5rem] gap-8">
             <div className="flex items-center gap-6">
               <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary">

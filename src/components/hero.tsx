@@ -102,7 +102,7 @@ export function HeroAnimated() {
             </div>
 
             {/* FLOATING ELEMENTS */}
-            <div className="absolute -top-10 -right-6 z-30 bg-card/80 backdrop-blur-xl p-6 rounded-[2rem] shadow-2xl animate-float group border border-border/50">
+            <div className="absolute -top-10 -right-6 z-30 bg-card p-6 rounded-[2rem] shadow-2xl animate-float group border border-border/50">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-secondary border border-primary/10 rounded-2xl flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shadow-sm group-hover:shadow-lg group-hover:shadow-primary/20">
                   <TrendingUp className="w-6 h-6 text-primary group-hover:text-inherit" />
@@ -114,7 +114,7 @@ export function HeroAnimated() {
               </div>
             </div>
 
-            <div className="absolute -bottom-10 -left-6 z-30 bg-card/80 backdrop-blur-xl p-6 rounded-[2rem] shadow-2xl animate-float-delayed group border border-border/50">
+            <div className="absolute -bottom-10 -left-6 z-30 bg-card p-6 rounded-[2rem] shadow-2xl animate-float-delayed group border border-border/50">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-secondary border border-primary/10 rounded-2xl flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 shadow-sm group-hover:shadow-lg group-hover:shadow-primary/20">
                   <Users className="w-6 h-6 text-primary group-hover:text-inherit" />

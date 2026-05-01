@@ -5,10 +5,10 @@ import { AppSidebar } from "@/components/dashboard/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { ThemeSwitcher } from "@/components/shared/ThemeSwitcher";
 import { LanguageSwitcher } from "@/components/shared/LanguageSwitcher";
-import { ChevronRight, LayoutDashboard, Bell, Search } from "lucide-react";
+import { ChevronRight, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
-
 import { ProtectedRoute } from "@/components/shared/ProtectedRoute";
+import { GlobalSearch } from "@/components/shared/GlobalSearch";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -32,9 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         <main className="flex-1 overflow-auto min-h-screen bg-secondary/30 relative">
           
-          {/* --- Decorative Background --- */}
-          <div className="absolute top-0 right-0 w-[30rem] h-[30rem] bg-primary/5 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
-
+       
           {/* ================= PREMIUM HEADER ================= */}
           <header className="sticky top-0 z-30 w-full bg-background/95 backdrop-blur-3xl border-b border-border shadow-sm">
             <div className="flex h-20 items-center justify-between px-6 md:px-10">
@@ -64,30 +62,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </nav>
               </div>
 
-              {/* Right Section: Actions & Settings */}
+               {/* Right Section: Actions & Settings */}
               <div className="flex items-center gap-4">
-                
-                {/* Quick Search (Placeholder) */}
-                <div className="hidden lg:flex items-center gap-3 px-4 h-11 bg-secondary/50 border border-border/50 rounded-2xl text-muted-foreground hover:bg-secondary transition-all cursor-pointer">
-                   <Search className="w-4 h-4" />
-                   <span className="text-[10px] font-bold uppercase tracking-widest">Search Command...</span>
-                   <div className="flex items-center gap-1 ml-4 border border-border/60 px-1.5 py-0.5 rounded text-[8px] font-black">
-                      ⌘K
-                   </div>
-                </div>
-
-                <div className="h-8 w-px bg-border/60 mx-2" />
-
-                <div className="flex items-center gap-3">
-                   <button className="h-11 w-11 flex items-center justify-center rounded-2xl bg-card border border-border/50 text-muted-foreground hover:text-primary hover:border-primary/30 transition-all relative group">
-                      <Bell className="w-4.5 h-4.5" />
-                      <span className="absolute top-3 right-3 w-1.5 h-1.5 bg-primary rounded-full" />
-                   </button>
-                   
-                   <LanguageSwitcher />
-                   <ThemeSwitcher />
-                </div>
-
+                 <GlobalSearch />
+                 <div className="h-8 w-px bg-border/60 mx-2" />
+                 <LanguageSwitcher />
+                 <ThemeSwitcher />
               </div>
             </div>
           </header>

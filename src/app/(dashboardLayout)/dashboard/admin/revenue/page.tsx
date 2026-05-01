@@ -121,7 +121,6 @@ function AdminRevenueContent() {
 
       {/* ================= TOP PERFORMING ASSETS ================= */}
       <div className="bg-card border border-border rounded-[3.5rem] overflow-hidden shadow-sm relative">
-         <div className="absolute top-0 left-0 w-[40rem] h-[40rem] bg-primary/5 blur-[120px] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
          
          <div className="p-12 border-b border-border/50 relative z-10 flex justify-between items-end">
             <div>

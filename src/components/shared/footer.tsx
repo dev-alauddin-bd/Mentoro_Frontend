@@ -76,6 +76,7 @@ export function Footer() {
                 <li><Link href="/about" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.about") || "About Us"}</Link></li>
                 <li><Link href="/contact" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.contact") || "Contact"}</Link></li>
                 <li><Link href="/how-it-works" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("footer.learning_path") || "Methodology"}</Link></li>
+                <li><Link href="/careers" className="hover:text-primary transition-all hover:translate-x-1.5 inline-block">{t("nav.careers") || "Careers"}</Link></li>
             </FooterColumn>
 
             <FooterColumn title={t("extra.for_instructors") || "Educators"}>

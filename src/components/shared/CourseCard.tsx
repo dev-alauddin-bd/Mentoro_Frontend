@@ -29,13 +29,13 @@ export function CourseCard({ course }: CourseCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
 
         {/* Category Badge */}
-        <div className="absolute top-6 left-6 z-10 px-4 py-1.5 bg-background/90 backdrop-blur-md rounded-xl text-[10px] font-black uppercase tracking-widest text-primary shadow-xl border border-primary/10">
+        <div className="absolute top-6 left-6 z-10 px-4 py-1.5 bg-background rounded-xl text-[10px] font-black uppercase tracking-widest text-primary shadow-xl border border-primary/10">
           {course.category?.name || t("course_card.uncategorized")}
         </div>
 
         {/* Floating Play Indicator */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 scale-75 group-hover:scale-100">
-           <div className="w-16 h-16 bg-primary/90 text-white rounded-full flex items-center justify-center shadow-2xl backdrop-blur-sm">
+           <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl">
               <ArrowRight className="w-6 h-6" />
            </div>
         </div>

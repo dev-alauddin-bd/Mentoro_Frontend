@@ -1,6 +1,11 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
+import { useEffect, useRef, useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { toast } from "react-toastify"
 import {
   Mail,
   Phone,
@@ -8,26 +13,64 @@ import {
   Send,
   Globe,
   Sparkles,
+  Clock,
+  CheckCircle2,
+  Headphones,
 } from "lucide-react";
+import { trackEvent } from "@/lib/gtag"
 
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+
 export default function ContactPage() {
   const { t } = useTranslation();
+  const [isInView, setIsInView] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  // --- Dynamic Validation Schema ---
+  const contactSchema = z.object({
+    fullName: z.string().min(2, t("contact.validation.name_min") || "Name must be at least 2 characters"),
+    email: z.string().email(t("contact.validation.email_invalid") || "Invalid email address"),
+    subject: z.string().min(3, t("contact.validation.subject_min") || "Subject must be at least 3 characters"),
+    message: z.string().min(10, t("contact.validation.message_min") || "Message must be at least 10 characters"),
+  })
+
+  type ContactFormValues = z.infer<typeof contactSchema>
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+  })
+
+  useEffect(() => {
+    setIsInView(true)
+  }, [])
+
+  const onSubmit = async (data: ContactFormValues) => {
+    try {
+      trackEvent('contact_page_submit', { subject: data.subject });
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+      toast.success(t("contact.success_toast") || "Message sent successfully!")
+      reset()
+    } catch (error) {
+      toast.error(t("contact.error_toast") || "Failed to send message.")
+    }
+  }
 
   /* ================= MAP CONFIG ================= */
   const position: [number, number] = [22.701, 90.3535]; // Barishal
 
   return (
-    <main className="min-h-screen py-24 relative overflow-hidden">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 w-[50rem] h-[50rem] bg-primary/5 blur-[120px] rounded-full -translate-y-1/2 translate-x-1/2"></div>
-      <div className="absolute bottom-0 left-0 w-[40rem] h-[40rem] bg-purple-500/5 blur-[120px] rounded-full translate-y-1/2 -translate-x-1/2"></div>
-
+    <main className="min-h-screen py-24 relative overflow-hidden bg-background">
+      
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto space-y-20">
 
-          {/* Header Section (UNCHANGED) */}
+          {/* Header Section */}
           <div className="text-center max-w-3xl mx-auto space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-black uppercase tracking-[0.2em] mb-4 border border-primary/20">
               <Sparkles className="w-3.5 h-3.5" /> {t("contact.badge")}
@@ -42,94 +85,137 @@ export default function ContactPage() {
             </p>
           </div>
 
-          {/* ================= MAP (ONLY CHANGED PART) ================= */}
+          {/* ================= MAP ================= */}
           <div className="relative group">
-            <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full scale-50 group-hover:scale-75 transition-transform duration-1000"></div>
-
             <div className="relative h-[400px] w-full rounded-[3.5rem] overflow-hidden border-8 border-background shadow-2xl">
-
-           <MapContainer
-  center={position as any}
-  zoom={11}
-  scrollWheelZoom={false}
-  style={{ height: "100%", width: "100%" }}
->
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-
+              <MapContainer
+                center={position as any}
+                zoom={11}
+                scrollWheelZoom={false}
+                style={{ height: "100%", width: "100%" }}
+              >
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <Marker position={position}>
                   <Popup>📍 {t("contact.location")}</Popup>
                 </Marker>
               </MapContainer>
-
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
 
-            {/* Contact Form (UNCHANGED) */}
-            <div className="bg-background border border-border rounded-[3rem] p-8 md:p-12 shadow-2xl shadow-primary/5">
+            {/* Contact Form */}
+            <div className="bg-card border border-border rounded-[3rem] p-8 md:p-12 shadow-2xl shadow-primary/5">
               <div className="space-y-8">
-
                 <div className="space-y-2">
                   <h2 className="text-3xl font-black tracking-tight">
                     {t("extra.send_message") || "Send a Message"}
                   </h2>
-
                   <p className="text-muted-foreground text-sm font-medium">
                     {t("contact.sla_desc")}
                   </p>
                 </div>
 
-                <form className="space-y-6">
-                  <input className="w-full h-14 px-6 border rounded-2xl" placeholder={t("extra.full_name")} />
-                  <input className="w-full h-14 px-6 border rounded-2xl" placeholder={t("extra.email_address")} />
-                  <textarea className="w-full px-6 py-4 border rounded-2xl" rows={5} placeholder={t("extra.your_message")} />
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  <div className="space-y-2">
+                    <input 
+                      {...register("fullName")}
+                      className={`w-full h-14 px-6 bg-secondary/30 border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold ${errors.fullName ? "border-red-500/50" : "border-border"}`} 
+                      placeholder={t("extra.full_name")} 
+                    />
+                    {errors.fullName && <p className="text-[10px] text-red-500 font-bold ml-2">{errors.fullName.message}</p>}
+                  </div>
 
-                  <button className="w-full h-16 bg-primary text-white rounded-2xl flex items-center justify-center gap-3">
-                    <Send className="w-4 h-4" /> {t("extra.submit")}
+                  <div className="space-y-2">
+                    <input 
+                      {...register("email")}
+                      className={`w-full h-14 px-6 bg-secondary/30 border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold ${errors.email ? "border-red-500/50" : "border-border"}`} 
+                      placeholder={t("extra.email_address")} 
+                    />
+                    {errors.email && <p className="text-[10px] text-red-500 font-bold ml-2">{errors.email.message}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <input 
+                      {...register("subject")}
+                      className={`w-full h-14 px-6 bg-secondary/30 border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold ${errors.subject ? "border-red-500/50" : "border-border"}`} 
+                      placeholder={t("extra.subject") || "Subject"} 
+                    />
+                    {errors.subject && <p className="text-[10px] text-red-500 font-bold ml-2">{errors.subject.message}</p>}
+                  </div>
+
+                  <div className="space-y-2">
+                    <textarea 
+                      {...register("message")}
+                      className={`w-full px-6 py-4 bg-secondary/30 border rounded-[2rem] focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold resize-none ${errors.message ? "border-red-500/50" : "border-border"}`} 
+                      rows={5} 
+                      placeholder={t("extra.your_message")} 
+                    />
+                    {errors.message && <p className="text-[10px] text-red-500 font-bold ml-2">{errors.message.message}</p>}
+                  </div>
+
+                  <button 
+                    disabled={isSubmitting}
+                    className="w-full h-16 bg-primary text-white rounded-2xl flex items-center justify-center gap-3 shadow-xl shadow-primary/20 hover:shadow-primary/40 hover:-translate-y-1 transition-all disabled:opacity-70 disabled:cursor-not-allowed font-black uppercase tracking-widest text-sm"
+                  >
+                    {isSubmitting ? (
+                      <Clock className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" /> {t("extra.submit")}
+                      </>
+                    )}
                   </button>
                 </form>
-
               </div>
             </div>
 
-            {/* Contact Info (UNCHANGED) */}
-            <div className="space-y-12 py-10 lg:pl-10">
-
+            {/* Contact Info */}
+            <div className="space-y-12 lg:pl-10">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
                 <ContactInfoCard
                   icon={<Mail className="w-6 h-6" />}
-                  title="Email"
+                  title={t("contact.email_us") || "Email Us"}
                   value="support@coursemaster.com"
-                  subtitle="24/7 Support"
+                  subtitle={t("contact.official_support") || "24/7 Support"}
                 />
 
                 <ContactInfoCard
-                  icon={<Phone className="w-6 h-6" />}
-                  title="Phone"
-                  value="+880 000 000"
-                  subtitle="Mon-Fri"
+                  icon={<Headphones className="w-6 h-6" />}
+                  title={t("contact.live_support") || "Live Support"}
+                  value="+880 1234 567890"
+                  subtitle={t("contact.mon_fri") || "Mon-Fri, 9am-6pm"}
                 />
 
                 <ContactInfoCard
                   icon={<MapPin className="w-6 h-6" />}
-                  title="Location"
-                  value="Barishal"
-                  subtitle="Bangladesh"
+                  title={t("contact.our_studio") || "Location"}
+                  value={t("contact.location") || "Barishal, Bangladesh"}
+                  subtitle={t("contact.address") || "Global Academy Hub"}
                 />
 
                 <ContactInfoCard
                   icon={<Globe className="w-6 h-6" />}
-                  title="Social"
+                  title={t("contact.socials") || "Social"}
                   value="@CourseMasterHQ"
-                  subtitle="Online Support"
+                  subtitle={t("contact.social_platforms") || "Twitter / Instagram"}
                 />
-
               </div>
 
+              {/* SLA / Trust Card */}
+              <div className="bg-card border border-border rounded-[2.5rem] p-10 relative overflow-hidden group hover:border-primary/30 transition-all duration-500 shadow-sm">
+                  <div className="relative z-10 space-y-6">
+                    <div className="w-14 h-14 bg-primary/10 border border-primary/20 rounded-2xl flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                        <Clock className="w-7 h-7" />
+                    </div>
+                    <div className="space-y-2">
+                        <h4 className="text-xl font-black tracking-tight text-foreground italic">{t("contact.rapid_response") || "Rapid Response Team"}</h4>
+                        <p className="text-muted-foreground text-sm font-medium leading-relaxed">
+                          {t("contact.sla_desc") || "Our global team ensures that no message goes unanswered."}
+                        </p>
+                    </div>
+                  </div>
+              </div>
             </div>
           </div>
 
@@ -139,21 +225,17 @@ export default function ContactPage() {
   );
 }
 
-/* ================= CARD (UNCHANGED) ================= */
 function ContactInfoCard({ icon, title, value, subtitle }: any) {
   return (
-    <div className="p-6 bg-card border border-border rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 group">
-      <div className="flex flex-col gap-5">
-        <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
+    <div className="p-7 bg-card border border-border rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 group relative overflow-hidden">
+      <div className="flex flex-col gap-5 relative z-10">
+        <div className="w-14 h-14 bg-primary/10 border border-primary/20 text-primary rounded-2xl flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">
           {icon}
         </div>
-
         <div className="space-y-1">
-          <h4 className="text-xs font-black uppercase tracking-widest text-muted-foreground">
-            {title}
-          </h4>
-          <p className="text-lg font-black">{value}</p>
-          <p className="text-xs text-muted-foreground/60">{subtitle}</p>
+          <h4 className="text-[10px] font-black uppercase tracking-widest text-primary/70">{title}</h4>
+          <p className="text-base font-black text-foreground tracking-tight break-words">{value}</p>
+          <p className="text-[10px] font-bold text-muted-foreground/60">{subtitle}</p>
         </div>
       </div>
     </div>

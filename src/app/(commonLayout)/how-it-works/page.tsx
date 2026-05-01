@@ -107,7 +107,6 @@ export default function HowItWorks() {
 
             {/* Visual Element: Mockup Style */}
             <div className="relative">
-              <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full opacity-50"></div>
               <div className="relative aspect-video bg-background border border-border rounded-2xl shadow-2xl overflow-hidden group">
                  <div className="h-8 bg-muted border-b border-border flex items-center px-4 gap-2">
                     <div className="w-2 h-2 rounded-full bg-red-500/30" />

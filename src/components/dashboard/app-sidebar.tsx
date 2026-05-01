@@ -21,6 +21,7 @@ import {
   Users,
   Video,
   Activity,
+  Briefcase,
 } from "lucide-react";
 import {
   Sidebar,
@@ -62,6 +63,7 @@ export function AppSidebar() {
   const adminItems = [
     { title: t("nav.platform_hub") || "Platform Hub", url: "/dashboard", icon: ShieldCheck },
     { title: t("nav.manage_users") || "Manage Users", url: "/dashboard/admin/manage-users", icon: Users },
+    { title: t("nav.manage_jobs") || "Manage Jobs", url: "/dashboard/admin/manage-jobs", icon: Briefcase },
     { title: t("nav.revenue") || "Revenue", url: "/dashboard/admin/revenue", icon: BarChart3 },
     { title: t("nav.legal") || "Legal Policy", url: "/dashboard/admin/refund-policy", icon: History },
     { title: t("nav.analytics") || "Analytics", url: "/dashboard/admin/analytics", icon: Activity },

@@ -128,7 +128,6 @@ function InstructorRevenueContent() {
 
       {/* ================= COURSE PERFORMANCE BREAKDOWN ================= */}
       <div className="space-y-8 bg-card border border-border rounded-[3.5rem] p-12 relative overflow-hidden">
-         <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-primary/5 blur-[120px] rounded-full pointer-events-none -translate-y-1/2 translate-x-1/2"></div>
          
          <div className="flex justify-between items-end relative z-10">
             <div className="space-y-1">

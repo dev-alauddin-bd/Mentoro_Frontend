@@ -272,7 +272,6 @@ export function PlatformAnalytics({
               </div>
            </div>
            
-           <div className="absolute top-[-50px] right-[-50px] w-80 h-80 bg-primary/10 blur-[120px] rounded-full"></div>
         </div>
 
         {/* Growth Trends */}
@@ -460,7 +459,7 @@ function BarChart({ data, color, labels = [] }: { data: number[], color: string,
       {data.map((val, i) => (
         <div key={i} className="flex-1 h-full group relative flex flex-col justify-end items-center">
           <div 
-            className="w-full bg-gradient-to-t from-primary/80 to-primary/20 rounded-2xl transition-all duration-500 group-hover:from-primary group-hover:to-primary/40 group-hover:scale-105 group-hover:shadow-[0_0_30px_rgba(59,130,246,0.3)] cursor-pointer relative"
+            className="w-full bg-gradient-to-t from-primary/80 to-primary/20 rounded-2xl transition-all duration-500 group-hover:from-primary group-hover:to-primary/40 group-hover:scale-105 cursor-pointer relative"
             style={{ height: `${(val / (max || 1)) * 100}%` }}
           >
              <div className="absolute top-[-40px] left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-zinc-950 text-white text-[10px] font-black px-2.5 py-1.5 rounded-lg border border-white/10 shadow-xl whitespace-nowrap">

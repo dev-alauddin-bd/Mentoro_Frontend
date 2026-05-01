@@ -57,7 +57,6 @@ export function AdminDashboard() {
         
         {/* Recent Courses Section */}
         <div className="space-y-8 bg-card border border-border rounded-[3.5rem] p-10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
           
           <div className="flex justify-between items-center relative z-10">
             <div className="space-y-1">
@@ -77,7 +76,6 @@ export function AdminDashboard() {
 
         {/* Recent Users Section */}
         <div className="space-y-8 bg-card border border-border rounded-[3.5rem] p-10 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/5 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
           
           <div className="flex justify-between items-center relative z-10">
             <div className="space-y-1">

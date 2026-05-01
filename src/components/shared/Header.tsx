@@ -66,6 +66,9 @@ export function Header() {
               <Link href="/contact" className="text-[11px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
                 {t("nav.contact") || "Support"}
               </Link>
+              <Link href="/careers" className="text-[11px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
+                {t("nav.careers") || "Careers"}
+              </Link>
              
             </div>
 

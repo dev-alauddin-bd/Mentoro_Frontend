@@ -9,13 +9,10 @@ export default function LoginPage() {
   const { t } = useTranslation();
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-background to-background flex items-center justify-center py-12 px-4 relative overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute top-[-10%] right-[-10%] w-[40rem] h-[40rem] bg-primary/5 blur-[120px] rounded-full"></div>
-      <div className="absolute bottom-[-10%] left-[-10%] w-[30rem] h-[30rem] bg-purple-500/5 blur-[120px] rounded-full"></div>
+    <main className="min-h-screen bg-background flex items-center justify-center py-12 px-4 relative overflow-hidden">
       
       <div className="w-full max-w-md relative z-10">
-        <div className="bg-background border border-border rounded-[2.5rem] shadow-2xl p-10 backdrop-blur-xl">
+        <div className="bg-card border border-border rounded-[2.5rem] shadow-2xl p-10">
           <div className="mb-10 text-center space-y-3">
              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest mb-2">
                 Secure Access
