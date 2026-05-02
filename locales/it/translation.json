@@ -308,7 +308,10 @@
     "refund_policy": "Politica di Rimborso",
     "systems_active": "Sistemi Attivi",
     "handcrafted": "Realizzato a mano per Istruttori",
-    "copyright": "Tutti i diritti riservati"
+    "copyright": "Tutti i diritti riservati",
+    "email_required": "L'email è richiesta",
+    "subscribe_success": "Iscrizione avvenuta con successo!",
+    "subscribe_error": "Iscrizione non riuscita"
   },
   "upcoming": {
     "title": "Adesso e Prossimamente",

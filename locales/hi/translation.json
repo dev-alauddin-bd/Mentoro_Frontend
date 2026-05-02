@@ -308,7 +308,10 @@
     "refund_policy": "रिफंड नीति",
     "systems_active": "सिस्टम सक्रिय",
     "handcrafted": "प्रशिक्षकों के लिए हस्तनिर्मित",
-    "copyright": "सारे अधिकार सुरक्षित"
+    "copyright": "सारे अधिकार सुरक्षित",
+    "email_required": "ईमेल आवश्यक है",
+    "subscribe_success": "सफलतापूर्वक सब्सक्राइब किया गया!",
+    "subscribe_error": "सब्सक्राइब करने में विफल"
   },
   "upcoming": {
     "title": "अब और आगामी",

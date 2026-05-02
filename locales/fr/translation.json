@@ -310,7 +310,10 @@
     "refund_policy": "Politique de remboursement",
     "systems_active": "Systèmes actifs",
     "handcrafted": "Conçu avec soin pour les éducateurs",
-    "copyright": "Tous droits réservés."
+    "copyright": "Tous droits réservés.",
+    "email_required": "L'e-mail est requis",
+    "subscribe_success": "Inscription réussie !",
+    "subscribe_error": "Échec de l'inscription"
   },
   "upcoming": {
     "title": "Maintenant et à venir",

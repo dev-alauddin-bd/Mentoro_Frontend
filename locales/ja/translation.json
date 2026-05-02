@@ -308,7 +308,10 @@
     "refund_policy": "返金ポリシー",
     "systems_active": "システムアクティブ",
     "handcrafted": "インストラクター向けのハンドクラフト",
-    "copyright": "著作権一切保有"
+    "copyright": "著作権一切保有",
+    "email_required": "メールアドレスは必須です",
+    "subscribe_success": "正常に登録されました！",
+    "subscribe_error": "登録に失敗しました"
   },
   "upcoming": {
     "title": "今と予定",

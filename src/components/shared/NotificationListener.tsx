@@ -7,12 +7,8 @@ import { useDispatch } from "react-redux";
 import baseApi from "@/redux/baseApi/baseApi";
 import { useRouter } from "next/navigation";
 
-/**
- * Developer Note:
- * This component listens for global real-time notifications from the backend
- * using the Socket.IO provider. It triggers react-hot-toast popups 
- * and automatically refreshes relevant Redux data (RTK Query tags).
- */
+import { addNotification } from "@/redux/features/notifications/notificationSlice";
+
 export function NotificationListener() {
   const { socket } = useSocket();
   const dispatch = useDispatch();
@@ -23,7 +19,13 @@ export function NotificationListener() {
 
     // Listen for 'new_notification' event from the backend
     socket.on("new_notification", (data: { message: string, type?: 'success' | 'error' | 'info', link?: string }) => {
-      
+      // 1. Dispatch to Redux Store
+      dispatch(addNotification({
+        message: data.message,
+        type: data.type || 'info',
+        link: data.link
+      }));
+
       const msg = data.message.toLowerCase();
       let link = data.link;
 

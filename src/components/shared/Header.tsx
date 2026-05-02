@@ -14,6 +14,7 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 
 import { auth } from "@/lib/firebase";
 import { GlobalSearch } from "./GlobalSearch";
+import { NotificationBell } from "./NotificationBell";
 
 // --- Main Component: Header ---
 export function Header() {
@@ -61,7 +62,7 @@ export function Header() {
               <Link href="/careers" className="text-[11px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-colors">
                 {t("nav.careers")}
               </Link>
-             
+
             </div>
 
             <div className="flex items-center gap-4">
@@ -108,9 +109,13 @@ export function Header() {
           {/* 3. User Actions (Right) */}
           <div className="flex items-center justify-end gap-3 ">
             <div className="hidden md:block mr-2">
-               <GlobalSearch />
+              <GlobalSearch />
             </div>
-      
+
+            {isAuthenticated && (
+              <NotificationBell />
+            )}
+
             {isAuthenticated ? (
               <div className="relative hidden lg:block" ref={dropdownRef}>
                 <button
@@ -146,7 +151,7 @@ export function Header() {
                       >
                         {t("nav.dashboard")}
                       </Link>
-                    
+
                     </div>
 
                     <div className="h-px bg-border/50 my-2 mx-2" />
@@ -197,7 +202,7 @@ export function Header() {
       {isMenuOpen && (
         <div className="lg:hidden animate-in slide-in-from-top-4 duration-200 border-t bg-background p-4 grid gap-2 shadow-2xl relative z-[60]">
           <div className="mb-4">
-             <GlobalSearch />
+            <GlobalSearch />
           </div>
           <MobileNavLink href="/" label={t("nav.home")} onClick={() => setIsMenuOpen(false)} />
           <MobileNavLink href="/courses" label={t("nav.courses")} onClick={() => setIsMenuOpen(false)} />
@@ -205,7 +210,7 @@ export function Header() {
           <MobileNavLink href="/contact" label={t("nav.contact")} onClick={() => setIsMenuOpen(false)} />
           <MobileNavLink href="/how-it-works" label={t("nav.platform_guide")} onClick={() => setIsMenuOpen(false)} />
 
-         
+
 
           <div className="flex items-center gap-3 p-2 mt-2 bg-secondary/50 rounded-2xl border border-border/50">
             <div className="flex-1">
@@ -246,7 +251,7 @@ export function Header() {
           )}
         </div>
       )}
-      
+
     </header>
   );
 }

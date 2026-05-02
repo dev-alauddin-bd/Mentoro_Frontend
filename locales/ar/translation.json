@@ -310,7 +310,10 @@
     "refund_policy": "سياسة الإسترجاع",
     "systems_active": "الأنظمة النشيطة",
     "handcrafted": "مصنوع<y mano恩 للمعلمين",
-    "copyright": "كل الحقوق محفوظة."
+    "copyright": "كل الحقوق محفوظة.",
+    "email_required": "البريد الإلكتروني مطلوب",
+    "subscribe_success": "تم الاشتراك بنجاح!",
+    "subscribe_error": "فشل في الاشتراك"
   },
   "upcoming": {
     "title": "الآن والقادم",

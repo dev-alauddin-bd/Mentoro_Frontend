@@ -9,6 +9,7 @@ import { ChevronRight, LayoutDashboard } from "lucide-react";
 import Link from "next/link";
 import { ProtectedRoute } from "@/components/shared/ProtectedRoute";
 import { GlobalSearch } from "@/components/shared/GlobalSearch";
+import { NotificationBell } from "@/components/shared/NotificationBell";
 import { useTranslation } from "react-i18next";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -68,6 +69,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <div className="flex items-center gap-4">
                  <GlobalSearch />
                  <div className="h-8 w-px bg-border/60 mx-2" />
+                 <NotificationBell />
                  <LanguageSwitcher />
                  <ThemeSwitcher />
               </div>

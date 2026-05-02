@@ -308,7 +308,10 @@
     "refund_policy": "환불 정책",
     "systems_active": "시스템 활성화",
     "handcrafted": "강사들을 위해 제작되었습니다",
-    "copyright": "すべて의 권利 보호"
+    "copyright": "すべて의 권利 보호",
+    "email_required": "이메일이 필수입니다",
+    "subscribe_success": "구독이 성공적으로 완료되었습니다!",
+    "subscribe_error": "구독 실패"
   },
   "upcoming": {
     "title": "지금 및 예정",

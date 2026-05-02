@@ -308,7 +308,10 @@
     "refund_policy": "Erstattungsrichtlinie",
     "systems_active": "Systeme aktiv",
     "handcrafted": "Handgefertigt für Dozenten",
-    "copyright": "Alle Rechte vorbehalten"
+    "copyright": "Alle Rechte vorbehalten",
+    "email_required": "E-Mail ist erforderlich",
+    "subscribe_success": "Abonnement erfolgreich!",
+    "subscribe_error": "Abonnement fehlgeschlagen"
   },
   "upcoming": {
     "title": "Jetzt & Kommend",

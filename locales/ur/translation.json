@@ -308,7 +308,10 @@
     "refund_policy": "واپسی کی پالیسی",
     "systems_active": "سسٹمز ایکٹو",
     "handcrafted": "انスト्रकٹرز کے لئے ہاتھ سے بنی ہوئی",
-    "copyright": "تمام حقوق محفوظ ہیں"
+    "copyright": "تمام حقوق محفوظ ہیں",
+    "email_required": "ای میل ضروری ہے",
+    "subscribe_success": "کامیابی کے ساتھ سبسکرائب ہو گیا ہے!",
+    "subscribe_error": "سبسکرائب کرنے میں ناکامی"
   },
   "upcoming": {
     "title": "اب اور آنے والا",

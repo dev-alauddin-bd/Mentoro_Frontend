@@ -310,7 +310,10 @@
     "refund_policy": "Política de reembolso",
     "systems_active": "Sistemas activos",
     "handcrafted": "Elaborado a mano para educadores",
-    "copyright": "Todos los derechos reservados."
+    "copyright": "Todos los derechos reservados.",
+    "email_required": "El correo electrónico es obligatorio",
+    "subscribe_success": "Suscripción exitosa",
+    "subscribe_error": "No se pudo subscribir"
   },
   "upcoming": {
     "title": "Ahora y próximas",
