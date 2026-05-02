@@ -43,7 +43,7 @@ export function FeaturedCourses() {
   const skeletons = Array.from({ length: limit });
 
   return (
-    <Section className="from-transparent to-secondary/20">
+    <Section className="from-transparent to-secondary/20" containerClassName="space-y-10 lg:space-y-16">
       {/* ================= HEADER ================= */}
       <div className="space-y-6 border-b border-primary/10 pb-0">
         {/* ================= TITLE ================= */}
@@ -54,8 +54,8 @@ export function FeaturedCourses() {
               {t("extra.voices_success") || "Top Rated"}
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-black tracking-tighter text-foreground">
-              {t("home.featured")}
+            <h2 className="text-5xl md:text-6xl font-black tracking-tighter text-foreground leading-[0.9]">
+              {t("home.featured_start")} <span className="text-primary italic font-serif">{t("home.featured_end")}</span>
             </h2>
 
             <p className="text-muted-foreground text-lg max-w-xl font-medium">
@@ -95,7 +95,7 @@ export function FeaturedCourses() {
       </div>
 
       {/* ================= COURSES ================= */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {isLoading
           ? skeletons.map((_, idx) => (
             <div
@@ -116,7 +116,7 @@ export function FeaturedCourses() {
       </div>
 
       {/* ================= MOBILE BUTTON ================= */}
-      <div className="flex md:hidden justify-center pt-4">
+      <div className="flex md:hidden justify-center pt-2">
         <Link
           href="/courses"
           className="w-full h-14 flex items-center justify-center rounded-2xl bg-secondary font-black"

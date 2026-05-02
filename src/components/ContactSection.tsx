@@ -32,12 +32,15 @@ export function ContactSection() {
   });
 
   const onSubmit = async (data: ContactFormValues) => {
+    console.log("Submitting form:", data);
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
+
+    console.log("EmailJS Keys check:", { serviceId: !!serviceId, templateId: !!templateId, publicKey: !!publicKey });
+
     try {
       trackEvent('contact_section_submit', { subject: data.subject });
-      
-      const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
-      const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
-      const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
 
       await emailjs.send(
         serviceId,
@@ -85,17 +88,17 @@ export function ContactSection() {
           <div className="space-y-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {[
-                { 
-                  icon: <Mail />, 
-                  label: t("contact.email_label"), 
-                  value: "support@coursemaster.com", 
-                  sub: t("contact.email_sub") 
+                {
+                  icon: <Mail />,
+                  label: t("contact.email_label"),
+                  value: "support@coursemaster.com",
+                  sub: t("contact.email_sub")
                 },
-                { 
-                  icon: <Phone />, 
-                  label: t("contact.call_label"), 
-                  value: "+880 1700 000000", 
-                  sub: t("contact.call_sub") 
+                {
+                  icon: <Phone />,
+                  label: t("contact.call_label"),
+                  value: "+880 1700 000000",
+                  sub: t("contact.call_sub")
                 },
               ].map((item, idx) => (
                 <div key={idx} className="p-8 bg-card/60 backdrop-blur-md border border-border rounded-[2.5rem] hover:border-primary/20 transition-all group">
@@ -149,7 +152,7 @@ export function ContactSection() {
                 {errors.message && <p className="text-[10px] text-red-500 font-bold ml-1">{errors.message.message}</p>}
               </div>
 
-              <button 
+              <button
                 disabled={isSubmitting}
                 className="w-full h-16 bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-xs hover:shadow-2xl hover:shadow-primary/20 hover:-translate-y-1 active:scale-95 transition-all flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
               >
