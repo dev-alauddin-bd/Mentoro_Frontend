@@ -1,7 +1,7 @@
 // lib/api.ts
 import axios from "axios";
 
-const API_BASE = "https://coursemaster-backend-production.up.railway.app/api/v1"
+const API_BASE = `${process.env.NEXT_PUBLIC_API_URL}/api`;
 
 export async function getCourseById(courseId: string) {
   try {
