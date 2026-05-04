@@ -53,11 +53,11 @@ export function AppSidebar() {
 
   const instructorItems = [
     { title: t("nav.overview"), url: "/dashboard", icon: BarChart3 },
-    { title: t("nav.categories"), url: "/dashboard/admin/manage-categories", icon: FolderKanban },
+    { title: t("nav.categories"), url: "/dashboard/instructor/manage-categories", icon: FolderKanban },
     { title: t("nav.my_courses"), url: "/dashboard/instructor/manage-courses", icon: FolderKanban },
     { title: t("nav.curriculum"), url: "/dashboard/instructor/modules", icon: Files },
     { title: t("nav.revenue"), url: "/dashboard/instructor/revenue", icon: Zap },
-    { title: t("nav.live_workshops"), url: "/dashboard/manage-live-sessions", icon: Video },
+    { title: t("nav.live_workshops"), url: "/dashboard/instructor/manage-live-sessions", icon: Video },
     { title: t("nav.assignments"), url: "/dashboard/instructor/assignments", icon: ClipboardList },
     { title: t("nav.analytics"), url: "/dashboard/instructor/analytics", icon: Activity },
   ];
