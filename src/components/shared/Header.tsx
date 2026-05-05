@@ -14,7 +14,6 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 
 import { auth } from "@/lib/firebase";
 import { GlobalSearch } from "./GlobalSearch";
-import { NotificationBell } from "./NotificationBell";
 
 // --- Main Component: Header ---
 export function Header() {
@@ -124,9 +123,7 @@ export function Header() {
               <GlobalSearch />
             </div>
 
-            {isAuthenticated && (
-              <NotificationBell />
-            )}
+         
 
             {isAuthenticated ? (
               <div className="relative hidden lg:block" ref={dropdownRef}>
