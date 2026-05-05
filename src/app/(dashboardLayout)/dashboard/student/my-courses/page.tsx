@@ -191,7 +191,7 @@ export default function MyCoursesPage() {
                         disabled={isRefunding}
                         className="w-full h-10 flex items-center justify-center gap-2 text-red-500 hover:text-white hover:bg-red-500 bg-red-500/10 border border-red-500/20 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all active:scale-95 disabled:opacity-50"
                       >
-                        {isRefunding ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : "Cancel & Refund"}
+                        {isRefunding ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : (course.price > 0 ? "Cancel & Refund" : "Unenroll")}
                       </button>
                   </div>
                 </div>

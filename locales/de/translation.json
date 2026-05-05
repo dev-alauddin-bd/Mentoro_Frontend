@@ -51,7 +51,13 @@
     "featured_desc": "Lernen Sie von den besten Instruktoren der Welt",
     "view_all": "Alle anzeigen",
     "featured_start": "Top-bewertete Technologie",
-    "featured_end": "Zertifizierungskurse"
+    "featured_end": "Zertifizierungskurse",
+    "new_arrivals_start": "Neu",
+    "new_arrivals_end": "Hinzugefügt",
+    "new_arrivals_desc": "Frische Kurse wurden unserer Bibliothek hinzugefügt — erkunden Sie, was diese Woche neu ist",
+    "top_enrolled_start": "Favoriten der Schüler",
+    "top_enrolled_end": "Favoriten",
+    "top_enrolled_desc": "Diese sind die Kurse, die die meisten Schüler lieben und gerade lernen"
   },
   "hero": {
     "featured": "Empfohlene Kurse",
@@ -151,7 +157,14 @@
     "creating_account": "Konto erstellen...",
     "already_have_account": "Haben Sie bereits ein Konto?",
     "start_learning": "Lernen Sie heute los!",
-    "create_account_desc": "Erstellen Sie Ihr Konto, um Zugang zu Tausenden von Kursen von Experten-Dozenten zu erhalten."
+    "create_account_desc": "Erstellen Sie Ihr Konto, um Zugang zu Tausenden von Kursen von Experten-Dozenten zu erhalten.",
+    "password_requirements": {
+      "min_chars": "8+ Zeichen",
+      "uppercase": "Großbuchstabe",
+      "lowercase": "Kleinbuchstabe",
+      "number": "Eine Zahl",
+      "special": "Sonderzeichen"
+    }
   },
   "dashboard": {
     "title": "Mein Dashboard",

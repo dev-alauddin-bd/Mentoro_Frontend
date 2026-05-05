@@ -35,6 +35,7 @@ export function FeaturedCourses() {
     page: 1,
     limit,
     category: selectedCategoryId,
+    isFeatured: true,
   });
 
   const courses: any[] = courseData?.data?.courses || [];

@@ -7,6 +7,8 @@ import { ContactSection } from "@/components/ContactSection";
 import { InstructorCTA } from "@/components/InstructorCta";
 import { TrustBar } from "@/components/TrustBar";
 import { UpcomingLiveCourses } from "@/components/UpcomingLiveCourses";
+import { NewArrivalCourses } from "@/components/NewArrivalCourses";
+import { TopEnrolledCourses } from "@/components/TopEnrolledCourses";
 import { FAQ } from "@/components/FAQ";
 
 export const metadata: Metadata = {
@@ -26,8 +28,9 @@ export default function Home() {
 
       <HeroAnimated />
       <TrustBar />
-      {/* <StatsSection /> */}
       <FeaturedCourses />
+      <TopEnrolledCourses />
+      <NewArrivalCourses />
       <UpcomingLiveCourses />
       <InstructorCTA />
       <ContactSection />

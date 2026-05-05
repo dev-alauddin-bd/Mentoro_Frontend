@@ -51,7 +51,13 @@
     "featured_desc": "世界的最高教师から学る",
     "view_all": "解里複数",
     "featured_start": "\u00143\u00144",
-    "featured_end": "\u00145\u00146"
+    "featured_end": "\u00145\u00146",
+    "new_arrivals_start": "新しく",
+    "new_arrivals_end": "追加",
+    "new_arrivals_desc": "ライブラリに追加された新しいコース — 今週の新着を探索してみて",
+    "top_enrolled_start": "学生の",
+    "top_enrolled_end": "お気に入り",
+    "top_enrolled_desc": "これらは、最も多くの学生が愛し、今学んでいるコースです"
   },
   "hero": {
     "featured": "最遍行私動",
@@ -151,7 +157,14 @@
     "creating_account": "アナウントを作成中。。",
     "already_have_account": "巨帮アカウントを存っちだり。",
     "start_learning": "今日开始に学成しま。",
-    "create_account_desc": "唐一部々もアカウントを作成して、統加者が指定の諲幏をアノスに取得でにす。"
+    "create_account_desc": "唐一部々もアカウントを作成して、統加者が指定の諲幏をアノスに取得でにす。",
+    "password_requirements": {
+      "min_chars": "8文字以上",
+      "uppercase": "大文字",
+      "lowercase": "小文字",
+      "number": "数字",
+      "special": "特殊文字"
+    }
   },
   "dashboard": {
     "title": "自のダシバード",

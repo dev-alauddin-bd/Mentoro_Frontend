@@ -51,7 +51,13 @@
     "featured_desc": "Apprenez des meilleurs enseignants du monde",
     "view_all": "Voir tout",
     "featured_start": "Tech les mieux notés",
-    "featured_end": "Cours de certification"
+    "featured_end": "Cours de certification",
+    "new_arrivals_start": "Nouveaux",
+    "new_arrivals_end": "Ajoutés",
+    "new_arrivals_desc": "Cours frais ajoutés à notre bibliothèque — explorez ce qui est nouveau cette semaine",
+    "top_enrolled_start": "Préférés des étudiants",
+    "top_enrolled_end": "Préférés",
+    "top_enrolled_desc": "Ce sont les cours que la plupart des étudiants aiment et apprennent en ce moment"
   },
   "hero": {
     "featured": "Cours en vedette",
@@ -153,7 +159,14 @@
     "creating_account": "Création du compte...",
     "already_have_account": "Avez-vous déjà un compte?",
     "start_learning": "Commencez à apprendre aujourd'hui!",
-    "create_account_desc": "Créez votre compte pour accéder à des milliers de cours dispensés par des instructeurs experts."
+    "create_account_desc": "Créez votre compte pour accéder à des milliers de cours dispensés par des instructeurs experts.",
+    "password_requirements": {
+      "min_chars": "8+ caractères",
+      "uppercase": "Lettre majuscule",
+      "lowercase": "Lettre minuscule",
+      "number": "Un chiffre",
+      "special": "Caractère spécial"
+    }
   },
   "dashboard": {
     "title": "Mon Tableau de bord",

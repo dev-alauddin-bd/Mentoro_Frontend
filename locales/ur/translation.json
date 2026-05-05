@@ -51,7 +51,13 @@
     "featured_desc": "دنیا کے بہترین انسٹرکٹرز سے سیکھیں",
     "view_all": "سبھ دیکھیں",
     "featured_start": "ٹاپ ریٹڈ ٹیک",
-    "featured_end": "سرٹیفیکیشن کورسز"
+    "featured_end": "سرٹیفیکیشن کورسز",
+    "new_arrivals_start": "نئے",
+    "new_arrivals_end": "اضافہ کیے گئے",
+    "new_arrivals_desc": "ہماری لائبریری میں نئے کورسز شامل کیے گئے ۔ آج ہفتے میں کیا نیا ہے اس کا جائزہ لیں",
+    "top_enrolled_start": "طالب علموں کی",
+    "top_enrolled_end": "پسندیدہ",
+    "top_enrolled_desc": "یہ وہ کورسز ہیں جنہیں زیادہ تر طالب علم پسند کرتے ہیں اور فی الحال سیکھ رہے ہیں"
   },
   "hero": {
     "featured": "تجویز کردہ کورسز",
@@ -151,7 +157,14 @@
     "creating_account": "اکاؤنٹ بنائی جا رہا ہے...",
     "already_have_account": "کیا آپ کا پہلے سے اکاؤنٹ ہے؟",
     "start_learning": "آج ہی سیکھنا شروع کریں!",
-    "create_account_desc": "ہزاروں ماہر انструкторز کے کورسز تک رسائی کے لئے اپنا اکاؤنٹ بنائیں۔"
+    "create_account_desc": "ہزاروں ماہر انструкторز کے کورسز تک رسائی کے لئے اپنا اکاؤنٹ بنائیں۔",
+    "password_requirements": {
+      "min_chars": "8+ حروف",
+      "uppercase": "بڑے حروف",
+      "lowercase": "چھوٹے حروف",
+      "number": "ایک نمبر",
+      "special": "خصوصی字符"
+    }
   },
   "dashboard": {
     "title": "میرا ڈیش بورڈ",

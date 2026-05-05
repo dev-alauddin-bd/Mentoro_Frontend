@@ -74,6 +74,11 @@ html {
   --chart-3: oklch(0.45 0.2 30);
   --chart-4: oklch(0.85 0.1 80);
   --chart-5: oklch(0.7 0.12 40);
+
+  /* ===== SECTION ACCENT COLORS ===== */
+  --section-featured: oklch(0.702 0.2 49.48);   /* orange-500 = primary */
+  --section-new:      oklch(0.82 0.16 84);       /* amber-400 = lighter orange */
+  --section-popular:  oklch(0.57 0.19 42);       /* orange-700 = darker orange */
 }
 
 .dark {
@@ -122,19 +127,30 @@ html {
   .no-print {
     display: none !important;
   }
+
   .print-only {
     display: block !important;
   }
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(calc(-100% - 2rem)); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(calc(-100% - 2rem));
+  }
 }
 
 @keyframes marquee-reverse {
-  0% { transform: translateX(calc(-100% - 2rem)); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(calc(-100% - 2rem));
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .animate-marquee {
@@ -143,4 +159,4 @@ html {
 
 .animate-marquee-reverse {
   animation: marquee-reverse 50s linear infinite;
-}
+}

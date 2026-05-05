@@ -27,7 +27,13 @@ const signupSchema = z
   .object({
     name: z.string().min(1, "Full name is required"),
     email: z.string().email("Invalid email"),
-    password: z.string().min(6, "Password must be at least 6 characters"),
+    password: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .regex(/[A-Z]/, "Must contain at least one uppercase letter")
+      .regex(/[a-z]/, "Must contain at least one lowercase letter")
+      .regex(/[0-9]/, "Must contain at least one digit")
+      .regex(/[!@#$%^&*()_+\-=\[\]{};':"|,.<>/?]/, "Must contain at least one special character"),
     role: z.enum(["student", "instructor"]),
     terms: z.literal(true, {
       message: "You must accept the terms and conditions",
@@ -62,6 +68,15 @@ export function SignupForm() {
   });
 
   const role = watch("role");
+  const password = watch("password") || "";
+
+  const passwordRequirements = [
+    { label: t("auth.password_requirements.min_chars"), met: password.length >= 8 },
+    { label: t("auth.password_requirements.uppercase"), met: /[A-Z]/.test(password) },
+    { label: t("auth.password_requirements.lowercase"), met: /[a-z]/.test(password) },
+    { label: t("auth.password_requirements.number"), met: /[0-9]/.test(password) },
+    { label: t("auth.password_requirements.special"), met: /[!@#$%^&*()_+\-=\[\]{};':"|,.<>/?]/.test(password) },
+  ];
 
   const onGoogleLogin = async () => {
     try {
@@ -209,6 +224,7 @@ export function SignupForm() {
               />
               <InputGroupAddon align="inline-end">
                 <InputGroupButton
+                  type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? "Hide password" : "Show password"}
                   className="hover:bg-transparent"
@@ -217,8 +233,27 @@ export function SignupForm() {
                 </InputGroupButton>
               </InputGroupAddon>
             </InputGroup>
+
+            {/* Password Requirements Checklist */}
+            <div className="grid grid-cols-2 gap-x-4 gap-y-1.5 mt-2 ml-1">
+              {passwordRequirements.map((req, idx) => (
+                <div key={idx} className="flex items-center gap-2">
+                  <div className={cn(
+                    "w-1.5 h-1.5 rounded-full transition-colors",
+                    req.met ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" : "bg-muted-foreground/30"
+                  )} />
+                  <span className={cn(
+                    "text-[10px] font-bold uppercase tracking-wider transition-colors",
+                    req.met ? "text-emerald-500" : "text-muted-foreground/50"
+                  )}>
+                    {req.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+
             {errors.password && (
-              <p className="text-destructive text-xs font-bold mt-1 ml-1">{errors.password.message}</p>
+              <p className="text-destructive text-[10px] font-black uppercase tracking-widest mt-2 ml-1">{errors.password.message}</p>
             )}
           </div>
         </div>

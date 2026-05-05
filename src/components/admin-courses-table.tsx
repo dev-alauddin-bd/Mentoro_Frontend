@@ -1,8 +1,8 @@
 "use client"
 
 import { useMemo } from "react"
-import { Eye, Edit, Trash2, Send, PowerOff } from "lucide-react"
-import { useGetAllCoursesQuery, useTogglePublishMutation } from "@/redux/features/course/courseAPi";
+import { Eye, Edit, Trash2, Send, PowerOff, Star, CheckCircle } from "lucide-react"
+import { useGetAllCoursesQuery, useTogglePublishMutation, useRequestFeatureMutation, useApproveFeatureMutation, useCreateFeaturedCheckoutMutation } from "@/redux/features/course/courseAPi";
 import { TableSkeleton } from "./dashboard/skeletons";
 import { toast } from "react-hot-toast";
 
@@ -19,6 +19,9 @@ export function AdminCoursesTable({ instructorId, limit = 5, showAll }: AdminCou
   );
   
   const [togglePublish, { isLoading: isToggling }] = useTogglePublishMutation();
+  const [requestFeature, { isLoading: isRequesting }] = useRequestFeatureMutation();
+  const [approveFeature, { isLoading: isApproving }] = useApproveFeatureMutation();
+  const [createFeaturedCheckout, { isLoading: isProcessingPayment }] = useCreateFeaturedCheckoutMutation();
 
   const fetchedCourses = useMemo(() => data?.data?.courses || [], [data]);
 
@@ -29,7 +32,9 @@ export function AdminCoursesTable({ instructorId, limit = 5, showAll }: AdminCou
     students: c._count?.enrolledUsers || 0,
     revenue: `$${(c.price * (c._count?.enrolledUsers || 0)).toLocaleString()}`,
     status: c.isPublished ? "published" : "draft",
-    isPublished: c.isPublished
+    isPublished: c.isPublished,
+    isFeatured: c.isFeatured,
+    featureRequested: c.featureRequested
   })), [fetchedCourses]);
 
   const handleTogglePublish = async (id: string, currentStatus: boolean, title: string) => {
@@ -50,6 +55,40 @@ export function AdminCoursesTable({ instructorId, limit = 5, showAll }: AdminCou
     } catch (err) {
       // Error handled by toast.promise
     }
+  };
+
+  const handleRequestFeature = async (id: string, title: string) => {
+    const confirmed = window.confirm(`Requesting to feature "${title}" requires a one-time promotion fee of $50. Proceed to payment?`);
+    if (!confirmed) return;
+
+    try {
+      const response = await toast.promise(
+        createFeaturedCheckout(id).unwrap(),
+        {
+          loading: "Preparing payment session...",
+          success: "Redirecting to secure payment...",
+          error: (err) => err?.data?.message || "Failed to initiate payment",
+        }
+      );
+
+      if (response?.data?.paymentUrl) {
+        window.location.href = response.data.paymentUrl;
+      }
+    } catch (err) {}
+  };
+
+  const handleApproveFeature = async (id: string, currentStatus: boolean, title: string) => {
+    const action = currentStatus ? "Remove from Featured" : "Approve as Featured";
+    try {
+      await toast.promise(
+        approveFeature({ id, isFeatured: !currentStatus }).unwrap(),
+        {
+          loading: `${currentStatus ? "Removing" : "Approving"}...`,
+          success: `Successfully ${currentStatus ? "removed" : "approved"} "${title}"!`,
+          error: (err) => err?.data?.message || "Operation failed",
+        }
+      );
+    } catch (err) {}
   };
 
   if (isLoading) {
@@ -96,6 +135,36 @@ export function AdminCoursesTable({ instructorId, limit = 5, showAll }: AdminCou
                     >
                       {course.isPublished ? <PowerOff className="w-4 h-4" /> : <Send className="w-4 h-4" />}
                     </button>
+
+                    {/* Featured Logic */}
+                    {instructorId ? (
+                      <button
+                        onClick={() => handleRequestFeature(course.id, course.title)}
+                        disabled={isRequesting || isProcessingPayment || course.isFeatured || course.featureRequested}
+                        className={`p-2 rounded-xl border transition-all ${course.isFeatured ? "bg-primary text-white border-primary" : course.featureRequested ? "bg-yellow-500/10 text-yellow-500 border-yellow-500/20" : "hover:bg-primary/10 hover:text-primary border-border"}`}
+                        title={course.isFeatured ? "Currently Featured" : course.featureRequested ? "Feature Requested" : "Request Featured Status ($50)"}
+                      >
+                        <Star className={`w-4 h-4 ${course.isFeatured ? "fill-white" : course.featureRequested ? "fill-yellow-500" : ""}`} />
+                      </button>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        {course.featureRequested && (
+                          <span className="flex items-center gap-1 text-[8px] font-black uppercase bg-emerald-500/10 text-emerald-500 px-2 py-1 rounded-md border border-emerald-500/20">
+                            <CheckCircle className="w-2.5 h-2.5" />
+                            Paid
+                          </span>
+                        )}
+                        <button
+                          onClick={() => handleApproveFeature(course.id, course.isFeatured, course.title)}
+                          disabled={isApproving}
+                          className={`p-2 rounded-xl border transition-all ${course.isFeatured ? "bg-primary text-white border-primary" : course.featureRequested ? "bg-yellow-500/10 text-yellow-500 border-yellow-500/20 animate-pulse" : "hover:bg-primary/10 hover:text-primary border-border"}`}
+                          title={course.isFeatured ? "Remove Featured" : "Approve Featured"}
+                        >
+                          {course.isFeatured ? <Star className="w-4 h-4 fill-white" /> : <CheckCircle className="w-4 h-4" />}
+                        </button>
+                      </div>
+                    )}
+
                     <button className="p-2 bg-card hover:bg-primary/10 hover:text-primary border border-border rounded-xl transition shadow-sm" title="Edit">
                       <Edit className="w-4 h-4" />
                     </button>

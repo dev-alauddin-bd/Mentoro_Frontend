@@ -51,7 +51,13 @@
     "featured_desc": "Aprende de los mejores profesores del mundo",
     "view_all": "Ver todo",
     "featured_start": "Tecnología con mejor calificación",
-    "featured_end": "Cursos de certificación"
+    "featured_end": "Cursos de certificación",
+    "new_arrivals_start": "Nuevos",
+    "new_arrivals_end": "Agregados",
+    "new_arrivals_desc": "Cursos frescos agregados a nuestra biblioteca — explora lo que hay de nuevo esta semana",
+    "top_enrolled_start": "Favoritos de los estudiantes",
+    "top_enrolled_end": "Favoritos",
+    "top_enrolled_desc": "Estos son los cursos que más les gustan a los estudiantes y que están aprendiendo ahora mismo"
   },
   "hero": {
     "featured": "Cursos Destacados",
@@ -153,7 +159,14 @@
     "creating_account": "Creando cuenta...",
     "already_have_account": "¿Ya tienes una cuenta?",
     "start_learning": "¡Comienza a aprender hoy!",
-    "create_account_desc": "Crea tu cuenta para acceder a miles de cursos de instructores expertos."
+    "create_account_desc": "Crea tu cuenta para acceder a miles de cursos de instructores expertos.",
+    "password_requirements": {
+      "min_chars": "8+ caracteres",
+      "uppercase": "Letra mayúscula",
+      "lowercase": "Letra minúscula",
+      "number": "Un número",
+      "special": "Carácter especial"
+    }
   },
   "dashboard": {
     "title": "Mi Panel de Control",

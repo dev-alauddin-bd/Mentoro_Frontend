@@ -51,7 +51,13 @@
     "featured_desc": "Aprenda com os melhores instrutores do mundo",
     "view_all": "Ver Tudo",
     "featured_start": "Tecnologia Avaliada",
-    "featured_end": "Cursos de Certificação"
+    "featured_end": "Cursos de Certificação",
+    "new_arrivals_start": "Novamente",
+    "new_arrivals_end": "Adicionado",
+    "new_arrivals_desc": "Cursos frescos adicionados à nossa biblioteca — explore o que há de novo esta semana",
+    "top_enrolled_start": "Favoritos dos",
+    "top_enrolled_end": "Alunos",
+    "top_enrolled_desc": "Estes são os cursos que a maioria dos alunos ama e está aprendendo agora"
   },
   "hero": {
     "featured": "Cursos Recomendados",
@@ -151,7 +157,14 @@
     "creating_account": "Criando conta...",
     "already_have_account": "Já tem uma conta?",
     "start_learning": "Comece a aprender hoje!",
-    "create_account_desc": "Crie sua conta para acessar milhares de cursos de instrutores especializados."
+    "create_account_desc": "Crie sua conta para acessar milhares de cursos de instrutores especializados.",
+    "password_requirements": {
+      "min_chars": "8+ caracteres",
+      "uppercase": "Letra maiúscula",
+      "lowercase": "Letra minúscula",
+      "number": "Um número",
+      "special": "Caractere especial"
+    }
   },
   "dashboard": {
     "title": "Meu Painel",

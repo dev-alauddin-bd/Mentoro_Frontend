@@ -51,7 +51,13 @@
     "featured_desc": "Impara dai migliori istruttori del mondo",
     "view_all": "Visualizza Tutti",
     "featured_start": "Tech Valutate",
-    "featured_end": "Corsi di Certificazione"
+    "featured_end": "Corsi di Certificazione",
+    "new_arrivals_start": "Di recente",
+    "new_arrivals_end": "Aggiunti",
+    "new_arrivals_desc": "Corsi freschi aggiunti alla nostra libreria — scopri cosa c'è di nuovo questa settimana",
+    "top_enrolled_start": "Preferiti degli studenti",
+    "top_enrolled_end": "Preferiti",
+    "top_enrolled_desc": "Questi sono i corsi che la maggior parte degli studenti ama e sta imparando in questo momento"
   },
   "hero": {
     "featured": "Corsi Consigliati",
@@ -151,7 +157,14 @@
     "creating_account": "Creazione account...",
     "already_have_account": "Hai già un account?",
     "start_learning": "Inizia a imparare oggi!",
-    "create_account_desc": "Crea il tuo account per accedere a migliaia di corsi tenuti da istruttori esperti."
+    "create_account_desc": "Crea il tuo account per accedere a migliaia di corsi tenuti da istruttori esperti.",
+    "password_requirements": {
+      "min_chars": "8+ caratteri",
+      "uppercase": "Lettera maiuscola",
+      "lowercase": "Lettera minuscola",
+      "number": "Un numero",
+      "special": "Carattere speciale"
+    }
   },
   "dashboard": {
     "title": "Il mio cruscotto",

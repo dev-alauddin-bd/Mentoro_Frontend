@@ -51,7 +51,13 @@
     "featured_desc": "تعلم من أفضل معلمي العالم",
     "view_all": "عرض الكل",
     "featured_start": "التكنولوجيا ذات التصنيف الأعلى",
-    "featured_end": "دورات الشهادة"
+    "featured_end": "دورات الشهادة",
+    "new_arrivals_start": "م最近",
+    "new_arrivals_end": "مضاف",
+    "new_arrivals_desc": "دورات جديدة_added إلى مكتبتنا — استكشف ما الجديد هذا الأسبوع",
+    "top_enrolled_start": "مفضلة الطلاب",
+    "top_enrolled_end": "الأكثر قدرة",
+    "top_enrolled_desc": "هذه هي الدورات التي يحبها معظم الطلاب ويتم تعلمها الآن"
   },
   "hero": {
     "featured": "الدورات المميزة",
@@ -153,7 +159,14 @@
     "creating_account": "إنشاء حساب...",
     "already_have_account": "هل لديك حساب بالفعل؟",
     "start_learning": "ابدأ بالتعلم اليوم!",
-    "create_account_desc": "انشئ حسابك للوصول إلى آلاف الدورات من معلمين خبراء."
+    "create_account_desc": "انشئ حسابك للوصول إلى آلاف الدورات من معلمين خبراء.",
+    "password_requirements": {
+      "min_chars": "8+ حروف",
+      "uppercase": "حرف كبير",
+      "lowercase": "حرف صغير",
+      "number": "رقم واحد",
+      "special": "حرف خاص"
+    }
   },
   "dashboard": {
     "title": "لوحة القيادة الخاصة بي",

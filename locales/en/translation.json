@@ -47,9 +47,15 @@
     "title": "Master High-Demand Tech Skills Online",
     "subtitle": "Learn React, Next.js, AI, and Full-Stack Web Development from industry-leading experts",
     "cta": "Search Courses",
-    "featured_start": "Top-Rated Tech",
-    "featured_end": "Certification Courses",
-    "featured_desc": "Accelerate your career with our most popular online programming and design courses",
+    "featured_start": "Courses We",
+    "featured_end": "Recommend",
+    "featured_desc": "Our team has handpicked these courses — a great place to start your journey",
+    "new_arrivals_start": "Newly",
+    "new_arrivals_end": "Added",
+    "new_arrivals_desc": "Fresh courses added to our library — explore what's new this week",
+    "top_enrolled_start": "Students'",
+    "top_enrolled_end": "Favorites",
+    "top_enrolled_desc": "These are the courses most students love and are learning right now",
     "view_all": "View All"
   },
   "hero": {
@@ -146,6 +152,13 @@
     "agree_terms_error": "Please agree to the terms and conditions",
     "password_mismatch": "Passwords do not match",
     "weak_password": "Password is not strong enough",
+    "password_requirements": {
+      "min_chars": "8+ characters",
+      "uppercase": "Uppercase letter",
+      "lowercase": "Lowercase letter",
+      "number": "One number",
+      "special": "Special character"
+    },
     "signup_error": "Sign up failed. Please try again.",
     "creating_account": "Creating account...",
     "already_have_account": "Already have an account?",

@@ -10,6 +10,8 @@ export interface ICourse {
   thumbnail: string;
   previewVideo: string;
   price: number;
+    isFeatured: boolean;
+  featureRequested: boolean;
   instructor?: {
     id: string;
     name: string;

@@ -17,9 +17,9 @@ export const courseApi = baseApi.injectEndpoints({
 
    getAllCourses: build.query<
   ICoursesResponse,
-  { page?: number; limit?: number; search?: string; category?: string; sort?: string; instructorId?: string; showAll?: boolean } | void
+  { page?: number; limit?: number; search?: string; category?: string; sort?: string; instructorId?: string; showAll?: boolean; isFeatured?: boolean } | void
 >({
-  query: ({ page, limit, search, category, sort, instructorId, showAll } = {}) => {
+  query: ({ page, limit, search, category, sort, instructorId, showAll, isFeatured } = {}) => {
     const params = new URLSearchParams();
 
     if (page) params.append("page", page.toString());
@@ -31,6 +31,7 @@ export const courseApi = baseApi.injectEndpoints({
 
     // 🔥 FIX: sort (NOT sortBy)
     if (sort) params.append("sort", sort);
+    if (isFeatured) params.append("isFeatured", "true");
 
     return `/courses?${params.toString()}`;
   },
@@ -98,10 +99,19 @@ export const courseApi = baseApi.injectEndpoints({
       }),
     }),
 
-    // Process Refund
+    // Process Featured Request Checkout
+    createFeaturedCheckout: build.mutation<any, string>({
+      query: (courseId) => ({
+        url: `/payments/checkout-featured`,
+        method: "POST",
+        body: { courseId }
+      }),
+    }),
+
+    // Process Refund / Cancel Enrollment
     refundCourse: build.mutation<any, string>({
       query: (courseId) => ({
-        url: `/payments/refund`,
+        url: `/enrollments/cancel`,
         method: "POST",
         body: { courseId }
       }),
@@ -125,6 +135,25 @@ export const courseApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["Course"],
     }),
+
+    // Request Feature
+    requestFeature: build.mutation<ICourseResponse, string>({
+      query: (id) => ({
+        url: `/courses/${id}/request-feature`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Course"],
+    }),
+
+    // Approve Feature
+    approveFeature: build.mutation<ICourseResponse, { id: string; isFeatured: boolean }>({
+      query: ({ id, isFeatured }) => ({
+        url: `/courses/${id}/approve-feature`,
+        method: "PATCH",
+        body: { isFeatured },
+      }),
+      invalidatesTags: ["Course"],
+    }),
   }),
 });
 
@@ -137,9 +166,12 @@ export const {
   useDeleteCourseMutation,
   useEnrollCourseMutation,
   useCreateCheckoutMutation,
+  useCreateFeaturedCheckoutMutation,
   useRefundCourseMutation,
   useGetMyCoursesQuery,
   useCompleteLessonMutation,
   useTogglePublishMutation,
-  useGetRecommendationsQuery
+  useGetRecommendationsQuery,
+  useRequestFeatureMutation,
+  useApproveFeatureMutation
 } = courseApi;

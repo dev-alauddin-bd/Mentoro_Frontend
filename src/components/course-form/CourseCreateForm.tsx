@@ -214,7 +214,7 @@ export default function CourseCreateForm({
                     <option value="">Select a category</option>
                     {catLoading && <option>Loading...</option>}
                     {isError && <option>Error loading</option>}
-                    {categories?.data?.map((cat: any) => (
+                    {(categories?.data?.categories || categories?.data || [])?.map((cat: any) => (
                     <option key={cat.id} value={cat.id}>
                         {cat.name}
                     </option>
