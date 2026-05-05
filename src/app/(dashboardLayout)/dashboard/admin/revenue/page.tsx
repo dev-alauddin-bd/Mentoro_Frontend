@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useGetDashboardAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi";
+import { useGetAdminAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi";
 import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi";
 import { 
   BarChart3, 
@@ -30,7 +30,8 @@ export default function AdminRevenuePage() {
 
 function AdminRevenueContent() {
   const { t } = useTranslation();
-  const { data: analyticsData, isLoading: analyticsLoading } = useGetDashboardAnalyticsQuery();
+  const { data: analyticsData, isLoading: analyticsLoading } = useGetAdminAnalyticsQuery();
+
   const { data: coursesData, isLoading: coursesLoading } = useGetAllCoursesQuery({ limit: 100 });
 
   const stats = useMemo(() => analyticsData?.data?.statistics || {}, [analyticsData]);

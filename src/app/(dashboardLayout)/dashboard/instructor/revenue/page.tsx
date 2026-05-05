@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
-import { useGetDashboardAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi";
+import { useGetInstructorAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi";
 import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi";
 import { RootState } from "@/redux/store";
 import { 
@@ -32,7 +32,8 @@ export default function InstructorRevenuePage() {
 function InstructorRevenueContent() {
   const { t } = useTranslation();
   const { user } = useSelector((state: RootState) => state.cmAuth);
-  const { data: analyticsData, isLoading: analyticsLoading } = useGetDashboardAnalyticsQuery();
+  const { data: analyticsData, isLoading: analyticsLoading } = useGetInstructorAnalyticsQuery();
+
   const { data: coursesData, isLoading: coursesLoading } = useGetAllCoursesQuery({ limit: 100, instructorId: user?.id });
 
   const stats = useMemo(() => analyticsData?.data?.statistics || {}, [analyticsData]);

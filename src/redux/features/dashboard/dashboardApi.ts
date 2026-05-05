@@ -3,11 +3,24 @@ import { IApiResponse } from "@/interfaces/course.interface";
 
 export const dashboardApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
-    getDashboardAnalytics: build.query<IApiResponse<any>, void>({
-      query: () => `/dashboard/analytics`,
+    getAdminAnalytics: build.query<IApiResponse<any>, void>({
+      query: () => `/dashboard/admin-analytics`,
+      providesTags: ["Course"],
+    }),
+    getInstructorAnalytics: build.query<IApiResponse<any>, void>({
+      query: () => `/dashboard/instructor-analytics`,
+      providesTags: ["Course"],
+    }),
+    getStudentAnalytics: build.query<IApiResponse<any>, void>({
+      query: () => `/dashboard/student-analytics`,
       providesTags: ["Course"],
     }),
   }),
 });
 
-export const { useGetDashboardAnalyticsQuery } = dashboardApi;
+export const { 
+  useGetAdminAnalyticsQuery, 
+  useGetInstructorAnalyticsQuery, 
+  useGetStudentAnalyticsQuery 
+} = dashboardApi;
+

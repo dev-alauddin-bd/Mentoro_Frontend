@@ -48,8 +48,10 @@ export function AppSidebar() {
     { title: t("nav.overview"), url: "/dashboard", icon: LayoutDashboard },
     { title: t("nav.my_courses"), url: "/dashboard/student/my-courses", icon: BookOpen },
     { title: t("nav.payments"), url: "/dashboard/student/payments", icon: History },
+    { title: t("nav.analytics"), url: "/dashboard/student/analytics", icon: Activity },
     { title: t("nav.profile"), url: "/dashboard/settings", icon: GraduationCap },
   ];
+
 
   const instructorItems = [
     { title: t("nav.overview"), url: "/dashboard", icon: BarChart3 },

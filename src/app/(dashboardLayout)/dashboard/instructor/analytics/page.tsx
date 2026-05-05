@@ -1,10 +1,10 @@
 "use client"
 
-import { useGetDashboardAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi"
+import { useGetInstructorAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi"
 import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi"
 import { useGetAllUsersQuery } from "@/redux/features/user/userApi"
 import { Users, BookOpen, DollarSign, Loader2, TrendingUp, Inbox } from "lucide-react"
-import { PlatformAnalytics } from "@/components/dashboard/PlatformAnalytics"
+import { InstructorAnalytics } from "@/components/dashboard/InstructorAnalytics"
 import { RoleProtectedRoute } from "@/components/shared/RoleProtectedRoute"
 import { Role } from "@/interfaces/user.interface"
 import { useSelector } from "react-redux"
@@ -20,15 +20,13 @@ export default function InstructorAnalyticsPage() {
 
 function InstructorAnalyticsContent() {
   const { user } = useSelector((state: RootState) => state.cmAuth);
-  const { data: analyticsData, isLoading: analyticsLoading } = useGetDashboardAnalyticsQuery()
+  const { data: analyticsData, isLoading: analyticsLoading } = useGetInstructorAnalyticsQuery()
   const { data: coursesData, isLoading: coursesLoading } = useGetAllCoursesQuery({ limit: 1000, instructorId: user?.id })
-  const { data: usersData, isLoading: usersLoading } = useGetAllUsersQuery()
   
   const stats = analyticsData?.data?.statistics || {}
   const courses = coursesData?.data?.courses || []
-  const users = usersData?.data?.users || usersData?.data || []
 
-  if (analyticsLoading || coursesLoading || usersLoading) {
+  if (analyticsLoading || coursesLoading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -88,7 +86,7 @@ function InstructorAnalyticsContent() {
           <div className="flex items-center justify-between">
               <h2 className="text-3xl font-black italic tracking-tighter text-foreground">Curriculum Insights</h2>
           </div>
-          <PlatformAnalytics courses={courses} users={users} statistics={stats} />
+          <InstructorAnalytics courses={courses} statistics={stats} />
       </div>
     </div>
   )
@@ -110,3 +108,4 @@ function StatsTile({ label, value, icon, gradient }: any) {
     </div>
   )
 }
+

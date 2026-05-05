@@ -1,17 +1,13 @@
 "use client";
 
-import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import Link from "next/link";
 import { useTranslation, Trans } from "react-i18next";
 import {
   BookOpen,
-  Award,
   PlayCircle,
   ArrowRight,
   Sparkles,
-  Zap,
-  Star,
   Trophy
 } from "lucide-react";
 
@@ -19,38 +15,24 @@ import { RootState } from "@/redux/store";
 import { ProgressBar } from "./progress-bar";
 import { WelcomeHeroSkeleton, StatCardSkeleton, CourseCardSkeleton } from "./dashboard/skeletons";
 
-import { useGetMyCoursesQuery } from "@/redux/features/course/courseAPi";
 import { CourseRecommendation } from "./dashboard/CourseRecommendation";
-import { IMyCourse } from "@/interfaces/course.interface";
+import { StudentAnalytics } from "./dashboard/StudentAnalytics";
+import { useGetStudentAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi";
+
 
 export function StudentDashboard() {
   const { t } = useTranslation();
   const { user } = useSelector((state: RootState) => state.cmAuth);
-  const { data, isLoading, isError } = useGetMyCoursesQuery();
+  const { data: studentAnalytics, isLoading: analyticsLoading, isError: analyticsError } = useGetStudentAnalyticsQuery();
 
-  const myCourses: IMyCourse[] = useMemo(() => Array.isArray(data?.data?.courses) ? data.data.courses : (Array.isArray(data?.data) ? data.data : []), [data]);
+  const analyticsStats = studentAnalytics?.data?.statistics || {};
+  const {
+    totalEnrolled = 0,
+    overallProgressVal = 0,
+    continueCourses = []
+  } = analyticsStats;
 
-  // ================= MEMOIZED STATS =================
-  const stats = useMemo(() => {
-    const totalEnrolled = myCourses.length;
-    const completedCount = myCourses.filter((c) => c.progressPercentage === 100).length;
-    const inProgressCount = myCourses.filter((c) => c.progressPercentage < 100).length;
-    const overallProgressVal = myCourses.reduce((acc, c) => acc + (c.progressPercentage || 0), 0) / (myCourses.length || 1);
-
-    const continueCourses = [...myCourses]
-      .sort((a, b) => new Date(b.lastActivity).getTime() - new Date(a.lastActivity).getTime())
-      .slice(0, 4);
-
-    return {
-      totalEnrolled,
-      completedCount,
-      inProgressCount,
-      overallProgressVal,
-      continueCourses
-    };
-  }, [myCourses]);
-
-  if (isLoading) {
+  if (analyticsLoading) {
     return (
       <div className="space-y-16 animate-pulse">
         <WelcomeHeroSkeleton />
@@ -71,15 +53,13 @@ export function StudentDashboard() {
     );
   }
 
-  if (isError) {
+  if (analyticsError) {
     return (
       <div className="p-12 bg-destructive/5 border border-destructive/10 rounded-[2rem] text-center">
-        <p className="text-destructive font-black uppercase tracking-widest text-xs">{t("student.sync_failed") || "Failed to synchronize courses"}</p>
+        <p className="text-destructive font-black uppercase tracking-widest text-xs">{t("student.sync_failed") || "Failed to synchronize analytics"}</p>
       </div>
     );
   }
-
-  const { totalEnrolled, completedCount, inProgressCount, overallProgressVal, continueCourses } = stats;
 
   return (
     <div className="max-w-7xl mx-auto space-y-16 animate-in fade-in slide-in-from-bottom-6 duration-1000">
@@ -160,33 +140,9 @@ export function StudentDashboard() {
         </section>
       )}
 
-      {/* ================= STATS GRID ================= */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard
-          label={t("student.total_enrolled")}
-          value={totalEnrolled}
-          icon={<BookOpen className="w-5 h-5" />}
-          trend={t("student.enrolled_trend")}
-        />
-        <StatCard
-          label={t("student.mastered")}
-          value={completedCount}
-          icon={<Star className="w-5 h-5" />}
-          trend={t("student.mastered_trend")}
-        />
-        <StatCard
-          label={t("student.engaged")}
-          value={inProgressCount}
-          icon={<Zap className="w-5 h-5" />}
-          trend={t("student.engaged_trend")}
-        />
-        <StatCard
-          label={t("student.certificates")}
-          value={completedCount} 
-          icon={<Award className="w-5 h-5" />}
-          trend={t("student.certificates_trend")}
-        />
-      </div>
+      {/* ================= ANALYTICS INSIGHTS ================= */}
+      <StudentAnalytics statistics={analyticsStats} />
+
 
       {/* ================= CONTINUE THE MISSION ================= */}
       <div className="space-y-8">
@@ -205,13 +161,13 @@ export function StudentDashboard() {
           </Link>
         </div>
 
-        {myCourses.length === 0 ? (
+        {totalEnrolled === 0 ? (
           <div className="p-20 bg-secondary/30 border border-dashed border-border rounded-[3rem] text-center">
             <p className="text-muted-foreground font-medium italic">{t("student.empty_library") || "Your learning library is currently empty."}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
-            {continueCourses.map((course) => (
+            {continueCourses.map((course: any) => (
               <Link
                 key={course.id}
                 href={`/dashboard/student/my-courses/${course.id}`}
@@ -253,40 +209,6 @@ export function StudentDashboard() {
       {/* ================= RECOMMENDED FOR YOU (AI) ================= */}
       <CourseRecommendation />
 
-    </div>
-  );
-}
-
-/* ================= PREMIUM STAT CARD ================= */
-function StatCard({
-  label,
-  value,
-  icon,
-  trend,
-}: {
-  label: string;
-  value: string | number;
-  icon: React.ReactNode;
-  trend: string;
-}) {
-  return (
-    <div className="group relative p-8 bg-card border border-border rounded-[2.5rem] transition-all duration-500 hover:border-primary/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
-      <div className="space-y-6">
-        <div className="w-12 h-12 flex items-center justify-center bg-primary/5 border border-primary/10 rounded-2xl text-primary transition-all duration-500 group-hover:bg-primary group-hover:text-white group-hover:scale-110">
-          {icon}
-        </div>
-
-        <div className="space-y-1">
-          <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest leading-none">
-            {label}
-          </p>
-          <p className="text-4xl font-black text-foreground tracking-tighter leading-none">{value}</p>
-        </div>
-
-        <div className="pt-4 border-t border-border/50">
-          <p className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em]">{trend}</p>
-        </div>
-      </div>
     </div>
   );
 }

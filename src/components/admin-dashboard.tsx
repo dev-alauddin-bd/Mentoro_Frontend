@@ -6,14 +6,15 @@ import { AdminCoursesTable } from "./admin-courses-table"
 import { AdminUsersTable } from "./admin-users-table"
 import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi"
 import { useGetAllUsersQuery } from "@/redux/features/user/userApi"
-import { useGetDashboardAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi"
+import { useGetAdminAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi"
 import { Sparkles, Activity, ShieldCheck, ArrowRight, Loader2 } from "lucide-react"
 import Link from "next/link"
-import { PlatformAnalytics } from "./dashboard/PlatformAnalytics"
+import { AdminAnalytics } from "./dashboard/AdminAnalytics"
 
 export function AdminDashboard() {
   const { t } = useTranslation()
-  const { data: analyticsData } = useGetDashboardAnalyticsQuery()
+  const { data: analyticsData } = useGetAdminAnalyticsQuery()
+
   const { data: coursesData } = useGetAllCoursesQuery({ limit: 1000 })
   const { data: usersData } = useGetAllUsersQuery()
   
@@ -52,7 +53,8 @@ export function AdminDashboard() {
       <AdminStats />
 
       {/* ================= ADVANCED ANALYTICS ================= */}
-      <PlatformAnalytics courses={courses} users={users} statistics={stats} />
+      <AdminAnalytics courses={courses} users={users} statistics={stats} />
+
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-12">
         
         {/* Recent Courses Section */}

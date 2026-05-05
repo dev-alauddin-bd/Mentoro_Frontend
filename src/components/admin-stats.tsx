@@ -2,7 +2,7 @@
 
 import { useMemo } from "react"
 import { Users, BookOpen, TrendingUp, DollarSign, Loader2, Sparkles } from "lucide-react"
-import { useGetDashboardAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi"
+import { useGetAdminAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi"
 import { DashboardStatCard } from "./dashboard/stat-card"
 import { StatCardSkeleton } from "./dashboard/skeletons"
 
@@ -10,8 +10,9 @@ import { useTranslation } from "react-i18next"
 
 export function AdminStats() {
   const { t } = useTranslation();
-  const { data, isLoading } = useGetDashboardAnalyticsQuery();
+  const { data, isLoading } = useGetAdminAnalyticsQuery();
   const stats = useMemo(() => data?.data?.statistics || {}, [data]);
+
 
   if (isLoading) {
     return (

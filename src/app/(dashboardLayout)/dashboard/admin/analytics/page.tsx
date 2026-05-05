@@ -1,11 +1,11 @@
 "use client"
 
-import { useGetDashboardAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi"
+import { useGetAdminAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi"
 import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi"
 import { useGetAllUsersQuery } from "@/redux/features/user/userApi"
 import { Users, BookOpen, DollarSign, Loader2, TrendingUp, Inbox, ShieldCheck, UserCheck } from "lucide-react"
 import { useTranslation } from "react-i18next"
-import { PlatformAnalytics } from "@/components/dashboard/PlatformAnalytics"
+import { AdminAnalytics } from "@/components/dashboard/AdminAnalytics"
 import { RoleProtectedRoute } from "@/components/shared/RoleProtectedRoute"
 import { Role } from "@/interfaces/user.interface"
 
@@ -19,7 +19,7 @@ export default function AdminAnalyticsPage() {
 
 function AdminAnalyticsContent() {
   const { t } = useTranslation()
-  const { data: analyticsData, isLoading: analyticsLoading } = useGetDashboardAnalyticsQuery()
+  const { data: analyticsData, isLoading: analyticsLoading } = useGetAdminAnalyticsQuery()
   const { data: coursesData, isLoading: coursesLoading } = useGetAllCoursesQuery({ limit: 1000 })
   const { data: usersData, isLoading: usersLoading } = useGetAllUsersQuery({ limit: 1000 })
   
@@ -78,7 +78,7 @@ function AdminAnalyticsContent() {
               {t('admin.data_sync')}
            </div>
         </div>
-        <PlatformAnalytics courses={courses} users={users} statistics={stats} />
+        <AdminAnalytics courses={courses} users={users} statistics={stats} />
       </div>
     
     </div>
@@ -97,19 +97,3 @@ function AdminMiniStats({ label, value, icon, color, bg }: any) {
     )
 }
 
-function ProgressItem({ label, value, color }: any) {
-    return (
-        <div className="space-y-2">
-            <div className="flex justify-between text-xs font-black uppercase tracking-widest opacity-60">
-                <span>{label}</span>
-                <span>{value}%</span>
-            </div>
-            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                <div 
-                  className={`h-full ${color} rounded-full transition-all duration-1000 ease-out`} 
-                  style={{ width: `${value}%` }}
-                ></div>
-            </div>
-        </div>
-    )
-}
