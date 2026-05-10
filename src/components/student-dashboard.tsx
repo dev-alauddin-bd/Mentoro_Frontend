@@ -15,7 +15,6 @@ import { RootState } from "@/redux/store";
 import { ProgressBar } from "./progress-bar";
 import { WelcomeHeroSkeleton, StatCardSkeleton, CourseCardSkeleton } from "./dashboard/skeletons";
 
-import { CourseRecommendation } from "./dashboard/CourseRecommendation";
 import { StudentAnalytics } from "./dashboard/StudentAnalytics";
 import { useGetStudentAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi";
 
@@ -206,8 +205,6 @@ export function StudentDashboard() {
         )}
       </div>
 
-      {/* ================= RECOMMENDED FOR YOU (AI) ================= */}
-      <CourseRecommendation />
 
     </div>
   );

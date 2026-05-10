@@ -13,9 +13,9 @@ const AUTH_ROUTES = ["/login", "/register"];
 
 // Map routes to required roles for Course Master
 const ROLE_PERMISSIONS: Record<string, string[]> = {
-  "/admin": ["admin"],
-  "/instructor": ["instructor", "admin"],
-  "/student": ["student", "instructor", "admin"],
+  "/dashboard/admin": ["admin"],
+  "/dashboard/instructor": ["instructor"],
+  "/dashboard/student": ["student"],
   "/dashboard": ["student", "instructor", "admin"],
 };
 
@@ -41,13 +41,12 @@ export async function proxy(request: NextRequest) {
     if (refreshToken) {
       try {
         const secret = new TextEncoder().encode(
-          process.env.NEXT_PUBLIC_REFRESH_TOKEN_SECRET || "fallback-secret",
+          process.env.REFRESH_TOKEN_SECRET || "fallback-secret",
         );
         await jwtVerify(refreshToken, secret);
         console.log(`\x1b[33m[WATCHDOG]\x1b[0m 🔄 Session active. Diverting from ${pathname} to dashboard.`);
         
-        // Redirect to their respective home based on logic or a default dashboard
-        return NextResponse.redirect(new URL("/", request.url));
+        return NextResponse.redirect(new URL("/dashboard", request.url));
       } catch (e) {
         console.log(`\x1b[31m[WATCHDOG] ⚠️ Session stale on ${pathname}. Clearance provided for re-authentication.\x1b[0m`);
         return NextResponse.next();
@@ -69,12 +68,24 @@ export async function proxy(request: NextRequest) {
 
     try {
       const secret = new TextEncoder().encode(
-        process.env.NEXT_PUBLIC_REFRESH_TOKEN_SECRET || "fallback-secret",
+        process.env.REFRESH_TOKEN_SECRET || "fallback-secret",
       );
       const { payload } = await jwtVerify(refreshToken, secret);
       const userRole = (payload.role as string) || "GUEST";
 
       console.log(`\x1b[32m[WATCHDOG]\x1b[0m 🛂 Identity Confirmed: [${userRole}] | Destination: ${pathname}`);
+
+      // Specific redirection for base /dashboard route
+      if (pathname === "/dashboard") {
+        const roleMap: Record<string, string> = {
+          admin: "/dashboard/admin",
+          instructor: "/dashboard/instructor",
+          student: "/dashboard/student",
+        };
+        const target = roleMap[userRole] || "/dashboard/student";
+        console.log(`\x1b[33m[WATCHDOG]\x1b[0m 🔄 Routing generic dashboard to ${target} for ${userRole}.`);
+        return NextResponse.redirect(new URL(target, request.url));
+      }
 
       // Check for RBAC Permissions
       for (const [route, allowedRoles] of Object.entries(ROLE_PERMISSIONS)) {

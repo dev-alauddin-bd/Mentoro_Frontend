@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { FeaturedCourses } from "@/components/FeaturedCourses";
 import { HeroAnimated } from "@/components/hero";
 import { StatsSection } from "@/components/StatsSection";
 import { Testimonials } from "@/components/Testimonials";
@@ -28,7 +27,6 @@ export default function Home() {
 
       <HeroAnimated />
       <TrustBar />
-      <FeaturedCourses />
       <TopEnrolledCourses />
       <NewArrivalCourses />
       <UpcomingLiveCourses />

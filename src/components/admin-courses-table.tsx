@@ -10,11 +10,12 @@ interface AdminCoursesTableProps {
   instructorId?: string;
   limit?: number;
   showAll?: boolean;
+  featureRequestedFilter?: boolean;
 }
 
-export function AdminCoursesTable({ instructorId, limit = 5, showAll }: AdminCoursesTableProps) {
+  export function AdminCoursesTable({ instructorId, limit = 5, showAll, featureRequestedFilter }: AdminCoursesTableProps) {
   const { data, isLoading } = useGetAllCoursesQuery(
-    { limit, instructorId, showAll },
+    { limit: showAll ? 1000 : limit, instructorId, showAll, featureRequested: featureRequestedFilter },
     { skip: !instructorId && !showAll }
   );
   
@@ -177,7 +178,7 @@ export function AdminCoursesTable({ instructorId, limit = 5, showAll }: AdminCou
             )) : (
               <tr>
                 <td colSpan={instructorId ? 5 : 6} className="px-4 py-12 text-center text-muted-foreground italic font-medium">
-                  No courses found in your library.
+                  {featureRequestedFilter ? "No pending featured requests found." : "No courses found in your library."}
                 </td>
               </tr>
             )}

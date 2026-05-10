@@ -17,9 +17,9 @@ export const courseApi = baseApi.injectEndpoints({
 
    getAllCourses: build.query<
   ICoursesResponse,
-  { page?: number; limit?: number; search?: string; category?: string; sort?: string; instructorId?: string; showAll?: boolean; isFeatured?: boolean } | void
+  { page?: number; limit?: number; search?: string; category?: string; sort?: string; instructorId?: string; showAll?: boolean; isFeatured?: boolean; featureRequested?: boolean } | void
 >({
-  query: ({ page, limit, search, category, sort, instructorId, showAll, isFeatured } = {}) => {
+  query: ({ page, limit, search, category, sort, instructorId, showAll, isFeatured, featureRequested } = {}) => {
     const params = new URLSearchParams();
 
     if (page) params.append("page", page.toString());
@@ -32,19 +32,13 @@ export const courseApi = baseApi.injectEndpoints({
     // 🔥 FIX: sort (NOT sortBy)
     if (sort) params.append("sort", sort);
     if (isFeatured) params.append("isFeatured", "true");
+    if (featureRequested) params.append("featureRequested", "true");
 
     return `/courses?${params.toString()}`;
   },
   providesTags: ["Course"],
 }),
 
-   getRecommendations: build.query({
-      query: () => ({
-        url: "/ai/recommendations",
-        method: "GET",
-      }),
-      providesTags: ["Course"],
-    }),
 
     // Get Single Course
     getCourseById: build.query<ICourseResponse, string>({
@@ -171,7 +165,6 @@ export const {
   useGetMyCoursesQuery,
   useCompleteLessonMutation,
   useTogglePublishMutation,
-  useGetRecommendationsQuery,
   useRequestFeatureMutation,
   useApproveFeatureMutation
 } = courseApi;

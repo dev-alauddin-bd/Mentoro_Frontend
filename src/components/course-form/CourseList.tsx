@@ -1,9 +1,9 @@
 "use client";
 
-import { Edit2, Plus, Loader2, BookOpen, Eye, Trash2, CloudUpload, CloudOff, Layers } from "lucide-react";
+import { Edit2, Plus, Loader2, BookOpen, Eye, Trash2, CloudUpload, CloudOff, Layers, Sparkles } from "lucide-react";
 import Link from "next/link";
 
-export default function CourseList({ courses, isLoading, onEdit, onAddModule, onDelete, onTogglePublish }: any) {
+export default function CourseList({ courses, isLoading, onEdit, onAddModule, onDelete, onTogglePublish, onFeatureRequest }: any) {
   
   if (isLoading) {
     return (
@@ -64,6 +64,11 @@ export default function CourseList({ courses, isLoading, onEdit, onAddModule, on
                             <div className={`w-1 h-1 rounded-full ${course.isPublished ? "bg-green-500 animate-pulse" : "bg-orange-500"}`} />
                             {course.isPublished ? "Live" : "Draft"}
                           </span>
+                          {course.isFeatured && (
+                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest bg-yellow-500/10 text-yellow-600 border border-yellow-500/20">
+                                <Sparkles className="w-2 h-2" /> Featured
+                            </span>
+                          )}
                         </div>
                     </div>
                   </div>
@@ -91,6 +96,19 @@ export default function CourseList({ courses, isLoading, onEdit, onAddModule, on
                     title={course.isPublished ? "Unpublish Course" : "Publish Course"}
                   >
                     {course.isPublished ? <CloudOff className="w-3.5 h-3.5" /> : <CloudUpload className="w-3.5 h-3.5" />}
+                  </button>
+                  
+                  <button
+                    onClick={() => onFeatureRequest(course.id, course.title)}
+                    disabled={course.isFeatured || course.featureRequested}
+                    className={`h-9 w-9 border border-border/50 rounded-xl transition-all flex items-center justify-center shadow-sm ${
+                      course.isFeatured ? "bg-yellow-500/10 text-yellow-600 cursor-not-allowed" : 
+                      course.featureRequested ? "bg-blue-500/10 text-blue-500 cursor-not-allowed" : 
+                      "bg-background text-muted-foreground hover:bg-yellow-500 hover:text-white hover:border-yellow-500"
+                    }`}
+                    title={course.isFeatured ? "Featured Course" : course.featureRequested ? "Request Pending" : "Request Feature Status ($50)"}
+                  >
+                    <Sparkles className={`w-3.5 h-3.5 ${course.featureRequested ? "animate-pulse" : ""}`} />
                   </button>
 
                   <Link

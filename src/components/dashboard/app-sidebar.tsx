@@ -23,6 +23,7 @@ import {
   Activity,
   Briefcase,
   ClipboardList,
+  Sparkles,
 } from "lucide-react";
 import {
   Sidebar,
@@ -67,6 +68,7 @@ export function AppSidebar() {
   const adminItems = [
     { title: t("nav.platform_hub"), url: "/dashboard", icon: ShieldCheck },
     { title: t("nav.manage_users"), url: "/dashboard/admin/manage-users", icon: Users },
+    { title: t("nav.featured_requests"), url: "/dashboard/admin/featured-requests", icon: Sparkles },
     { title: t("nav.manage_jobs"), url: "/dashboard/admin/manage-jobs", icon: Briefcase },
     { title: t("nav.revenue"), url: "/dashboard/admin/revenue", icon: BarChart3 },
     { title: t("nav.legal"), url: "/dashboard/admin/refund-policy", icon: History },

@@ -6,7 +6,7 @@
 
 ## 📖 About The Project
 
-CourseMaster bridges the gap between instructors and students by providing a seamless, interactive platform for course creation, discovery, and learning. It empowers educators with robust course management tools—such as dynamic creation forms, media uploads, and structured lessons—while offering students an intuitive dashboard, personalized recommendations, and a 24/7 AI Mentor to aid their learning journey.
+CourseMaster bridges the gap between instructors and students by providing a seamless, interactive platform for course creation, discovery, and learning. It empowers educators with robust course management tools—such as dynamic creation forms, media uploads, and structured lessons—while offering students an intuitive dashboard and a 24/7 AI Mentor to aid their learning journey.
 
 Whether you are looking to monetize your expertise or upskill with new knowledge, CourseMaster provides the perfect ecosystem with built-in payments, multi-language support, and intelligent search capabilities.
 
@@ -21,7 +21,6 @@ Whether you are looking to monetize your expertise or upskill with new knowledge
 | ☁️ **Media Uploads** | Seamless image and video uploads integrated with Cloudinary for course thumbnails and previews. |
 | 🤖 **AI Mentor & Quiz Gen** | Persistent 24/7 AI assistant for instant support and on-the-fly quiz generation to test knowledge. |
 | 🔍 **Intelligent Search** | Semantic AI search with insights, smart course matching, and filtering capabilities. |
-| 🎯 **Smart Recommendations** | Personalized course recommendations based on user history and preferences. |
 | 🌍 **Multi-Language (i18n)** | Native support for multiple languages including English, Bengali, Arabic (RTL), French, and Spanish, powered by Intlayer & AI. |
 | 💼 **Jobs & Careers Board** | Dedicated job portal for users to apply to platform careers, with admin application tracking. |
 | 📹 **Live Sessions** | Integrated live session management for instructors to schedule and host real-time classes. |
@@ -98,7 +97,7 @@ pnpm dev
 | `/careers` | View and apply for open job positions | Public |
 | `/contact` | Get in touch with platform support via interactive forms | Public |
 | `/login` & `/signup` | Secure authentication flows | Public |
-| `/dashboard/student/*` | Student progress, enrolled courses, and recommendations | Protected |
+| `/dashboard/student/*` | Student progress and enrolled courses | Protected |
 | `/dashboard/instructor/*` | Instructor course management, assignments, modules, and live sessions | Protected |
 | `/dashboard/admin/*` | Platform administration, advanced analytics, user management, and job postings | Protected |
 

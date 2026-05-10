@@ -40,6 +40,7 @@
     "explore_courses": "Explore Courses",
     "analytics": "Analytics",
     "manage_jobs": "Manage Jobs",
+    "featured_requests": "Featured Requests",
     "dash": "Dash",
     "policies": "Policies"
   },
@@ -260,6 +261,14 @@
       "revenue": "Captured Revenue",
       "verified": "Verified Placement",
       "no_data": "Lateral data not yet synchronized."
+    },
+    "featured_requests": {
+      "title_start": "Featured",
+      "title_end": "Requests.",
+      "subtitle": "Review and approve courses that have paid for featured placement on the platform.",
+      "pipeline": "Promotion Pipeline",
+      "pending_approvals": "Pending Approvals",
+      "pending_subtitle": "Verify payment status and curriculum quality before approving."
     }
   },
   "requirements": {
@@ -744,6 +753,21 @@
       "metrics_desc": "Based on enrollment and revenue metrics",
       "students_enrolled": "Students enrolled",
       "gross_revenue": "Gross Revenue"
+    },
+    "manage_courses": {
+      "title": "Manage Courses.",
+      "subtitle": "Create new learning paths, update pricing, and manage your course catalog to build your digital presence.",
+      "catalog": "Course Catalog",
+      "create_course": "Create Course",
+      "edit_course": "Edit Course",
+      "draft_new": "Draft New Course",
+      "update_details": "Update your curriculum details.",
+      "fill_details": "Fill in the details to lay out your curriculum.",
+      "close": "Close",
+      "delete_confirm": "Are you sure you want to delete this course?",
+      "delete_success": "Course deleted successfully!",
+      "delete_error": "Failed to delete course.",
+      "promote_confirm": "Promoting \"{{title}}\" to \"Featured\" requires a one-time fee of $50. Proceed to payment?"
     }
   },
   "info": {
