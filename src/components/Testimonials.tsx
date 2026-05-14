@@ -24,7 +24,7 @@ export function Testimonials() {
     },
     {
       id: "s3",
-      content: "I've tried many platforms, but CourseMaster is by far the most professional and well-structured.",
+      content: "I've tried many platforms, but Mentoro is by far the most professional and well-structured.",
       rating: 5,
       user: { name: "Elena Rodriguez", role: "Product Designer", avatar: "https://i.pravatar.cc/150?img=45" }
     },

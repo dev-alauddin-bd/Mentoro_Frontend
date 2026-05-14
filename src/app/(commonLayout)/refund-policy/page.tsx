@@ -100,9 +100,9 @@ export default function RefundPolicyPage() {
                    </div>
                 </div>
 
-                <a href="mailto:support@coursemaster.com" className="h-16 w-full bg-primary text-white rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all hover:-translate-y-1">
+                <a href="mailto:support@Mentoro.com" className="h-16 w-full bg-primary text-white rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest shadow-xl shadow-primary/20 hover:shadow-primary/40 transition-all hover:-translate-y-1">
                    <Mail className="w-5 h-5" />
-                   support@coursemaster.com
+                   support@Mentoro.com
                 </a>
              </div>
           </div>

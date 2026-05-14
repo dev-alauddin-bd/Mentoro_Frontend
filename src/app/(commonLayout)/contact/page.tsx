@@ -194,7 +194,7 @@ export default function ContactPage() {
                 <ContactInfoCard
                   icon={<Mail className="w-6 h-6" />}
                   title={t("contact.email_us")}
-                  value="support@coursemaster.com"
+                  value="support@Mentoro.com"
                   subtitle={t("contact.official_support")}
                 />
 
@@ -215,7 +215,7 @@ export default function ContactPage() {
                 <ContactInfoCard
                   icon={<Globe className="w-6 h-6" />}
                   title={t("contact.socials")}
-                  value="@CourseMasterHQ"
+                  value="@MentoroHQ"
                   subtitle={t("contact.social_platforms")}
                 />
               </div>

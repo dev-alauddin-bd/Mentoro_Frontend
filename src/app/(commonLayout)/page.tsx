@@ -11,10 +11,10 @@ import { TopEnrolledCourses } from "@/components/TopEnrolledCourses";
 import { FAQ } from "@/components/FAQ";
 
 export const metadata: Metadata = {
-  title: "CourseMaster | Transform Your Future with Expert-Led Online Courses",
-  description: "Join CourseMaster to learn React, Next.js, AI, and more. Master new skills with high-quality video courses and live sessions from industry experts.",
+  title: "Mentoro | Transform Your Future with Expert-Led Online Courses",
+  description: "Join Mentoro to learn React, Next.js, AI, and more. Master new skills with high-quality video courses and live sessions from industry experts.",
   openGraph: {
-    title: "CourseMaster | Transform Your Future with Expert-Led Online Courses",
+    title: "Mentoro | Transform Your Future with Expert-Led Online Courses",
     description: "Master new skills with high-quality video courses and live sessions from industry experts.",
     type: "website",
   }

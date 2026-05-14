@@ -273,13 +273,13 @@
   },
   "requirements": {
     "title": "System Requirements",
-    "subtitle": "Ensure your system meets the requirements for the best learning experience on CourseMaster",
+    "subtitle": "Ensure your system meets the requirements for the best learning experience on Mentoro",
     "need_help": "Need help?"
   },
   "extra": {
     "trust_title": "Trusted by leading Tech Companies & Developers Worldwide",
     "instructors_title": "Learn from Top Software Engineers",
-    "about_title": "Why Choose CourseMaster for Tech Education?",
+    "about_title": "Why Choose Mentoro for Tech Education?",
     "contact_title": "Get in Touch with our Tech Mentors",
     "testimonials_title": "Success Stories & Student Reviews",
     "become_instructor": "Become an Instructor",
@@ -460,7 +460,7 @@
   "ai_assistant": {
     "mentor_title": "AI Mentor",
     "status_ready": "Online & Ready",
-    "welcome_title": "Welcome to CourseMaster",
+    "welcome_title": "Welcome to Mentoro",
     "welcome_desc": "How can I help you in your learning journey today?",
     "placeholder": "Ask anything...",
     "error_msg": "Sorry, having trouble connecting right now. Please try again later."
@@ -500,7 +500,7 @@
   },
   "user_management": {
     "title": "Identity Management.",
-    "subtitle": "Administer platform access, roles, and status for all users in the CourseMaster ecosystem.",
+    "subtitle": "Administer platform access, roles, and status for all users in the Mentoro ecosystem.",
     "identity_hub": "Identity Hub",
     "active_users": "Active Users",
     "table": {
@@ -689,7 +689,7 @@
       "back_to_courses": "Back to My Courses",
       "back_to_workspace": "Back to Workspace",
       "export_pdf": "Export as PDF",
-      "academy_name": "CourseMaster",
+      "academy_name": "Mentoro",
       "academy_pro": "Academy of Professional Excellence",
       "awarded_to": "This official certificate is awarded to",
       "distinguished_student": "Distinguished Student",
@@ -782,7 +782,7 @@
   "about": {
     "title_start": "Education",
     "title_end": "Revolution",
-    "subtitle": "At CourseMaster, we believe education shouldn't just be consumed - it should be experienced. The tools we build empower the next generation of digital pioneers.",
+    "subtitle": "At Mentoro, we believe education shouldn't just be consumed - it should be experienced. The tools we build empower the next generation of digital pioneers.",
     "badge": "Our DNA",
     "mission_title": "Our Ultimate Goal",
     "mission_desc": "To be the world's most accessible high-fidelity education system, regardless of geographical or financial barriers",
@@ -826,27 +826,27 @@
     "contact_sales": "Contact Sales"
   },
   "seo": {
-    "home_title": "CourseMaster | Ultimate Learning Platform",
-    "home_description": "Master new skills with our expert-led online courses. From web development to data science, start your learning journey with CourseMaster today.",
-    "courses_title": "All Courses | CourseMaster - Explore Expert-Led Programs",
-    "courses_description": "Browse our wide range of professional courses in React, Next.js, and AI. Start your career with CourseMaster today.",
-    "about_title": "About Us | CourseMaster - Empowering Learners Globally",
-    "about_description": "Learn more about CourseMaster's mission to provide world-class education. Discover our values and how we're transforming online learning.",
-    "contact_title": "Contact Us | CourseMaster - Get in Touch",
-    "contact_description": "Have questions or need support? Contact the CourseMaster team. We're here to help you on your learning journey."
+    "home_title": "Mentoro | Ultimate Learning Platform",
+    "home_description": "Master new skills with our expert-led online courses. From web development to data science, start your learning journey with Mentoro today.",
+    "courses_title": "All Courses | Mentoro - Explore Expert-Led Programs",
+    "courses_description": "Browse our wide range of professional courses in React, Next.js, and AI. Start your career with Mentoro today.",
+    "about_title": "About Us | Mentoro - Empowering Learners Globally",
+    "about_description": "Learn more about Mentoro's mission to provide world-class education. Discover our values and how we're transforming online learning.",
+    "contact_title": "Contact Us | Mentoro - Get in Touch",
+    "contact_description": "Have questions or need support? Contact the Mentoro team. We're here to help you on your learning journey."
   },
   "faq": {
     "badge": "Common Questions",
     "title_start": "Common Questions About",
     "title_end": "Our Tech Courses",
     "subtitle": "Find answers about course access, certificates, and learning paths",
-    "q1": "How do I get started on CourseMaster?",
+    "q1": "How do I get started on Mentoro?",
     "a1": "Sign up for an account, explore our course library, and enroll in any course that interests you. You can start learning instantly.",
     "q2": "Are the courses self-paced or live?",
     "a2": "We offer both. Most courses are self-paced so you can learn at your own speed, along with live sessions and workshops led by industry experts.",
     "q3": "Will I get a certificate after completing a course?",
     "a3": "Yes, you will receive a digital certificate after successfully completing a course. You can share it on LinkedIn or with potential employers.",
-    "q4": "Can I become an instructor on CourseMaster?",
+    "q4": "Can I become an instructor on Mentoro?",
     "a4": "Yes, you can. If you have expertise in a subject, you can apply to be an instructor from your dashboard and start teaching.",
     "q5": "What is the refund policy?",
     "a5": "We offer a 30-day money-back guarantee on most courses. If you're not satisfied, you can request a refund within 30 days of purchase."
@@ -886,7 +886,7 @@
     "benefit4_title": "Paid Retreats",
     "benefit4_desc": "Twice a year team meetups.",
     "ready_join": "Ready to join the A-Team?",
-    "testimonial_text": "\"Joining Course Master was the best career move I ever made. The culture of thinking and innovation is real.\"",
+    "testimonial_text": "\"Joining Mentoro was the best career move I ever made. The culture of thinking and innovation is real.\"",
     "testimonial_author": "Alex Rivera",
     "testimonial_role": "Lead Developer",
     "no_role_title": "Don't see your role?",
@@ -918,7 +918,7 @@
     "section2_title": "2. How We Use Data",
     "section2_desc": "Your data is used to personalize your curriculum, process transactions securely via our payment partners, and send important platform updates. We analyze anonymous usage patterns to constantly refine our interface and content quality.",
     "section3_title": "3. Data Security",
-    "section3_desc": "CourseMaster employs industry-leading encryption and decentralized security protocols to ensure your data remains inaccessible to unauthorized parties. All payment processing is handled by Level 1 PCI-compliant service providers.",
+    "section3_desc": "Mentoro employs industry-leading encryption and decentralized security protocols to ensure your data remains inaccessible to unauthorized parties. All payment processing is handled by Level 1 PCI-compliant service providers.",
     "section4_title": "4. Your Rights",
     "section4_desc": "You retain full ownership of your data. At any time, you can request a full export of your personal information or ask for permanent account deletion. We honor all GDPR and CCPA requests with immediate priority."
   },
@@ -926,13 +926,13 @@
     "badge": "Legal Framework",
     "title_start": "Platform Terms",
     "title_end": "of Service",
-    "subtitle": "Effective as of April 13, 2026. By accessing CourseMaster, you agree to these professional standards and legal obligations.",
+    "subtitle": "Effective as of April 13, 2026. By accessing Mentoro, you agree to these professional standards and legal obligations.",
     "section1_title": "1. Acceptance of Terms",
-    "section1_desc": "By creating an account on CourseMaster, you enter into a legally binding agreement. You certify that you are at least 18 years of age (or have legal guardian consent) and will provide accurate registration information.",
+    "section1_desc": "By creating an account on Mentoro, you enter into a legally binding agreement. You certify that you are at least 18 years of age (or have legal guardian consent) and will provide accurate registration information.",
     "section2_title": "2. User License",
     "section2_desc": "We grant you a limited, non-transferable, personal license to access and view course content for which you have paid all required fees. This license is for personal, non-commercial educational use only.",
     "section3_title": "3. Intellectual Property",
-    "section3_desc": "All content provided on the platform—including videos, transcripts, and downloadable assets—remains the exclusive property of CourseMaster or its instructors. Unauthorized reproduction or distribution is strictly prohibited.",
+    "section3_desc": "All content provided on the platform—including videos, transcripts, and downloadable assets—remains the exclusive property of Mentoro or its instructors. Unauthorized reproduction or distribution is strictly prohibited.",
     "section4_title": "4. Code of Conduct",
     "section4_desc": "Users must maintain a professional and respectful environment. Any form of harassment, hate speech, or attempt to compromise platform security will result in immediate termination of access without refund."
   },

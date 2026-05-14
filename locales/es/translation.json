@@ -267,13 +267,13 @@
   },
   "requirements": {
     "title": "Requisitos del sistema",
-    "subtitle": "Asegúrate de tener los requisitos necesarios para obtener la mejor experiencia de aprendizaje en CourseMaster",
+    "subtitle": "Asegúrate de tener los requisitos necesarios para obtener la mejor experiencia de aprendizaje en Mentoro",
     "need_help": "¿Necesitas ayuda?"
   },
   "extra": {
     "trust_title": "=Razonado por los mejores equipos del mundo",
     "instructors_title": "Nuestros instructores expertos",
-    "about_title": "Acerca de CourseMaster",
+    "about_title": "Acerca de Mentoro",
     "contact_title": "Pontente en contacto",
     "testimonials_title": "Lo que nuestros estudiantes dicen",
     "become_instructor": "Conviértete en instructor",
@@ -507,7 +507,7 @@
       "back_to_courses": "Volver a Mis Cursos",
       "back_to_workspace": "Volver a Workspace",
       "export_pdf": "Exportar como PDF",
-      "academy_name": "CourseMaster",
+      "academy_name": "Mentoro",
       "academy_pro": "Academia de Excelencia Profesional",
       "awarded_to": "Este Certificado Oficial es Otorgado a",
       "distinguished_student": "Estudiante Distinguido",
@@ -607,7 +607,7 @@
   },
   "about": {
     "title": "Revolucionando el aprendizaje.",
-    "subtitle": "En CourseMaster, creemos que la educación no debería ser solo consumida, sino experimentada. Desarrollamos herramientas que empoderan a la próxima generación de pioneros digitales.",
+    "subtitle": "En Mentoro, creemos que la educación no debería ser solo consumida, sino experimentada. Desarrollamos herramientas que empoderan a la próxima generación de pioneros digitales.",
     "badge": "Nuestro ADN",
     "mission_title": "Nuestro objetivo ultimate",
     "mission_desc": "Convertirnos en el ecosistema de aprendizaje de alta fidelidad más accesible del mundo, sin importar las barreras geográficas o financieras.",
@@ -654,14 +654,14 @@
     "title_end": "Viaje de aprendizaje"
   },
   "seo": {
-    "home_title": "CourseMaster | La plataforma de aprendizaje definitiva",
-    "home_description": "Domina nuevas habilidades con nuestros cursos en línea dirigidos por expertos. Desde Desarrollo Web hasta Ciencia de Datos, comienza tu viaje de aprendizaje con CourseMaster hoy.",
-    "courses_title": "Todos los cursos | CourseMaster - Explora programas dirigidos por expertos",
-    "courses_description": "Explora nuestra amplia gama de cursos profesionales en React, Next.js y AI. Comienza tu viaje de aprendizaje con CourseMaster hoy.",
-    "about_title": "Acerca de nosotros | CourseMaster - Empoderando a los aprendices en todo el mundo",
-    "about_description": "Aprende más sobre la misión de CourseMaster de proporcionar educación de clase mundial. Descubre nuestros valores y cómo estamos transformando el aprendizaje en línea.",
-    "contact_title": "Contáctanos | CourseMaster - Ponte en contacto",
-    "contact_description": "¿Tienes preguntas o necesitas soporte? Comunícate con el equipo de CourseMaster. Estamos aquí para ayudarte en tu viaje de aprendizaje."
+    "home_title": "Mentoro | La plataforma de aprendizaje definitiva",
+    "home_description": "Domina nuevas habilidades con nuestros cursos en línea dirigidos por expertos. Desde Desarrollo Web hasta Ciencia de Datos, comienza tu viaje de aprendizaje con Mentoro hoy.",
+    "courses_title": "Todos los cursos | Mentoro - Explora programas dirigidos por expertos",
+    "courses_description": "Explora nuestra amplia gama de cursos profesionales en React, Next.js y AI. Comienza tu viaje de aprendizaje con Mentoro hoy.",
+    "about_title": "Acerca de nosotros | Mentoro - Empoderando a los aprendices en todo el mundo",
+    "about_description": "Aprende más sobre la misión de Mentoro de proporcionar educación de clase mundial. Descubre nuestros valores y cómo estamos transformando el aprendizaje en línea.",
+    "contact_title": "Contáctanos | Mentoro - Ponte en contacto",
+    "contact_description": "¿Tienes preguntas o necesitas soporte? Comunícate con el equipo de Mentoro. Estamos aquí para ayudarte en tu viaje de aprendizaje."
   },
   "live_sessions": {
     "management_title": "Administración de sesiones en vivo",
@@ -750,7 +750,7 @@
     "ai_assistant": {
       "mentor_title": "Mentor de IA",
       "status_ready": "En línea y listo",
-      "welcome_title": "Bienvenido a CourseMaster",
+      "welcome_title": "Bienvenido a Mentoro",
       "welcome_desc": "¿Cómo puedo ayudarte en tu viaje de aprendizaje hoy?",
       "placeholder": "Pregúntame cualquier cosa...",
       "error_msg": "Lo siento, estoy teniendo problemas para conectarme en este momento. Inténtelo de nuevo más tarde"
@@ -799,13 +799,13 @@
     "badge": "Preguntas comunes",
     "title": "Preguntas frecuentes",
     "subtitle": "Todo lo que necesitas saber sobre la plataforma y tu viaje de aprendizaje.",
-    "q1": "¿Cómo comienzo con CourseMaster!",
+    "q1": "¿Cómo comienzo con Mentoro!",
     "a1": "Registra una cuenta, explora nuestra biblioteca de cursos y matricúlate en cualquier curso que te interese. Puedes empezar a aprender de inmediato.",
     "q2": "¿Los cursos son auto-ritmo o en vivo!",
     "a2": "Ofrecemos ambas opciones. La mayoría de los cursos son auto-ritmo para que puedas aprender a tu propio ritmo, junto con sesiones en vivo y talleres dirigidos por expertos de la industria.",
     "q3": "¿Recibiré un certificado después de completar un curso!",
     "a3": "Sí, recibirás un certificado digital al completar con éxito un curso. Puedes compartirlo en LinkedIn o con posibles empleadores.",
-    "q4": "¿Puedo convertirme en instructor en CourseMaster!",
+    "q4": "¿Puedo convertirme en instructor en Mentoro!",
     "a4": "Sí, puedes. Si tienes experiencia en un tema, puedes solicitar convertirte en instructor desde tu panel de control y empezar a enseñar.",
     "q5": "¿Cuál es la política de reembolso!",
     "a5": "Ofrecemos una garantía de devolución de dinero de 30 días para la mayoría de los cursos. Si no está satisfecho, puede solicitar un reembolso dentro de los 30 días posteriores a la compra.",
@@ -815,7 +815,7 @@
   "ai_assistant": {
     "mentor_title": "Mentor de IA",
     "status_ready": "Conectado y listo",
-    "welcome_title": "Bienvenido a CourseMaster",
+    "welcome_title": "Bienvenido a Mentoro",
     "welcome_desc": "¿Cómo puedo ayudarte en tu camino de aprendizaje hoy?",
     "placeholder": "Pregúntame cualquier cosa...",
     "error_msg": "Lo siento, estoy teniendo problemas para conectarme en este momento. Por favor, inténtalo de nuevo más tarde."
@@ -855,7 +855,7 @@
   },
   "user_management": {
     "title": "Administración de identidad.",
-    "subtitle": "Administrar el acceso a la plataforma, roles y estado para todos los usuarios en el ecosistema de CourseMaster.",
+    "subtitle": "Administrar el acceso a la plataforma, roles y estado para todos los usuarios en el ecosistema de Mentoro.",
     "identity_hub": "Centro de identidad",
     "active_users": "Usuarios activos",
     "table": {
@@ -917,7 +917,7 @@
     "benefit4_title": "Retiros pagados",
     "benefit4_desc": "Reuniones de equipo dos veces al año.",
     "ready_join": "¿Listo para unirse al Equipo A?",
-    "testimonial_text": "\"Unirse a Course Master fue el mejor movimiento de carrera que hice. La cultura de pensamiento e innovación es real.\"",
+    "testimonial_text": "\"Unirse a Mentoro fue el mejor movimiento de carrera que hice. La cultura de pensamiento e innovación es real.\"",
     "testimonial_author": "Alex Rivera",
     "testimonial_role": "Desarrollador líder",
     "no_role_title": "¿No ves tu función?",
@@ -949,20 +949,20 @@
     "section2_title": "2. Cómo utilizamos los datos",
     "section2_desc": "Sus datos se utilizan para personalizar su currículum, procesar transacciones de manera segura a través de nuestros socios de pago, y enviar actualizaciones importantes de la plataforma. Analizamos patrones de uso anónimos para refinar constantemente nuestra interfaz y la calidad del contenido.",
     "section3_title": "3. Seguridad de los datos",
-    "section3_desc": "CourseMaster emplea cifrado líder en la industria y protocolos de seguridad descentralizados para garantizar que sus datos permanezcan inaccesibles para partes no autorizadas. Todo el procesamiento de pagos es realizado por proveedores de servicios conformes con el nivel 1 de PCI.",
+    "section3_desc": "Mentoro emplea cifrado líder en la industria y protocolos de seguridad descentralizados para garantizar que sus datos permanezcan inaccesibles para partes no autorizadas. Todo el procesamiento de pagos es realizado por proveedores de servicios conformes con el nivel 1 de PCI.",
     "section4_title": "4. Tus Derechos",
     "section4_desc": "Mantienes la propiedad total de tus datos. En cualquier momento, puedes solicitar una exportación completa de tu información personal o solicitar la eliminación permanente de tu cuenta. Honramos todas las solicitudes de GDPR y CCPA con prioridad inmediata."
   },
   "terms_of_service": {
     "badge": "Marco Legal",
     "title": "Términos de Servicio de la Plataforma",
-    "subtitle": "Vigente a partir del 13 de abril de 2026. Al acceder a CourseMaster, aceptas estos estándares profesionales y obligaciones legales.",
+    "subtitle": "Vigente a partir del 13 de abril de 2026. Al acceder a Mentoro, aceptas estos estándares profesionales y obligaciones legales.",
     "section1_title": "1. Aceptación de Términos",
-    "section1_desc": "Al crear una cuenta en CourseMaster, entras en un acuerdo legalmente vinculante. Certificas que tienes al menos 18 años de edad (o tienes el consentimiento de un tutor legal) y proporcionarás información de registro precisa.",
+    "section1_desc": "Al crear una cuenta en Mentoro, entras en un acuerdo legalmente vinculante. Certificas que tienes al menos 18 años de edad (o tienes el consentimiento de un tutor legal) y proporcionarás información de registro precisa.",
     "section2_title": "2. Licencia de Usuario",
     "section2_desc": "Otorgamos una licencia limitada, no transferible y personal para acceder y ver contenido de cursos por el cual ha pagado todas las tarifas requeridas. Esta licencia es solo para uso educativo personal y no comercial.",
     "section3_title": "3. Propiedad Intelectual",
-    "section3_desc": "Todo el contenido proporcionado en la plataforma, incluyendo videos, transcripciones y activos descargables, remains la propiedad exclusiva de CourseMaster o sus instructores. La reproducción o distribución no autorizada está estrictamente prohibida.",
+    "section3_desc": "Todo el contenido proporcionado en la plataforma, incluyendo videos, transcripciones y activos descargables, remains la propiedad exclusiva de Mentoro o sus instructores. La reproducción o distribución no autorizada está estrictamente prohibida.",
     "section4_title": "4. Código de Conducta",
     "section4_desc": "Los usuarios deben mantener un entorno profesional y respetuoso. Cualquier forma de acoso, discurso de odio o intento de comprometer la seguridad de la plataforma resultará en la terminación inmediata del acceso sin reembolso.",
     "title_start": "Términos de la plataforma",

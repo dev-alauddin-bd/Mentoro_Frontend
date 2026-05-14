@@ -42,7 +42,7 @@ export default function AboutPage() {
                      { }
                      <img 
                         src="/hero.jpg" 
-                        alt="About CourseMaster" 
+                        alt="About Mentoro" 
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90"
                      />
                  </div>

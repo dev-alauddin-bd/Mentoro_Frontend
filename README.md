@@ -1,4 +1,4 @@
-# 🎓 CourseMaster — Frontend
+# 🎓 Mentoro — Frontend
 
 > A comprehensive, production-grade Learning Management System (LMS) UI designed to offer an immersive, AI-powered online education experience. Built with **Next.js 16**, **React 19**, **Tailwind CSS**, and **Cutting-edge AI Integration**.
 
@@ -6,9 +6,9 @@
 
 ## 📖 About The Project
 
-CourseMaster bridges the gap between instructors and students by providing a seamless, interactive platform for course creation, discovery, and learning. It empowers educators with robust course management tools—such as dynamic creation forms, media uploads, and structured lessons—while offering students an intuitive dashboard and a 24/7 AI Mentor to aid their learning journey.
+Mentoro bridges the gap between instructors and students by providing a seamless, interactive platform for course creation, discovery, and learning. It empowers educators with robust course management tools—such as dynamic creation forms, media uploads, and structured lessons—while offering students an intuitive dashboard and a 24/7 AI Mentor to aid their learning journey.
 
-Whether you are looking to monetize your expertise or upskill with new knowledge, CourseMaster provides the perfect ecosystem with built-in payments, multi-language support, and intelligent search capabilities.
+Whether you are looking to monetize your expertise or upskill with new knowledge, Mentoro provides the perfect ecosystem with built-in payments, multi-language support, and intelligent search capabilities.
 
 ---
 
@@ -58,8 +58,8 @@ Whether you are looking to monetize your expertise or upskill with new knowledge
 
 ### 1. Clone & Install
 ```bash
-git clone https://github.com/dev-alauddin-bd/Course_Master_Frontend.git
-cd Course_Master_Frontend
+git clone https://github.com/dev-alauddin-bd/Mentoro_Frontend.git
+cd Mentoro_Frontend
 pnpm install
 ```
 

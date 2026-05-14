@@ -7,7 +7,7 @@ import { Toaster } from "react-hot-toast";
 import LenisProvider from "./LenisProvider";
 
 export const metadata: Metadata = {
-  title: "CourseMaster - Learn Better",
+  title: "Mentoro - Learn Better",
   description: "Best platform for online learning and courses",
   keywords: ["online courses", "learning platform", "masterclass", "education", "skill development"],
   verification: {

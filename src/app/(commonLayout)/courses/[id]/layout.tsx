@@ -17,8 +17,8 @@ export async function generateMetadata(
     if (result?.success && result.data) {
       const course = result.data
       return {
-        title: `${course.title} | CourseMaster`,
-        description: course.description?.slice(0, 160) || "Learn this course on CourseMaster",
+        title: `${course.title} | Mentoro`,
+        description: course.description?.slice(0, 160) || "Learn this course on Mentoro",
         openGraph: {
           title: course.title,
           description: course.description?.slice(0, 160),
@@ -31,7 +31,7 @@ export async function generateMetadata(
   }
 
   return {
-    title: 'Course Details | CourseMaster',
+    title: 'Course Details | Mentoro',
     description: 'Master new skills with our expert-led courses.'
   }
 }

@@ -5,35 +5,27 @@ import { Palette, Check } from "lucide-react";
 
 const themes = [
   {
-    name: "Soft Light",
-    primary: "oklch(0.77 0.18 70)",
+    name: "Light",
+    primary: "oklch(70.08% 0.174 54.80)",
     background: "oklch(0.97 0.015 85)",
     /* Soft Creamy White */
     foreground: "oklch(0.3 0.02 70)",
     /* Softer Gray Text */
     card: "oklch(0.98 0.01 85)",
-    color: "#fefaf3",
+    color: "#ffffff",
     isLight: true,
   },
 
   {
     name: "Night",
-    primary: "oklch(0.77 0.18 70)",
+    primary: "oklch(70.08% 0.174 54.80)",
     background: "oklch(0.05 0.01 70)",
     foreground: "oklch(0.95 0.01 70)",
     card: "oklch(0.08 0.01 70)",
-    color: "#000000",
+    color: "#1a1a1a",
     isLight: false,
   },
-  {
-    name: "Green",
-    primary: "oklch(0.62 0.18 145)",
-    background: "oklch(0.12 0.02 145)",
-    foreground: "oklch(0.95 0.01 145)",
-    card: "oklch(0.16 0.01 145)",
-    color: "#22c55e",
-    isLight: false,
-  },
+
 ];
 
 export function ThemeSwitcher() {

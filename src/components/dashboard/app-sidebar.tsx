@@ -100,21 +100,10 @@ export function AppSidebar() {
       <SidebarContent className="flex flex-col h-full">
 
         {/* --- BRAND SECTION --- */}
-        <div className="p-8">
-        {/* 1. Logo Section (Left) */}
-          <div className="flex-shrink-0">
-            <Link href="/" className="group flex items-center gap-2.5 transition-all duration-300">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary">
-                <span className="text-2xl font-black text-white italic">C</span>
-              </div>
-              <div className="hidden flex-col sm:flex">
-                <span className="text-xl font-black tracking-tighter text-foreground leading-none">
-                  Course
-                </span>
-                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground/60 leading-none mt-1.5">Master</span>
-              </div>
-            </Link>
-          </div>
+        <div className="p-8 flex justify-center">
+          <Link href="/" className="group flex items-center transition-all duration-300">
+            <img src="/logo.svg" alt="Mentoro" className="h-16 w-auto" />
+          </Link>
         </div>
 
         {/* --- NAVIGATION SECTION --- */}

@@ -5,9 +5,9 @@ import Link from "next/link"
 import { useTranslation } from "react-i18next"
 import { ArrowRight, Sparkles, Users, TrendingUp, Play } from "lucide-react"
 import { trackEvent } from "@/lib/gtag"
-import { 
-  Dialog, 
-  DialogContent, 
+import {
+  Dialog,
+  DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
@@ -109,17 +109,17 @@ export function HeroAnimated() {
 
                 {/* PREMIUM PLAY BUTTON */}
                 <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover/mockup:bg-black/10 transition-all duration-700">
-                  <button 
+                  <button
                     onClick={() => setIsVideoOpen(true)}
                     className="relative group/play flex items-center justify-center scale-110 md:scale-125"
                   >
                     {/* Glow Effect */}
                     <div className="absolute inset-0 bg-primary/40 rounded-full blur-3xl group-hover/play:bg-primary/60 transition-all duration-700 animate-pulse" />
-                    
+
                     {/* Elegant Breathing Rings */}
                     <div className="absolute w-28 h-28 border-2 border-primary/20 rounded-full animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]" />
                     <div className="absolute w-20 h-20 border border-primary/30 rounded-full animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]" />
-                    
+
                     {/* Button Body */}
                     <div className="relative w-20 h-20 bg-primary text-primary-foreground rounded-full flex items-center justify-center shadow-[0_0_50px_-10px_rgba(var(--primary),0.6)] border-4 border-background/20 group-hover/play:scale-105 group-hover/play:border-background/40 transition-all duration-500">
                       <Play className="w-10 h-10 fill-current ml-1.5 drop-shadow-lg" />
@@ -162,17 +162,17 @@ export function HeroAnimated() {
       <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
         <DialogContent className="sm:max-w-[900px] p-0 overflow-hidden bg-black border-none rounded-[2rem] shadow-2xl">
           <DialogHeader className="sr-only">
-            <DialogTitle>Course Master Platform Overview</DialogTitle>
+            <DialogTitle>Mentoro Platform Overview</DialogTitle>
             <DialogDescription>
-              A visual tour of the Course Master platform and its features.
+              A visual tour of the Mentoro platform and its features.
             </DialogDescription>
           </DialogHeader>
           <div className="relative pt-[56.25%] w-full">
-            <iframe 
+            <iframe
               className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/YXlEzAWzuXw?autoplay=1" 
+              src="https://www.youtube.com/embed/YXlEzAWzuXw?autoplay=1"
               title="Course Preview"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
           </div>

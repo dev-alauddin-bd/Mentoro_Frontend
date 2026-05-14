@@ -11,7 +11,7 @@ import { jwtVerify } from "jose";
 const PUBLIC_ROUTES = ["/", "/courses", "/about", "/contact", "/unauthorized"];
 const AUTH_ROUTES = ["/login", "/register"];
 
-// Map routes to required roles for Course Master
+// Map routes to required roles for Mentoro
 const ROLE_PERMISSIONS: Record<string, string[]> = {
   "/dashboard/admin": ["admin"],
   "/dashboard/instructor": ["instructor"],

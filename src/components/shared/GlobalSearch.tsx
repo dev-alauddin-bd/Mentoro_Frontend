@@ -161,7 +161,7 @@ export function GlobalSearch() {
                  <span className="flex items-center gap-1"><span className="px-1.5 py-0.5 bg-background border border-border rounded text-[8px]">↑↓</span> Select</span>
                  <span className="flex items-center gap-1"><span className="px-1.5 py-0.5 bg-background border border-border rounded text-[8px]">Enter</span> Open</span>
               </div>
-              <p>Course Master Intelligence v2.0</p>
+              <p>Mentoro Intelligence v2.0</p>
             </div>
           </div>
         </div>

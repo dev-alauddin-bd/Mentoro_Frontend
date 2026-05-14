@@ -36,7 +36,7 @@ export function AdminAnalytics({
   // 📂 Calculate Real Course Distribution
   const courseDistribution = useMemo(() => {
     const categories: Record<string, { count: number, color: string }> = {};
-    const colors = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899', '#6366f1'];
+    const colors = ['#ee7b00', '#3b82f6', '#8b5cf6', '#10b981', '#ec4899', '#6366f1'];
     
     courses.forEach((c) => {
         const catName = c.category?.name || 'Uncategorized';

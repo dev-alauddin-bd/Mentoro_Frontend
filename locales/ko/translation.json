@@ -265,13 +265,13 @@
   },
   "requirements": {
     "title": "시스템 요구 사항",
-    "subtitle": "CourseMaster에서 최고의 학습 환경을 위한 시스템 요구 사항을 충족하십시오",
+    "subtitle": "Mentoro에서 최고의 학습 환경을 위한 시스템 요구 사항을 충족하십시오",
     "need_help": "도움이 필요합니까?"
   },
   "extra": {
     "trust_title": "전세계 주요 팀이 신뢰하는",
     "instructors_title": "우리의 전문가 강사",
-    "about_title": "CourseMasterについて",
+    "about_title": "Mentoroについて",
     "contact_title": "연락하기",
     "testimonials_title": "우리의 학생들이 말하는 것",
     "become_instructor": "강사되기",
@@ -463,7 +463,7 @@
   "ai_assistant": {
     "mentor_title": "AI 멘토",
     "status_ready": "온라인 & 준비 완료",
-    "welcome_title": "CourseMaster에 오신 것을 환영합니다",
+    "welcome_title": "Mentoro에 오신 것을 환영합니다",
     "welcome_desc": "오늘 제 배움의 여정을 도와드릴 수 있을까요?",
     "placeholder": "무엇이라도 묻고...",
     "error_msg": "현재 연결에 문제가 있어 다시 시도해 주세요."
@@ -503,7 +503,7 @@
   },
   "user_management": {
     "title": "아이덴티티 관리.",
-    "subtitle": "CourseMaster 생態계의 모든 사용자에 대한 플랫폼 액세스, 역할 및 상태를 관리합니다.",
+    "subtitle": "Mentoro 생態계의 모든 사용자에 대한 플랫폼 액세스, 역할 및 상태를 관리합니다.",
     "identity_hub": "아이덴티티 허브",
     "active_users": "활성 사용자",
     "table": {
@@ -770,7 +770,7 @@
   },
   "about": {
     "title": "교육 혁명",
-    "subtitle": "CourseMaster에서는 교육이 단순히 소비되기만해서는 안 되며 경험되어야 한다고 믿습니다. 우리는 디지털 개척자의 다음 세대를 강력하게 하는 도구를 구축합니다.",
+    "subtitle": "Mentoro에서는 교육이 단순히 소비되기만해서는 안 되며 경험되어야 한다고 믿습니다. 우리는 디지털 개척자의 다음 세대를 강력하게 하는 도구를 구축합니다.",
     "badge": "우리들의 DNA",
     "mission_title": "우리들의 궁극적인 목표",
     "mission_desc": "지리적 또는 금융적 장벽에 관계없이 세계에서 가장 접근 가능한 고신뢰도 교육 시스템이 되는 것입니다",
@@ -817,26 +817,26 @@
     "title_end": " "
   },
   "seo": {
-    "home_title": "CourseMaster | 종합 학습 플랫폼",
-    "home_description": "전문가 주도 온라인 과정으로 새로운 기술을 배우세요. 웹 개발에서 데이터 과학까지 CourseMaster와 함께 오늘부터 학습 여정을 시작하세요.",
-    "courses_title": "모든 강의 | CourseMaster - 전문가 주도 프로그램 탐색",
-    "courses_description": "리액트, Next.js, AI 등 다양한 전문 과정들을.browseraler. CourseMaster에서 오늘부터 경력을 시작하세요.",
-    "about_title": "关于 우리 | CourseMaster - 전 세계 학습자를 위한 구매력",
-    "about_description": "CourseMaster의 세계 수준의 교육을 제공하려는使命에 대해 자세히 알아보세요. 우리는 온라인 학습을 어떻게変化시키고 있는지 发现하세요.",
-    "contact_title": "联系 nosotros | CourseMaster - 연락처",
-    "contact_description": "질문이나 지원이 필요하면 CourseMaster 팀에聯絡하세요. 우리는 귀하의 학습 여행에서 도와드릴 준비가 되어 있습니다."
+    "home_title": "Mentoro | 종합 학습 플랫폼",
+    "home_description": "전문가 주도 온라인 과정으로 새로운 기술을 배우세요. 웹 개발에서 데이터 과학까지 Mentoro와 함께 오늘부터 학습 여정을 시작하세요.",
+    "courses_title": "모든 강의 | Mentoro - 전문가 주도 프로그램 탐색",
+    "courses_description": "리액트, Next.js, AI 등 다양한 전문 과정들을.browseraler. Mentoro에서 오늘부터 경력을 시작하세요.",
+    "about_title": "关于 우리 | Mentoro - 전 세계 학습자를 위한 구매력",
+    "about_description": "Mentoro의 세계 수준의 교육을 제공하려는使命에 대해 자세히 알아보세요. 우리는 온라인 학습을 어떻게変化시키고 있는지 发现하세요.",
+    "contact_title": "联系 nosotros | Mentoro - 연락처",
+    "contact_description": "질문이나 지원이 필요하면 Mentoro 팀에聯絡하세요. 우리는 귀하의 학습 여행에서 도와드릴 준비가 되어 있습니다."
   },
   "faq": {
     "badge": "흔히 묻는 질문",
     "title": "자주 묻는 질문",
     "subtitle": "플랫폼과 귀하의 학습 여행에 대한 모든 것",
-    "q1": "CourseMaster를 어떻게 시작하나요?",
+    "q1": "Mentoro를 어떻게 시작하나요?",
     "a1": "계정에 가입하세요, 과정 라이브러리를 살펴보세요, 그리고 귀ubarinteresting 과정에 등록하세요. 즉시 학습을 시작할 수 있습니다.",
     "q2": "과정은 자율 또는 라이브인가?",
     "a2": "우리는 둘 다 제공합니다. 대부분의 과정은 자기주도학습이기에 자신의 속도에 따라 학습할 수 있으며, 산업 전문가가 주도하는 라이브 세션과 워크숍이 함께 제공됩니다.",
     "q3": "과정 완료 후에 자격증을 받을 수 있나요?",
     "a3": "네, 과정 완료 후에 디지털 자격증을 받으실 수 있습니다. لینک드인이나 잠재적인 고용주에게 공유할 수 있습니다.",
-    "q4": "CourseMaster에서 강사로 활동할 수 있나요?",
+    "q4": "Mentoro에서 강사로 활동할 수 있나요?",
     "a4": "네, 가능합니다. 과목에 대한 전문성이 있다면 대시보드에서 강사로 신청할 수 있으며 강의를 시작할 수 있습니다.",
     "q5": "환불 정책은 무엇인가요?",
     "a5": "대부분의 과정에 대해 30일 돈 환불 보장을 제공합니다. 만족하지 못한 경우 구매 후 30일 이내에 환불을 요청할 수 있습니다.",
@@ -910,20 +910,20 @@
     "section2_title": "2. 데이터 사용 방법",
     "section2_desc": "귀하의 데이터는 커리큘럼을 개인화하고, 우리의 결제 파트너를 통해 안전하게 거래를 처리하고, 중요한 플랫폼 업데이트를发送하는 데 사용됩니다. 우리는 匿名 사용 패턴을 분석하여 인터페이스와 콘텐츠 품질을 끊임없이 개선합니다.",
     "section3_title": "3. 데이터 보안",
-    "section3_desc": "CourseMaster는 業界를 이끄는 암호化와 분산 보안 프로토콜을 사용하여 귀하의 데이터가 권한 없는 당사자로부터 접근できない 것으로 kolem 합니다. 모든 결제 처리는 Level 1 PCI-compliant 서비스 제공업체에 의해 처리됩니다.",
+    "section3_desc": "Mentoro는 業界를 이끄는 암호化와 분산 보안 프로토콜을 사용하여 귀하의 데이터가 권한 없는 당사자로부터 접근できない 것으로 kolem 합니다. 모든 결제 처리는 Level 1 PCI-compliant 서비스 제공업체에 의해 처리됩니다.",
     "section4_title": "4. 귀하의 권리",
     "section4_desc": "귀하는 귀하의 데이터에 대한 모든 권리를 보유합니다. 언제든지 귀하는 귀하의 개인 정보의 전체 내보내기 또는 영구 계정 삭제를 요청할 수 있습니다. 우리는 모든 GDPR 및 CCPA 요청에 즉시 우선권을 부여합니다."
   },
   "terms_of_service": {
     "badge": "법적 커프레임",
     "title": "플랫폼 서비스 약관",
-    "subtitle": "2026년 4월 13일부터 효력이 발생합니다. CourseMaster에 액세스함으로써 귀하는 이러한 전문 표준 및 법적 의무를 동의합니다.",
+    "subtitle": "2026년 4월 13일부터 효력이 발생합니다. Mentoro에 액세스함으로써 귀하는 이러한 전문 표준 및 법적 의무를 동의합니다.",
     "section1_title": "1. 이용약관 동의",
-    "section1_desc": "CourseMaster 계정을 생성함으로써 법적으로 구속력을 가진 계약을 체결하는 것입니다. 귀하는 최소 18세 이상의 성인으로서(또는 법적 보호者の 동의를 얻은 경우) 정확한 등록 정보를 제공할 것임을 보증합니다.",
+    "section1_desc": "Mentoro 계정을 생성함으로써 법적으로 구속력을 가진 계약을 체결하는 것입니다. 귀하는 최소 18세 이상의 성인으로서(또는 법적 보호者の 동의를 얻은 경우) 정확한 등록 정보를 제공할 것임을 보증합니다.",
     "section2_title": "2. 사용자 라이선스",
-    "section2_desc": "CourseMaster는 귀하에게 유료 과정을 수강하기 위해 모든 필수 수수료를 지불한 경우 과정 콘텐츠에 접근하고查看하는 제한적, 양도할 수 없는, 개인 사용자 라이선스를 부여합니다. 이 라이선스는 개인적, 비상업적 교육용으로만 사용할 수 있습니다.",
+    "section2_desc": "Mentoro는 귀하에게 유료 과정을 수강하기 위해 모든 필수 수수료를 지불한 경우 과정 콘텐츠에 접근하고查看하는 제한적, 양도할 수 없는, 개인 사용자 라이선스를 부여합니다. 이 라이선스는 개인적, 비상업적 교육용으로만 사용할 수 있습니다.",
     "section3_title": "3. 지적 재산권",
-    "section3_desc": "Platform에서 제공하는 모든 콘텐츠(비디오, 전사본, 다운로드 가능한 자산 포함)는 CourseMaster 또는その 강사의 독점적 재산입니다. 승인되지 않은 복제 또는 배포는 엄격하게 금지되어 있습니다.",
+    "section3_desc": "Platform에서 제공하는 모든 콘텐츠(비디오, 전사본, 다운로드 가능한 자산 포함)는 Mentoro 또는その 강사의 독점적 재산입니다. 승인되지 않은 복제 또는 배포는 엄격하게 금지되어 있습니다.",
     "section4_title": "4. 행동강령",
     "section4_desc": "사용자는 전문적이고 존중하는 환경을 유지해야 합니다. 괴롭힘, 증오 발언 또는 플랫폼 보안을 훼손하는 시도는 즉시 책임，没有 환불로 인해 액세스가 종료됩니다.",
     "title_start": " ",

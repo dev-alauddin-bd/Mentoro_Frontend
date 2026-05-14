@@ -88,7 +88,7 @@ export function ContactSection() {
                 {
                   icon: <Mail />,
                   label: t("contact.email_label"),
-                  value: "support@coursemaster.com",
+                  value: "support@mentoro.com",
                   sub: t("contact.email_sub")
                 },
                 {

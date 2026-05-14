@@ -81,16 +81,8 @@ export function Header() {
 
           {/* 1. Logo Section (Left) */}
           <div className="flex-shrink-0">
-            <Link href="/" className="group flex items-center gap-2.5 transition-all duration-300">
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary">
-                <span className="text-2xl font-black text-white italic">C</span>
-              </div>
-              <div className="hidden flex-col sm:flex">
-                <span className="text-xl font-black tracking-tighter text-foreground leading-none">
-                  Course
-                </span>
-                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-muted-foreground/60 leading-none mt-1.5">Master</span>
-              </div>
+            <Link href="/" className="group flex items-center transition-all duration-300">
+              <img src="/logo.svg" alt="Mentoro" className="h-16 w-auto" />
             </Link>
           </div>
 
@@ -101,17 +93,17 @@ export function Header() {
               <NavLink href="/courses" label={t("nav.courses")} active={pathname === "/courses"} />
               <NavLink href="/about" label={t("nav.about")} active={pathname === "/about"} />
               <NavLink href="/how-it-works" label={t("nav.how_it_works")} active={pathname === "/how-it-works"} />
-              
+
               <div className="relative group">
                 <button className={`flex items-center gap-1 rounded-xl px-5 py-2.5 text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${["/refund-policy", "/privacy-policy", "/terms-of-service", "/cookie-policy"].includes(pathname) ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-primary/5 hover:text-primary"}`}>
                   {t("nav.policies") || "Policies"}
                   <ChevronDown className="w-3 h-3 transition-transform group-hover:rotate-180" />
                 </button>
                 <div className="absolute top-full right-0 mt-2 w-48 bg-background border border-border/50 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-2 z-50">
-                   <Link href="/refund-policy" className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.refund_policy")}</Link>
-                   <Link href="/privacy-policy" className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.privacy")}</Link>
-                   <Link href="/terms-of-service" className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.terms")}</Link>
-                   <Link href="/cookie-policy" className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.cookie")}</Link>
+                  <Link href="/refund-policy" className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.refund_policy")}</Link>
+                  <Link href="/privacy-policy" className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.privacy")}</Link>
+                  <Link href="/terms-of-service" className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.terms")}</Link>
+                  <Link href="/cookie-policy" className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.cookie")}</Link>
                 </div>
               </div>
             </nav>
@@ -123,7 +115,7 @@ export function Header() {
               <GlobalSearch />
             </div>
 
-         
+
 
             {isAuthenticated ? (
               <div className="relative hidden lg:block" ref={dropdownRef}>
@@ -222,9 +214,9 @@ export function Header() {
           <div className="px-4 py-2 mt-2">
             <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">{t("nav.policies") || "Policies"}</span>
             <div className="grid gap-1 mt-2 border-l-2 border-primary/20 pl-2">
-                <MobileNavLink href="/refund-policy" label={t("footer.refund_policy")} onClick={() => setIsMenuOpen(false)} />
-                <MobileNavLink href="/privacy-policy" label={t("footer.privacy")} onClick={() => setIsMenuOpen(false)} />
-                <MobileNavLink href="/terms-of-service" label={t("footer.terms")} onClick={() => setIsMenuOpen(false)} />
+              <MobileNavLink href="/refund-policy" label={t("footer.refund_policy")} onClick={() => setIsMenuOpen(false)} />
+              <MobileNavLink href="/privacy-policy" label={t("footer.privacy")} onClick={() => setIsMenuOpen(false)} />
+              <MobileNavLink href="/terms-of-service" label={t("footer.terms")} onClick={() => setIsMenuOpen(false)} />
             </div>
           </div>          <div className="flex items-center gap-3 p-2 mt-2 bg-secondary/50 rounded-2xl border border-border/50">
             <div className="flex-1">
