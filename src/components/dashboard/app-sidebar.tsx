@@ -39,14 +39,14 @@ import { logout } from "@/redux/features/auth/authSlice";
 // -------- MENU BY ROLE --------
 export function AppSidebar() {
   const { t } = useTranslation();
-  const { user } = useSelector((state: RootState) => state.cmAuth);
+  const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const role = user?.role || "student";
   const dispatch = useDispatch();
   const pathname = usePathname();
 
   // -------- MENU BY ROLE --------
   const studentItems = [
-    { title: t("nav.overview"), url: "/dashboard", icon: LayoutDashboard },
+    { title: t("nav.overview"), url: "/dashboard/student", icon: LayoutDashboard },
     { title: t("nav.my_courses"), url: "/dashboard/student/my-courses", icon: BookOpen },
     { title: t("nav.payments"), url: "/dashboard/student/payments", icon: History },
     { title: t("nav.analytics"), url: "/dashboard/student/analytics", icon: Activity },
@@ -55,7 +55,7 @@ export function AppSidebar() {
 
 
   const instructorItems = [
-    { title: t("nav.overview"), url: "/dashboard", icon: BarChart3 },
+    { title: t("nav.overview"), url: "/dashboard/instructor", icon: BarChart3 },
     { title: t("nav.categories"), url: "/dashboard/instructor/manage-categories", icon: FolderKanban },
     { title: t("nav.my_courses"), url: "/dashboard/instructor/manage-courses", icon: FolderKanban },
     { title: t("nav.curriculum"), url: "/dashboard/instructor/modules", icon: Files },
@@ -66,12 +66,12 @@ export function AppSidebar() {
   ];
 
   const adminItems = [
-    { title: t("nav.platform_hub"), url: "/dashboard", icon: ShieldCheck },
+    { title: t("nav.platform_hub"), url: "/dashboard/admin", icon: ShieldCheck },
     { title: t("nav.manage_users"), url: "/dashboard/admin/manage-users", icon: Users },
     { title: t("nav.featured_requests"), url: "/dashboard/admin/featured-requests", icon: Sparkles },
     { title: t("nav.manage_jobs"), url: "/dashboard/admin/manage-jobs", icon: Briefcase },
     { title: t("nav.revenue"), url: "/dashboard/admin/revenue", icon: BarChart3 },
-    { title: t("nav.legal"), url: "/dashboard/admin/refund-policy", icon: History },
+    { title: t("nav.legal"), url: "/dashboard/admin/legal", icon: History },
     { title: t("nav.analytics"), url: "/dashboard/admin/analytics", icon: Activity },
   ];
 

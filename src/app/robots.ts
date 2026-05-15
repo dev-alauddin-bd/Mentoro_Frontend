@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin', '/dashboard', '/api'],
     },
-    sitemap: 'https://course-master-frontend-flax.vercel.app/sitemap.xml',
+    sitemap: 'https://mentoro-rho.vercel.app/sitemap.xml',
   }
 }

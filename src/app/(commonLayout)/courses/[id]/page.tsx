@@ -33,12 +33,12 @@ export default function EnhancedCourseDetailsPage() {
    const [enrollCourse, { isLoading: isEnrolling }] = useEnrollCourseMutation();
    const [createCheckout, { isLoading: isCheckingOut }] = useCreateCheckoutMutation();
    const [createReview] = useCreateReviewMutation();
-   
+
    const user = useSelector(selectCurrentUser);
-   
+
    const [activeModule, setActiveModule] = useState<string | null>(null);
    const [showVideoModal, setShowVideoModal] = useState(false);
-   
+
    const [rating, setRating] = useState(5);
    const [comment, setComment] = useState("");
    const [isSubmittingReview, setIsSubmittingReview] = useState(false);
@@ -75,13 +75,14 @@ export default function EnhancedCourseDetailsPage() {
 
       try {
          const isFree = course?.price === 0;
-         
+
          if (isFree) {
             await enrollCourse(courseId).unwrap();
             toast.success("Successfully enrolled in the free course!");
             refetch();
          } else {
             const res = await createCheckout(courseId).unwrap();
+            console.log("checkout", res);
             if (res.data?.paymentUrl) {
                window.location.href = res.data.paymentUrl;
             } else {
@@ -111,12 +112,12 @@ export default function EnhancedCourseDetailsPage() {
 
       try {
          setIsSubmittingReview(true);
-          await createReview({
+         await createReview({
             courseId,
             rating,
             content: comment,
          }).unwrap();
-         
+
          trackEvent('submit_review', { course_id: courseId, rating: rating });
          toast.success("Review submitted successfully!");
          setComment("");
@@ -172,7 +173,7 @@ export default function EnhancedCourseDetailsPage() {
             <div className="container mx-auto px-4 md:px-8 max-w-7xl relative z-10">
 
                <div className="max-w-4xl space-y-8">
-                  <button 
+                  <button
                      onClick={() => router.push("/courses")}
                      className="group flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary transition-all mb-4"
                   >
@@ -364,7 +365,7 @@ export default function EnhancedCourseDetailsPage() {
                      {isEnrolled && user && !course.reviews?.some((r: IReview) => r.userId === user.id) && (
                         <div className="mb-16 p-8 rounded-[2.5rem] bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/20 relative overflow-hidden group">
                            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-[100px] -mr-10 -mt-10 group-hover:scale-110 transition-transform"></div>
-                           
+
                            <h3 className="text-xl font-black mb-6">Share Your Experience</h3>
                            <form onSubmit={handleSubmitReview} className="space-y-6 relative z-10">
                               <div className="space-y-3">
@@ -382,7 +383,7 @@ export default function EnhancedCourseDetailsPage() {
                                     ))}
                                  </div>
                               </div>
-                              
+
                               <div className="space-y-3">
                                  <label className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Your Feedback</label>
                                  <textarea
@@ -500,35 +501,35 @@ export default function EnhancedCourseDetailsPage() {
                               </div>
                            )}
                         </div>
-{/* =======================
+                        {/* =======================
    ENROLLED BUTTON
 ======================= */}
-{isEnrolled ? (
-<button
-   onClick={() => {
-      trackEvent('continue_course', { course_id: courseId, course_name: course?.title });
-      router.push(`/dashboard/student/my-courses/${courseId}`);
-   }}
-   className="w-full h-16 rounded-[1.5rem] cursor-pointer flex items-center justify-center gap-3 font-black uppercase tracking-widest text-sm bg-secondary text-foreground hover:bg-muted border border-border transition-all"
->
-   <CheckCircle className="w-5 h-5" />
-   Continue
-</button>
-) : (
-   <button
-      onClick={handleEnrollment}
-      disabled={isEnrolling || isCheckingOut}
-      className="w-full h-16 rounded-[1.5rem] flex items-center justify-center gap-3 font-black uppercase tracking-widest text-sm bg-primary text-white hover:scale-[1.03] active:scale-95 shadow-primary/30 transition-all"
-   >
-      {isEnrolling || isCheckingOut ? (
-         <Loader2 className="w-5 h-5 animate-spin" />
-      ) : (
-         <PlayCircle className="w-5 h-5" />
-      )}
+                        {isEnrolled ? (
+                           <button
+                              onClick={() => {
+                                 trackEvent('continue_course', { course_id: courseId, course_name: course?.title });
+                                 router.push(`/dashboard/student/my-courses/${courseId}`);
+                              }}
+                              className="w-full h-16 rounded-[1.5rem] cursor-pointer flex items-center justify-center gap-3 font-black uppercase tracking-widest text-sm bg-secondary text-foreground hover:bg-muted border border-border transition-all"
+                           >
+                              <CheckCircle className="w-5 h-5" />
+                              Continue
+                           </button>
+                        ) : (
+                           <button
+                              onClick={handleEnrollment}
+                              disabled={isEnrolling || isCheckingOut}
+                              className="w-full h-16 rounded-[1.5rem] flex items-center justify-center gap-3 font-black uppercase tracking-widest text-sm bg-primary text-white hover:scale-[1.03] active:scale-95 shadow-primary/30 transition-all"
+                           >
+                              {isEnrolling || isCheckingOut ? (
+                                 <Loader2 className="w-5 h-5 animate-spin" />
+                              ) : (
+                                 <PlayCircle className="w-5 h-5" />
+                              )}
 
-      {isFree ? "Enroll Now for Free" : "Enroll Now"}
-   </button>
-)}
+                              {isFree ? "Enroll Now for Free" : "Enroll Now"}
+                           </button>
+                        )}
                         {/* Features checklist */}
                         <div className="pt-2 space-y-4 px-2">
                            <div className="flex items-center gap-4 text-sm font-bold text-foreground">
@@ -610,7 +611,7 @@ export default function EnhancedCourseDetailsPage() {
                      <h2 className="text-3xl font-black tracking-tight italic">Related Courses</h2>
                      <p className="text-sm font-medium text-muted-foreground">Other courses you might find interesting in this category.</p>
                   </div>
-                  <button 
+                  <button
                      onClick={() => router.push("/courses")}
                      className="px-6 py-2 bg-secondary border border-border rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-primary hover:text-white transition-all"
                   >
@@ -620,8 +621,8 @@ export default function EnhancedCourseDetailsPage() {
 
                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                   {relatedCourses.map((c: any) => (
-                     <div 
-                        key={c.id} 
+                     <div
+                        key={c.id}
                         onClick={() => router.push(`/courses/${c.id}`)}
                         className="group cursor-pointer bg-card border border-border/50 rounded-3xl overflow-hidden hover:border-primary/40 transition-all hover:-translate-y-2 shadow-sm"
                      >

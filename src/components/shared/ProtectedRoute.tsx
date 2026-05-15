@@ -7,7 +7,7 @@ import { RootState } from "@/redux/store";
 import { Loader2 } from "lucide-react";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, loading } = useSelector((state: RootState) => state.cmAuth);
+  const { isAuthenticated, loading } = useSelector((state: RootState) => state.mentoroAuth);
   const router = useRouter();
 
   useEffect(() => {

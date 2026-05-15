@@ -20,7 +20,7 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: "cmAuth",
+  name: "mentoroAuth",
   initialState,
   reducers: {
     authStart(state) {
@@ -60,9 +60,9 @@ export const { authStart, setUser, authFailure, logout, setLoading } = authSlice
 
 export default authSlice.reducer;
 
-export const selectCurrentUser = (state: RootState) => state.cmAuth.user;
-export const selectCurrentToken = (state: RootState) => state.cmAuth.token;
+export const selectCurrentUser = (state: RootState) => state.mentoroAuth.user;
+export const selectCurrentToken = (state: RootState) => state.mentoroAuth.token;
 export const selectIsAuthenticated = (state: RootState) =>
-  state.cmAuth.isAuthenticated;
-export const selectAuthLoading = (state: RootState) => state.cmAuth.loading;
-export const selectAuthError = (state: RootState) => state.cmAuth.error;
+  state.mentoroAuth.isAuthenticated;
+export const selectAuthLoading = (state: RootState) => state.mentoroAuth.loading;
+export const selectAuthError = (state: RootState) => state.mentoroAuth.error;

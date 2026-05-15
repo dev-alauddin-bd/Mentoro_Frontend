@@ -21,7 +21,7 @@ import { useGetStudentAnalyticsQuery } from "@/redux/features/dashboard/dashboar
 
 export function StudentDashboard() {
   const { t } = useTranslation();
-  const { user } = useSelector((state: RootState) => state.cmAuth);
+  const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const { data: studentAnalytics, isLoading: analyticsLoading, isError: analyticsError } = useGetStudentAnalyticsQuery();
 
   const analyticsStats = studentAnalytics?.data?.statistics || {};

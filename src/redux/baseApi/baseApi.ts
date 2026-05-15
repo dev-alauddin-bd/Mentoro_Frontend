@@ -19,7 +19,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl:`${process.env.NEXT_PUBLIC_API_URL}/api`,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as any).cmAuth.token;
+    const token = (getState() as any).mentoroAuth.token;
     if (token) {
       headers.set("authorization", `Bearer ${token}`);
     }
@@ -58,7 +58,7 @@ const baseQueryWithReauth: typeof baseQuery = async (
           const newToken = resultData.data.accessToken;
           
           // Get the current user from state instead of relying on refresh response
-          const currentUser = (api.getState() as any).cmAuth.user;
+          const currentUser = (api.getState() as any).mentoroAuth.user;
 
           api.dispatch(setUser({ user: currentUser, token: newToken }));
           result = await baseQuery(args, api, extraOptions);

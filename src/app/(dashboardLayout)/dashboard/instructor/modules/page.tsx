@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 
 export default function ModulesPage() {
-  const { user } = useSelector((state: RootState) => state.cmAuth);
+  const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const { data: modulesData, isLoading: queriesLoading } = useGetAllModulesQuery();
   const { data: coursesData } = useGetAllCoursesQuery(
     { instructorId: user?.id, limit: 100 },

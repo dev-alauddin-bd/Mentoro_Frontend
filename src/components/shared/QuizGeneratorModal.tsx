@@ -27,7 +27,7 @@ const QuizGeneratorModal = ({ lessonId, isOpen, onClose }: { lessonId: string; i
   const [score, setScore] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { token } = useAppSelector((state) => state.cmAuth);
+  const { token } = useAppSelector((state) => state.mentoroAuth);
 
   const generateQuiz = async () => {
     setIsLoading(true);

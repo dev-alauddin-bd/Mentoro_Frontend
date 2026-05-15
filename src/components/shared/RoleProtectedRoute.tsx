@@ -13,7 +13,7 @@ interface RoleProtectedRouteProps {
 }
 
 export function RoleProtectedRoute({ children, allowedRoles }: RoleProtectedRouteProps) {
-  const { user, isAuthenticated, loading } = useSelector((state: RootState) => state.cmAuth);
+  const { user, isAuthenticated, loading } = useSelector((state: RootState) => state.mentoroAuth);
   const router = useRouter();
 
   useEffect(() => {

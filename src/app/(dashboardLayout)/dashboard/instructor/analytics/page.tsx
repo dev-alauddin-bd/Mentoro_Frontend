@@ -19,7 +19,7 @@ export default function InstructorAnalyticsPage() {
 }
 
 function InstructorAnalyticsContent() {
-  const { user } = useSelector((state: RootState) => state.cmAuth);
+  const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const { data: analyticsData, isLoading: analyticsLoading } = useGetInstructorAnalyticsQuery()
   const { data: coursesData, isLoading: coursesLoading } = useGetAllCoursesQuery({ limit: 1000, instructorId: user?.id })
   

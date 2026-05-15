@@ -84,10 +84,21 @@ export function LoginForm() {
   // Quick login helper
   const quickLogin = (role: "admin" | "student" | "instructor") => {
     const creds = {
-      admin: { email: "admin@gmail.com", pass: "123456" },
-      student: { email: "alauddin@gmail.com", pass: "123456" },
-      instructor: { email: "instructor@gmail.com", pass: "123456" },
+      admin: {
+        email: process.env.NEXT_PUBLIC_ADMIN_EMAIL || "",
+        pass: process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "",
+      },
+      student: {
+        email: process.env.NEXT_PUBLIC_STUDENT_EMAIL || "",
+        pass: process.env.NEXT_PUBLIC_STUDENT_PASSWORD || "",
+      },
+      instructor: {
+        email: process.env.NEXT_PUBLIC_INSTRUCTOR_EMAIL || "",
+        pass: process.env.NEXT_PUBLIC_INSTRUCTOR_PASSWORD || "",
+      },
     };
+
+
     setValue("email", creds[role].email);
     setValue("password", creds[role].pass);
   };

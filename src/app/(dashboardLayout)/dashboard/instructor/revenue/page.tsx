@@ -31,7 +31,7 @@ export default function InstructorRevenuePage() {
 
 function InstructorRevenueContent() {
   const { t } = useTranslation();
-  const { user } = useSelector((state: RootState) => state.cmAuth);
+  const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const { data: analyticsData, isLoading: analyticsLoading } = useGetInstructorAnalyticsQuery();
 
   const { data: coursesData, isLoading: coursesLoading } = useGetAllCoursesQuery({ limit: 100, instructorId: user?.id });

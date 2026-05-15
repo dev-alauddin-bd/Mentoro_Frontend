@@ -19,7 +19,7 @@ import { GlobalSearch } from "./GlobalSearch";
 export function Header() {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuthenticated, user } = useSelector((state: RootState) => state.cmAuth);
+  const { isAuthenticated, user } = useSelector((state: RootState) => state.mentoroAuth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);

@@ -1,6 +1,6 @@
 // store.ts
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import cmAuth from "@/redux/features/auth/authSlice";
+import auth from "@/redux/features/auth/authSlice";
 import notifications from "@/redux/features/notifications/notificationSlice";
 import baseApi from "@/redux/baseApi/baseApi";
 import progressReducer from "@/redux/slices/coursesSlice";
@@ -34,7 +34,7 @@ const storage = typeof window !== "undefined" ? createWebStorage("local") : crea
 
 // 1️⃣ combine reducers
 const rootReducer = combineReducers({
-  cmAuth,
+  mentoroAuth: auth,
   notifications,
   progress: progressReducer, 
   [baseApi.reducerPath]: baseApi.reducer,
@@ -42,9 +42,9 @@ const rootReducer = combineReducers({
 
 // 2️⃣ persist config
 const persistConfig = {
-  key: "course-master-v1", // Changed key to v1 to clear old state like 'AFAuth'
+  key: "mentoro-v1", // Changed key to v1 to clear old state like 'AFAuth'
   storage,
-  whitelist: ["cmAuth", "progress", "notifications"], 
+  whitelist: ["mentoroAuth", "progress", "notifications"], 
 };
 
 // 3️⃣ persisted reducer

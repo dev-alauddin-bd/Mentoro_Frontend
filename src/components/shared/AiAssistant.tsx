@@ -14,7 +14,7 @@ const AiAssistant = () => {
   const [chatHistory, setChatHistory] = useState<{ role: string; content: string }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
-  const { token } = useAppSelector((state) => state.cmAuth);
+  const { token } = useAppSelector((state) => state.mentoroAuth);
 
   useEffect(() => {
     if (scrollRef.current) {

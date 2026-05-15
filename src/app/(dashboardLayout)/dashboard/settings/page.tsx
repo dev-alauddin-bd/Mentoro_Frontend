@@ -38,7 +38,7 @@ type StatusItemProps = {
 };
 
 export default function ProfilePage() {
-  const { user } = useSelector((state: RootState) => state.cmAuth);
+  const { user } = useSelector((state: RootState) => state.mentoroAuth);
   
   const [syncFirebase] = useSyncFirebaseMutation();
   const dispatch = useDispatch();

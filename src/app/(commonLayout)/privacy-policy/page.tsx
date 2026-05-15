@@ -1,10 +1,24 @@
 "use client";
 
 import { useTranslation } from "react-i18next";
-import { Shield, Lock, Eye, FileText, Sparkles, ArrowDown } from "lucide-react";
+import { Shield, Lock, Eye, FileText, Sparkles, ArrowDown, Loader2 } from "lucide-react";
+import { useGetLegalDocumentBySlugQuery } from "@/redux/features/legal/legalApi";
 
 export default function PrivacyPolicyPage() {
   const { t } = useTranslation();
+  const { data: legalData, isLoading } = useGetLegalDocumentBySlugQuery("privacy-policy");
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 bg-background">
+        <Loader2 className="w-12 h-12 animate-spin text-primary" />
+        <p className="text-xs font-black uppercase tracking-widest text-muted-foreground animate-pulse">Retrieving Policy...</p>
+      </div>
+    );
+  }
+
+  const dbData = legalData?.data;
+
   return (
     <main className="min-h-screen pt-32 pb-16 md:pt-40 md:pb-24 bg-background relative overflow-hidden">
 
@@ -19,13 +33,15 @@ export default function PrivacyPolicyPage() {
             </div>
             
             <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground leading-[0.9]">
-              {t("privacy_policy.title_start")} <br />
-              <span className="text-primary italic font-serif">{t("privacy_policy.title_end")}</span>
+              {dbData?.title || t("privacy_policy.title_start")} <br />
+              {!dbData && <span className="text-primary italic font-serif">{t("privacy_policy.title_end")}</span>}
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground font-medium">
-              {t("privacy_policy.subtitle")}
-            </p>
+            {!dbData && (
+              <p className="text-lg md:text-xl text-muted-foreground font-medium">
+                {t("privacy_policy.subtitle")}
+              </p>
+            )}
 
             <div className="flex justify-center pt-8">
                <div className="animate-bounce w-12 h-12 rounded-full border border-border flex items-center justify-center text-muted-foreground">
@@ -38,32 +54,41 @@ export default function PrivacyPolicyPage() {
 
       {/* --- Content Area --- */}
       <section className="container mx-auto px-4">
-        <div className="max-w-4xl mx-auto grid grid-cols-1 gap-16">
-          
-          <PolicySection 
-            icon={<Eye />}
-            title={t("privacy_policy.section1_title")}
-            content={t("privacy_policy.section1_desc")}
-          />
+        <div className="max-w-4xl mx-auto">
+          {dbData ? (
+            <div className="prose prose-invert max-w-none bg-card border border-border rounded-[3rem] p-10 md:p-16 animate-in fade-in duration-1000">
+              <div 
+                className="text-muted-foreground text-lg font-medium leading-relaxed whitespace-pre-wrap"
+                dangerouslySetInnerHTML={{ __html: dbData.content }}
+              />
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 gap-16">
+              <PolicySection 
+                icon={<Eye />}
+                title={t("privacy_policy.section1_title")}
+                content={t("privacy_policy.section1_desc")}
+              />
 
-          <PolicySection 
-            icon={<Lock />}
-            title={t("privacy_policy.section2_title")}
-            content={t("privacy_policy.section2_desc")}
-          />
+              <PolicySection 
+                icon={<Lock />}
+                title={t("privacy_policy.section2_title")}
+                content={t("privacy_policy.section2_desc")}
+              />
 
-          <PolicySection 
-            icon={<Sparkles />}
-            title={t("privacy_policy.section3_title")}
-            content={t("privacy_policy.section3_desc")}
-          />
+              <PolicySection 
+                icon={<Sparkles />}
+                title={t("privacy_policy.section3_title")}
+                content={t("privacy_policy.section3_desc")}
+              />
 
-          <PolicySection 
-            icon={<FileText />}
-            title={t("privacy_policy.section4_title")}
-            content={t("privacy_policy.section4_desc")}
-          />
-
+              <PolicySection 
+                icon={<FileText />}
+                title={t("privacy_policy.section4_title")}
+                content={t("privacy_policy.section4_desc")}
+              />
+            </div>
+          )}
         </div>
       </section>
 

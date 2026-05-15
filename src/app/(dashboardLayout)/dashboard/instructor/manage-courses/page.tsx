@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 
 export default function ManageCourses() {
   const { t } = useTranslation();
-  const { user } = useSelector((state: RootState) => state.cmAuth);
+  const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const router = useRouter();
   const { data: courses, refetch, isLoading } = useGetAllCoursesQuery(
     { instructorId: user?.id },

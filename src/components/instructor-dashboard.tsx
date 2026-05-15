@@ -18,8 +18,8 @@ import { useGetInstructorAnalyticsQuery } from "@/redux/features/dashboard/dashb
 
 export function InstructorDashboard() {
   const { t } = useTranslation();
-  const { user } = useSelector((state: RootState) => state.cmAuth);
-  const { data, isLoading } = useGetInstructorAnalyticsQuery();
+  const { user } = useSelector((state: RootState) => state.mentoroAuth);
+  const { data, isLoading, isError } = useGetInstructorAnalyticsQuery();
   const statistics = useMemo(() => data?.data?.statistics || {}, [data]);
   const { data: coursesData } = useGetAllCoursesQuery({ limit: 1000 });
 
@@ -41,6 +41,15 @@ export function InstructorDashboard() {
            <StatCardSkeleton />
         </div>
         <TableSkeleton />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="p-12 bg-destructive/5 border border-destructive/10 rounded-[3rem] text-center">
+        <h2 className="text-2xl font-black tracking-tight text-destructive mb-2">{t("common.error")}</h2>
+        <p className="text-muted-foreground font-medium">{t("instructor.sync_failed") || "Failed to synchronize instructor analytics. Please try again later."}</p>
       </div>
     );
   }
