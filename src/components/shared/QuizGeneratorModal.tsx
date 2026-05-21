@@ -38,8 +38,9 @@ const QuizGeneratorModal = ({ lessonId, isOpen, onClose }: { lessonId: string; i
     setSelectedAnswer(null);
 
     try {
+      const API_URL = typeof window !== "undefined" ? "/api" : `${process.env.NEXT_PUBLIC_API_URL}/api`;
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/ai/generate-quiz/${lessonId}`,
+        `${API_URL}/ai/generate-quiz/${lessonId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

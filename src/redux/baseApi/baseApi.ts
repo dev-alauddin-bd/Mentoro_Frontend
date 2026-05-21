@@ -15,8 +15,10 @@ interface IRefreshResponse {
 // Mutex to prevent multiple token refresh at once
 const mutex = new Mutex();
 
+const API_BASE = typeof window !== "undefined" ? "/api" : `${process.env.NEXT_PUBLIC_API_URL}/api`;
+
 const baseQuery = fetchBaseQuery({
-  baseUrl:`${process.env.NEXT_PUBLIC_API_URL}/api`,
+  baseUrl: API_BASE,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as any).mentoroAuth.token;
