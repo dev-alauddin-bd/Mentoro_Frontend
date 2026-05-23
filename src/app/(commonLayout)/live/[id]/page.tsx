@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation"
 import { SessionRegistration } from "@/components/live-session/SessionRegistration"
-import { ArrowLeft, Share2, Globe, ShieldCheck, Zap, Loader2 } from "lucide-react"
+import { ArrowLeft, Share2, Globe, ShieldCheck, Zap, Loader2, Users } from "lucide-react"
 import Link from "next/link"
 import { useGetSessionByIdQuery } from "@/redux/features/liveSession/liveSessionApi"
 
@@ -48,7 +48,7 @@ export default function SessionDetailsPage() {
                 {session.title}
               </h1>
               
-              <div className="flex flex-wrap gap-6">
+              <div className="flex flex-wrap gap-4">
                 <div className="flex items-center gap-3 px-5 py-2.5 bg-secondary/50 rounded-2xl border border-border">
                   <Globe className="w-4 h-4 text-primary" />
                   <span className="text-xs font-bold">Online Workshop</span>
@@ -56,6 +56,10 @@ export default function SessionDetailsPage() {
                 <div className="flex items-center gap-3 px-5 py-2.5 bg-secondary/50 rounded-2xl border border-border">
                   <Zap className="w-4 h-4 text-amber-500" />
                   <span className="text-xs font-bold">Intermediate Level</span>
+                </div>
+                <div className="flex items-center gap-3 px-5 py-2.5 bg-secondary/50 rounded-2xl border border-border">
+                  <Users className="w-4 h-4 text-green-500" />
+                  <span className="text-xs font-bold">{session._count?.registrations || 0} Registered</span>
                 </div>
               </div>
 

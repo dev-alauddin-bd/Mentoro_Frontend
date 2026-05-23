@@ -62,18 +62,24 @@ export function LiveSessionModal({ isOpen, onClose, session, onSuccess }: LiveSe
       const payload = {
         ...data,
         thumbnail: thumbnailUrl,
-        sessionDate: new Date(data.sessionDate).toISOString(),
-        registrationDeadline: new Date(data.registrationDeadline).toISOString(),
+        sessionDate: new Date(`${data.sessionDate}T${data.sessionTime}`).toISOString(),
+        registrationDeadline: new Date(`${data.registrationDeadlineDate}T${data.registrationDeadlineTime}`).toISOString(),
       }
       
-      // Remove thumbnailFile from payload as it's not needed by the backend
+      // Remove separate time/date fields from payload as they're not needed by the backend
       delete (payload as any).thumbnailFile
+      delete (payload as any).sessionTime
+      delete (payload as any).registrationDeadlineDate
+      delete (payload as any).registrationDeadlineTime
 
       if (session) {
         await updateSession({ id: session.id, ...payload }).unwrap()
         toast.success(t("live_sessions.modal.success_update"))
       } else {
         await createSession(payload).unwrap()
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("liveSessionDraft")
+        }
         toast.success(t("live_sessions.modal.success_create"))
       }
       onSuccess?.()

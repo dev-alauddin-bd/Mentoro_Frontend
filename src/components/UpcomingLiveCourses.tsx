@@ -78,7 +78,7 @@ export function UpcomingLiveCourses() {
               className="group relative flex flex-col h-full bg-card rounded-[2rem] overflow-hidden border border-border/50 hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10"
             >
               {/* Thumbnail Area */}
-              <div className="relative aspect-video overflow-hidden bg-muted">
+              <Link href={`/live/${session.id}`} className="relative aspect-video overflow-hidden bg-muted block">
                 <img
                   src={session.thumbnail || "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80"}
                   alt={session.title}
@@ -90,7 +90,7 @@ export function UpcomingLiveCourses() {
                     {t("upcoming.card_badge")}
                   </div>
                 </div>
-              </div>
+              </Link>
 
               {/* Content */}
               <div className="p-6 space-y-6 flex-grow flex flex-col">
@@ -102,20 +102,25 @@ export function UpcomingLiveCourses() {
                     </div>
                   </div>
                   
-                  <h3 className="text-xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors line-clamp-2 min-h-[3.5rem] flex items-center">
-                    {session.title}
-                  </h3>
+                  <Link href={`/live/${session.id}`} className="block">
+                    <h3 className="text-xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors line-clamp-2 min-h-[3.5rem] flex items-center">
+                      {session.title}
+                    </h3>
+                  </Link>
 
                   <p className="text-muted-foreground text-sm font-medium italic line-clamp-2 min-h-[2.5rem]">
                     {session.description}
                   </p>
                   
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <span className="px-2 py-0.5 bg-primary/10 rounded text-[10px] font-black uppercase tracking-widest text-primary">
                        {t("upcoming.card_type")}
                     </span>
                     <span className="text-[11px] font-bold text-muted-foreground">
                        • {session.instructor?.name || "Expert Instructor"}
+                    </span>
+                    <span className="flex items-center gap-1 text-[11px] font-bold text-muted-foreground">
+                       • <Users className="w-3 h-3" /> {session._count?.registrations || 0} Registered
                     </span>
                   </div>
                 </div>
@@ -130,8 +135,16 @@ export function UpcomingLiveCourses() {
                   </div>
 
                   {isDeadlinePassed ? (
-                    <div className="px-4 py-2 bg-secondary rounded-xl text-[10px] font-black uppercase tracking-widest text-muted-foreground cursor-not-allowed">
-                      {t("upcoming.closed")}
+                    <div className="flex items-center gap-2">
+                      <div className="px-3 py-2 bg-secondary rounded-xl text-[10px] font-black uppercase tracking-widest text-muted-foreground cursor-not-allowed">
+                        {t("upcoming.closed")}
+                      </div>
+                      <Link
+                        href={`/live/${session.id}`}
+                        className="px-3 py-2.5 bg-primary/10 text-primary rounded-xl text-[10px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all"
+                      >
+                        Details
+                      </Link>
                     </div>
                   ) : (
                     <Link

@@ -18,7 +18,9 @@ export interface SessionFormValues {
   thumbnail?: string
   thumbnailFile?: File
   sessionDate: string
-  registrationDeadline: string
+  sessionTime: string
+  registrationDeadlineDate: string
+  registrationDeadlineTime: string
   maxCapacity?: number
   meetingLink?: string
   isPublished: boolean
@@ -40,7 +42,9 @@ export function LiveSessionForm({ initialData, onSubmit, isLoading }: LiveSessio
     thumbnail: z.string().optional(),
     thumbnailFile: z.any().optional(),
     sessionDate: z.string().min(1, t("live_sessions.validation.date_required")),
-    registrationDeadline: z.string().min(1, t("live_sessions.validation.deadline_required")),
+    sessionTime: z.string().min(1, "Time is required"),
+    registrationDeadlineDate: z.string().min(1, t("live_sessions.validation.deadline_required")),
+    registrationDeadlineTime: z.string().min(1, "Time is required"),
     maxCapacity: z.preprocess(
       (val) => (val === "" || val === null || val === undefined || (typeof val === "number" && isNaN(val)) ? undefined : Number(val)),
       z.number().min(1, t("live_sessions.validation.capacity_min")).optional()
@@ -57,19 +61,48 @@ export function LiveSessionForm({ initialData, onSubmit, isLoading }: LiveSessio
     handleSubmit,
     reset,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<SessionFormValues>({
     resolver: zodResolver(sessionSchema as any),
-    defaultValues: {
-      title: "",
-      description: "",
-      thumbnail: "",
-      sessionDate: "",
-      registrationDeadline: "",
-      maxCapacity: undefined,
-      meetingLink: "",
-      isPublished: false,
-    },
+    defaultValues: useMemo(() => {
+      if (initialData) {
+        return {
+          title: initialData.title || "",
+          description: initialData.description || "",
+          thumbnail: initialData.thumbnail || "",
+          sessionDate: initialData.sessionDate ? new Date(initialData.sessionDate).toISOString().slice(0, 10) : "",
+          sessionTime: initialData.sessionDate ? new Date(initialData.sessionDate).toISOString().slice(11, 16) : "",
+          registrationDeadlineDate: initialData.registrationDeadline ? new Date(initialData.registrationDeadline).toISOString().slice(0, 10) : "",
+          registrationDeadlineTime: initialData.registrationDeadline ? new Date(initialData.registrationDeadline).toISOString().slice(11, 16) : "",
+          maxCapacity: initialData.maxCapacity || undefined,
+          meetingLink: initialData.meetingLink || "",
+          isPublished: initialData.isPublished || false,
+        }
+      }
+      
+      if (typeof window !== "undefined") {
+        const draft = localStorage.getItem("liveSessionDraft");
+        if (draft) {
+          try {
+            return JSON.parse(draft);
+          } catch(e) {}
+        }
+      }
+      
+      return {
+        title: "",
+        description: "",
+        thumbnail: "",
+        sessionDate: "",
+        sessionTime: "",
+        registrationDeadlineDate: "",
+        registrationDeadlineTime: "",
+        maxCapacity: undefined,
+        meetingLink: "",
+        isPublished: false,
+      }
+    }, [initialData]),
   })
 
   useEffect(() => {
@@ -78,8 +111,10 @@ export function LiveSessionForm({ initialData, onSubmit, isLoading }: LiveSessio
         title: initialData.title || "",
         description: initialData.description || "",
         thumbnail: initialData.thumbnail || "",
-        sessionDate: initialData.sessionDate ? new Date(initialData.sessionDate).toISOString().slice(0, 16) : "",
-        registrationDeadline: initialData.registrationDeadline ? new Date(initialData.registrationDeadline).toISOString().slice(0, 16) : "",
+        sessionDate: initialData.sessionDate ? new Date(initialData.sessionDate).toISOString().slice(0, 10) : "",
+        sessionTime: initialData.sessionDate ? new Date(initialData.sessionDate).toISOString().slice(11, 16) : "",
+        registrationDeadlineDate: initialData.registrationDeadline ? new Date(initialData.registrationDeadline).toISOString().slice(0, 10) : "",
+        registrationDeadlineTime: initialData.registrationDeadline ? new Date(initialData.registrationDeadline).toISOString().slice(11, 16) : "",
         maxCapacity: initialData.maxCapacity || undefined,
         meetingLink: initialData.meetingLink || "",
         isPublished: initialData.isPublished || false,
@@ -87,6 +122,18 @@ export function LiveSessionForm({ initialData, onSubmit, isLoading }: LiveSessio
       setThumbPreview(initialData.thumbnail || null)
     }
   }, [initialData, reset])
+
+  useEffect(() => {
+    if (initialData) return; // Do not save drafts while editing existing data
+    
+    const subscription = watch((value) => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("liveSessionDraft", JSON.stringify(value));
+      }
+    });
+    
+    return () => subscription.unsubscribe();
+  }, [watch, initialData]);
 
   const handleThumbChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -125,22 +172,36 @@ export function LiveSessionForm({ initialData, onSubmit, isLoading }: LiveSessio
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <label className="text-sm font-bold">{t("live_sessions.form.date")}</label>
-            <Input 
-              {...register("sessionDate")} 
-              type="datetime-local"
-              className="h-12 rounded-xl"
-            />
-            {errors.sessionDate && <p className="text-xs text-destructive font-medium">{errors.sessionDate.message}</p>}
+            <div className="flex gap-2">
+              <Input 
+                {...register("sessionDate")} 
+                type="date"
+                className="h-12 rounded-xl flex-1"
+              />
+              <Input 
+                {...register("sessionTime")} 
+                type="time"
+                className="h-12 rounded-xl flex-[0.7]"
+              />
+            </div>
+            {(errors.sessionDate || errors.sessionTime) && <p className="text-xs text-destructive font-medium">{errors.sessionDate?.message || errors.sessionTime?.message}</p>}
           </div>
 
           <div className="space-y-2">
             <label className="text-sm font-bold">{t("live_sessions.form.deadline")}</label>
-            <Input 
-              {...register("registrationDeadline")} 
-              type="datetime-local"
-              className="h-12 rounded-xl"
-            />
-            {errors.registrationDeadline && <p className="text-xs text-destructive font-medium">{errors.registrationDeadline.message}</p>}
+            <div className="flex gap-2">
+              <Input 
+                {...register("registrationDeadlineDate")} 
+                type="date"
+                className="h-12 rounded-xl flex-1"
+              />
+              <Input 
+                {...register("registrationDeadlineTime")} 
+                type="time"
+                className="h-12 rounded-xl flex-[0.7]"
+              />
+            </div>
+            {(errors.registrationDeadlineDate || errors.registrationDeadlineTime) && <p className="text-xs text-destructive font-medium">{errors.registrationDeadlineDate?.message || errors.registrationDeadlineTime?.message}</p>}
           </div>
         </div>
 

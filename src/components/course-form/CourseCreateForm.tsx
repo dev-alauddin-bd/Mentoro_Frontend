@@ -40,13 +40,34 @@ export default function CourseCreateForm({
   const isEditMode = !!initialData;
   const { register, handleSubmit, reset, setValue, watch } =
     useForm<FormValues>({
-      defaultValues: {
-        title: initialData?.title || "",
-        description: initialData?.description || "",
-        previewVideo: initialData?.previewVideo || "",
-        price: initialData?.price || 0,
-        categoryId: initialData?.categoryId || "",
-      },
+      defaultValues: (() => {
+        if (initialData) {
+          return {
+            title: initialData.title || "",
+            description: initialData.description || "",
+            previewVideo: initialData.previewVideo || "",
+            price: initialData.price || 0,
+            categoryId: initialData.categoryId || "",
+          };
+        }
+
+        if (typeof window !== "undefined") {
+          const draft = localStorage.getItem("courseDraft");
+          if (draft) {
+            try {
+              return JSON.parse(draft);
+            } catch (e) {}
+          }
+        }
+
+        return {
+          title: "",
+          description: "",
+          previewVideo: "",
+          price: 0,
+          categoryId: "",
+        };
+      })(),
     });
 
   const [createCourse] = useCreateCourseMutation();
@@ -70,6 +91,19 @@ export default function CourseCreateForm({
       setThumbPreview(initialData.thumbnail);
     }
   }, [initialData, reset]);
+
+  // Draft autosave
+  useEffect(() => {
+    if (initialData) return; // Do not save drafts while editing existing data
+    
+    const subscription = watch((value) => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("courseDraft", JSON.stringify(value));
+      }
+    });
+    
+    return () => subscription.unsubscribe();
+  }, [watch, initialData]);
 
   // Thumbnail handler
   const handleThumbChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -156,6 +190,9 @@ export default function CourseCreateForm({
       if (!isEditMode) {
         reset();
         setThumbPreview(null);
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("courseDraft");
+        }
       } else if (onCreated) {
         onCreated(initialData.id);
       }
@@ -180,7 +217,7 @@ export default function CourseCreateForm({
                 <input
                 {...register("title", { required: true })}
                 placeholder="Ex. Advanced Next.js Patterns"
-                className="w-full h-14 px-6 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50"
+                className="w-full h-14 px-6 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50"
                 />
             </div>
 
@@ -190,7 +227,7 @@ export default function CourseCreateForm({
                 {...register("description", { required: true })}
                 placeholder="Describe what students will learn..."
                 rows={4}
-                className="w-full px-6 py-4 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50 resize-none"
+                className="w-full px-6 py-4 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50 resize-none"
                 />
             </div>
 
@@ -201,7 +238,7 @@ export default function CourseCreateForm({
                     type="number"
                     {...register("price", { required: true, valueAsNumber: true })}
                     placeholder="299"
-                    className="w-full h-14 px-6 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50"
+                    className="w-full h-14 px-6 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50"
                 />
                 </div>
 
@@ -209,13 +246,13 @@ export default function CourseCreateForm({
                 <label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">Category</label>
                 <select
                     {...register("categoryId", { required: true })}
-                    className="w-full h-14 px-6 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-sm cursor-pointer"
+                    className="w-full h-14 px-6 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-sm cursor-pointer"
                 >
-                    <option value="">Select a category</option>
-                    {catLoading && <option>Loading...</option>}
-                    {isError && <option>Error loading</option>}
+                    <option value="" className="bg-background text-foreground">Select a category</option>
+                    {catLoading && <option className="bg-background text-foreground">Loading...</option>}
+                    {isError && <option className="bg-background text-foreground">Error loading</option>}
                     {(categories?.data?.categories || categories?.data || [])?.map((cat: any) => (
-                    <option key={cat.id} value={cat.id}>
+                    <option key={cat.id} value={cat.id} className="bg-background text-foreground">
                         {cat.name}
                     </option>
                     ))}
@@ -228,7 +265,7 @@ export default function CourseCreateForm({
                 <input
                 {...register("previewVideo", { required: true })}
                 placeholder="YouTube URL"
-                className="w-full h-14 px-6 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50"
+                className="w-full h-14 px-6 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50"
                 />
             </div>
 
@@ -251,7 +288,7 @@ export default function CourseCreateForm({
                             type="file" 
                             accept="image/*" 
                             onChange={handleThumbChange} 
-                            className="w-full text-sm text-muted-foreground file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-xs file:font-black file:uppercase file:tracking-widest file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-all cursor-pointer bg-secondary/30 rounded-2xl h-14 flex items-center pr-2"
+                            className="w-full text-sm text-muted-foreground file:mr-4 file:py-3 file:px-6 file:rounded-xl file:border-0 file:text-xs file:font-black file:uppercase file:tracking-widest file:bg-primary/10 file:text-primary hover:file:bg-primary/20 transition-all cursor-pointer bg-background border border-border rounded-2xl h-14 flex items-center pr-2"
                         />
                     </div>
                     {thumbPreview && (
