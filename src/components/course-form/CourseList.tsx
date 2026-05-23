@@ -89,18 +89,7 @@ export default function CourseList({ courses, isLoading, onEdit, onAddModule, on
                 {course.isPublished ? <CloudOff className="w-4 h-4" /> : <CloudUpload className="w-4 h-4" />}
             </button>
             
-            <button
-                onClick={() => onFeatureRequest(course.id, course.title)}
-                disabled={course.isFeatured || course.featureRequested}
-                className={`h-9 w-9 rounded-xl transition-all flex items-center justify-center shadow-sm ${
-                course.isFeatured ? "bg-yellow-500 text-white cursor-not-allowed" : 
-                course.featureRequested ? "bg-blue-500 text-white cursor-not-allowed" : 
-                "bg-background text-muted-foreground hover:bg-yellow-500 hover:text-white border border-border/50 hover:border-yellow-500"
-                }`}
-                title={course.isFeatured ? "Featured Course" : course.featureRequested ? "Request Pending" : "Request Feature Status ($50)"}
-            >
-                <Sparkles className={`w-4 h-4 ${course.featureRequested ? "animate-pulse" : ""}`} />
-            </button>
+          
           </div>
 
           <div className="flex items-center bg-secondary/30 p-1.5 rounded-2xl border border-border/50 gap-1.5">

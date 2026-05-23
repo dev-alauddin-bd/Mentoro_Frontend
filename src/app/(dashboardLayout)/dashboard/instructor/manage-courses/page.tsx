@@ -47,8 +47,35 @@ export default function ManageCourses() {
 
 
 
-  const handleDelete = async (id: string) => {
-    if (window.confirm(t("instructor.manage_courses.delete_confirm"))) {
+  const confirmAction = (message: string, onConfirm: () => void) => {
+    toast.custom((t_toast) => (
+      <div className={`${t_toast.visible ? 'animate-enter' : 'animate-leave'} max-w-sm w-full bg-card border border-border shadow-2xl rounded-2xl pointer-events-auto flex flex-col p-4 gap-4`}>
+        <p className="text-sm font-bold text-foreground text-center">
+          {message}
+        </p>
+        <div className="flex gap-2">
+            <button 
+                onClick={() => toast.dismiss(t_toast.id)}
+                className="flex-1 bg-secondary text-foreground text-xs font-black uppercase tracking-widest py-2.5 rounded-xl hover:bg-secondary/80 transition-all"
+            >
+                Cancel
+            </button>
+            <button 
+                onClick={() => {
+                    toast.dismiss(t_toast.id);
+                    onConfirm();
+                }}
+                className="flex-1 bg-primary text-white text-xs font-black uppercase tracking-widest py-2.5 rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all"
+            >
+                Confirm
+            </button>
+        </div>
+      </div>
+    ), { duration: Infinity });
+  };
+
+  const handleDelete = (id: string) => {
+    confirmAction(t("instructor.manage_courses.delete_confirm"), async () => {
       try {
         await deleteCourse(id).unwrap();
         toast.success(t("instructor.manage_courses.delete_success"));
@@ -56,28 +83,26 @@ export default function ManageCourses() {
       } catch (err) {
         toast.error(t("instructor.manage_courses.delete_error"));
       }
-    }
+    });
   };
 
-  const handleTogglePublish = async (id: string, currentStatus: boolean, title: string) => {
+  const handleTogglePublish = (id: string, currentStatus: boolean, title: string) => {
     const action = currentStatus ? "Unpublish" : "Publish";
-    const confirmed = window.confirm(`Are you sure you want to ${action.toLowerCase()} "${title}"?`);
-    
-    if (!confirmed) return;
-
-    try {
-      await toast.promise(
-        togglePublish(id).unwrap(),
-        {
-          loading: `${action}ing course...`,
-          success: `Course ${action.toLowerCase()}ed successfully!`,
-          error: (err) => err?.data?.message || `Failed to ${action.toLowerCase()} course`,
-        }
-      );
-      refetch();
-    } catch (err) {
-      // Error handled by toast.promise
-    }
+    confirmAction(`Are you sure you want to ${action.toLowerCase()} "${title}"?`, async () => {
+      try {
+        await toast.promise(
+          togglePublish(id).unwrap(),
+          {
+            loading: `${action}ing course...`,
+            success: `Course ${action.toLowerCase()}ed successfully!`,
+            error: (err) => err?.data?.message || `Failed to ${action.toLowerCase()} course`,
+          }
+        );
+        refetch();
+      } catch (err) {
+        // Error handled by toast.promise
+      }
+    });
   };
 
   const courseData = (courses as any)?.data || [];
@@ -92,24 +117,23 @@ export default function ManageCourses() {
     router.push(`/dashboard/instructor/modules?courseId=${course.id}&courseTitle=${encodeURIComponent(course.title)}&openModal=true`);
   };
 
-  const handleFeatureRequest = async (id: string, title: string) => {
-    const confirmed = window.confirm(t("instructor.manage_courses.promote_confirm", { title }));
-    if (!confirmed) return;
+  const handleFeatureRequest = (id: string, title: string) => {
+    confirmAction(t("instructor.manage_courses.promote_confirm", { title }), async () => {
+      try {
+        const response = await toast.promise(
+          createFeaturedCheckout(id).unwrap(),
+          {
+            loading: "Preparing payment session...",
+            success: "Redirecting to secure payment...",
+            error: (err) => err?.data?.message || "Failed to initiate payment",
+          }
+        );
 
-    try {
-      const response = await toast.promise(
-        createFeaturedCheckout(id).unwrap(),
-        {
-          loading: "Preparing payment session...",
-          success: "Redirecting to secure payment...",
-          error: (err) => err?.data?.message || "Failed to initiate payment",
+        if (response?.data?.paymentUrl) {
+          window.location.href = response.data.paymentUrl;
         }
-      );
-
-      if (response?.data?.paymentUrl) {
-        window.location.href = response.data.paymentUrl;
-      }
-    } catch (err) {}
+      } catch (err) {}
+    });
   };
 
   return (

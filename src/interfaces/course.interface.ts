@@ -1,7 +1,7 @@
 // src/interfaces/course.interface.ts
 
 import { ICategory } from "./category.interface";
-import { IUser, SubmissionType } from "./user.interface";
+import { IUser } from "./user.interface";
 
 export interface ICourse {
   id: string;
@@ -10,24 +10,30 @@ export interface ICourse {
   thumbnail: string;
   previewVideo: string;
   price: number;
-    isFeatured: boolean;
-  featureRequested: boolean;
-  instructor?: {
-    id: string;
-    name: string;
-    avatar?: string | null;
-  } | null;
+  instructorId: string;
+  instructor?: IUser;
   isPublished: boolean;
+
   categoryId: string;
+
+
   category?: ICategory;
   modules?: IModule[];
   createdAt: string | Date;
   updatedAt: string | Date;
-  reviews?: IReview[];
   _count?: {
     enrolledUsers: number;
-    reviews: number;
-  };
+  }
+
+  // New fields added for richer course metadata
+  learningOutcomes?: string[];
+  requirements?: string[];
+  targetAudience?: string[];
+  tags?: string[];
+  hasCertificate?: boolean;
+  isFree?: boolean;
+  reviews?: IReview[];
+
 }
 
 export interface IReview {

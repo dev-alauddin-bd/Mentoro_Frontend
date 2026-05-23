@@ -10,7 +10,6 @@ import {
 import { useGetCategoriesQuery } from "@/redux/features/category/categoriesApi";
 import { useGenerateContentMutation } from "@/redux/features/ai/aiApi";
 import { Sparkles } from "lucide-react";
-import { ICourse } from "@/interfaces/course.interface";
 import toast from "react-hot-toast";
 import { useEffect } from "react";
 
@@ -61,6 +60,12 @@ export default function CourseCreateForm({
             previewVideo: initialData.previewVideo || "",
             price: initialData.price || 0,
             categoryId: initialData.categoryId || "",
+            learningOutcomes: initialData.learningOutcomes?.join(", ") || "",
+            requirements: initialData.requirements?.join(", ") || "",
+            targetAudience: initialData.targetAudience?.join(", ") || "",
+            tags: initialData.tags?.join(", ") || "",
+            hasCertificate: initialData.hasCertificate || false,
+            isFree: initialData.isFree || false,
           };
         }
 
@@ -79,6 +84,12 @@ export default function CourseCreateForm({
           previewVideo: "",
           price: 0,
           categoryId: "",
+          learningOutcomes: "",
+          requirements: "",
+          targetAudience: "",
+          tags: "",
+          hasCertificate: false,
+          isFree: false,
         };
       })(),
     });
@@ -105,6 +116,12 @@ export default function CourseCreateForm({
         previewVideo: initialData.previewVideo,
         price: initialData.price,
         categoryId: initialData.categoryId,
+        learningOutcomes: initialData.learningOutcomes?.join(", ") || "",
+        requirements: initialData.requirements?.join(", ") || "",
+        targetAudience: initialData.targetAudience?.join(", ") || "",
+        tags: initialData.tags?.join(", ") || "",
+        hasCertificate: initialData.hasCertificate || false,
+        isFree: initialData.isFree || false,
       });
       setThumbPreview(initialData.thumbnail);
     }
@@ -183,13 +200,13 @@ export default function CourseCreateForm({
         description: data.description,
         thumbnail: thumbnailUrl,
         previewVideo: embedVideoUrl,
-        price: Number(data.price),
+        price: data.isFree ? 0 : Number(data.price),
         categoryId: data.categoryId,
         // New metadata fields – sent as comma‑separated strings; backend Prisma expects String[]
-        learningOutcomes: data.learningOutcomes?.split(",").map((s) => s.trim()),
-        requirements: data.requirements?.split(",").map((s) => s.trim()),
-        targetAudience: data.targetAudience?.split(",").map((s) => s.trim()),
-        tags: data.tags?.split(",").map((s) => s.trim()),
+        learningOutcomes: data.learningOutcomes?.split(",").map((s) => s.trim()).filter(Boolean) || [],
+        requirements: data.requirements?.split(",").map((s) => s.trim()).filter(Boolean) || [],
+        targetAudience: data.targetAudience?.split(",").map((s) => s.trim()).filter(Boolean) || [],
+        tags: data.tags?.split(",").map((s) => s.trim()).filter(Boolean) || [],
         hasCertificate: data.hasCertificate ?? false,
         isFree: data.isFree ?? false,
       };
@@ -278,7 +295,11 @@ export default function CourseCreateForm({
                     );
 
                     // ----- array fields (store as CSV strings) -----
-                    const toCsv = (arr?: string[]) => arr?.join(", ") ?? "";
+                    const toCsv = (arr?: any) => {
+                      if (Array.isArray(arr)) return arr.join(", ");
+                      if (typeof arr === "string") return arr;
+                      return "";
+                    };
 
                     setValue("tags", toCsv(ai.tags));
                     setValue("learningOutcomes", toCsv(ai.learningOutcomes));
@@ -380,9 +401,10 @@ export default function CourseCreateForm({
               </label>
               <input
                 type="number"
-                {...register("price", { required: true, valueAsNumber: true })}
-                placeholder="299"
-                className="w-full h-14 px-6 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50"
+                disabled={watch("isFree")}
+                {...register("price", { required: !watch("isFree"), valueAsNumber: true })}
+                placeholder={watch("isFree") ? "Free" : "299"}
+                className={`w-full h-14 px-6 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50 ${watch("isFree") ? "opacity-50 cursor-not-allowed bg-muted" : ""}`}
               />
             </div>
 
