@@ -106,10 +106,10 @@ NEXT_PUBLIC_INSTRUCTOR_PASSWORD=password123
 
 Mentoro uses a **Server-Side Security Watchdog** (`middleware.ts`) to enforce strict Role-Based Access Control (RBAC).
 
-- **API-Synchronized**: Every protected request triggers a session verification against the Node.js backend.
+- **API-Synchronized**: Every authenticationed request triggers a session verification against the Node.js backend.
 - **RBAC Enforcement**: Prevents students from accessing instructor/admin areas and vice versa.
 - **Watchdog Logs**: Real-time security monitoring in the terminal with stylized status alerts.
-- **Fail-Safe**: Automatically clears invalid cookies and redirects to `/login` or `/unauthorized`.
+- **Fail-Safe**: Automatically clears invalid cookies and redirects to `/login` or `/unauthorizationd`.
 
 ### 3. Internationalization (AI Translation)
 ```bash
@@ -135,11 +135,11 @@ pnpm dev
 | `/courses/[id]` | Detailed course view, curriculum, and enrollment | Public |
 | `/careers` | View and apply for open job positions | Public |
 | `/contact` | Get in touch with platform support via interactive forms | Public |
-| `/unauthorized` | Premium "Access Denied" page for RBAC violations | Public |
+| `/unauthorizationd` | Premium "Access Denied" page for RBAC violations | Public |
 | `/login` & `/signup` | Secure authentication flows | Public |
-| `/dashboard/student/*` | Student progress and enrolled courses | Protected |
-| `/dashboard/instructor/*` | Instructor course management, assignments, and live sessions | Protected |
-| `/dashboard/admin/*` | Platform administration, advanced analytics, and user management | Protected |
+| `/dashboard/student/*` | Student progress and enrolled courses | authenticationed |
+| `/dashboard/instructor/*` | Instructor course management, assignments, and live sessions | authenticationed |
+| `/dashboard/admin/*` | Platform administration, advanced analytics, and user management | authenticationed |
 
 ---
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { useGetAdminAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi"
-import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi"
+import { useGetAllPublicCoursesQuery } from "@/redux/features/course/courseAPi"
 import { useGetAllUsersQuery } from "@/redux/features/user/userApi"
 import { Users, BookOpen, DollarSign, Loader2, TrendingUp, Inbox, ShieldCheck, UserCheck } from "lucide-react"
 import { useTranslation } from "react-i18next"
@@ -13,8 +13,8 @@ export default function AdminAnalyticsPage() {
 function AdminAnalyticsContent() {
   const { t } = useTranslation()
   const { data: analyticsData, isLoading: analyticsLoading } = useGetAdminAnalyticsQuery()
-  const { data: coursesData, isLoading: coursesLoading } = useGetAllCoursesQuery({ limit: 1000 })
-  const { data: usersData, isLoading: usersLoading } = useGetAllUsersQuery({ limit: 1000 })
+  const { data: coursesData, isLoading: coursesLoading } = useGetAllPublicCoursesQuery({ limit: 100 })
+  const { data: usersData, isLoading: usersLoading } = useGetAllUsersQuery({ limit: 100 })
   
   const stats = analyticsData?.data?.statistics || {}
   const courses = coursesData?.data?.courses || []

@@ -6,7 +6,7 @@ import baseApi from "@/redux/baseApi/baseApi";
 export const courseApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     // Create Course
-    createCourse: build.mutation<ICourseResponse, Partial<ICourse>>({
+    createCourse: build.mutation<ICourseResponse, FormData>({
       query: (body) => ({
         url: "/courses",
         method: "POST",
@@ -15,29 +15,48 @@ export const courseApi = baseApi.injectEndpoints({
       invalidatesTags: ["Course"],
     }),
 
-   getAllCourses: build.query<
-  ICoursesResponse,
-  { page?: number; limit?: number; search?: string; category?: string; sort?: string; instructorId?: string; showAll?: boolean; isFeatured?: boolean; featureRequested?: boolean } | void
->({
-  query: ({ page, limit, search, category, sort, instructorId, showAll, isFeatured, featureRequested } = {}) => {
-    const params = new URLSearchParams();
+    getAllPublicCourses: build.query<
+      ICoursesResponse,
+      { page?: number; limit?: number; search?: string; category?: string; sort?: string; showAll?: boolean } | void
+    >({
+      query: ({ page, limit, search, category, sort, showAll } = {}) => {
+        const params = new URLSearchParams();
 
-    if (page) params.append("page", page.toString());
-    if (limit) params.append("limit", limit.toString());
-    if (search) params.append("search", search);
-    if (category) params.append("category", category);
-    if (instructorId) params.append("instructorId", instructorId);
-    if (showAll) params.append("showAll", "true");
+        if (page) params.append("page", page.toString());
+        if (limit) params.append("limit", limit.toString());
+        if (search) params.append("search", search);
+        if (category) params.append("category", category);
+        if (showAll) params.append("showAll", "true");
 
-    // 🔥 FIX: sort (NOT sortBy)
-    if (sort) params.append("sort", sort);
-    if (isFeatured) params.append("isFeatured", "true");
-    if (featureRequested) params.append("featureRequested", "true");
+        // 🔥 FIX: sort (NOT sortBy)
+        if (sort) params.append("sort", sort);
 
-    return `/courses?${params.toString()}`;
-  },
-  providesTags: ["Course"],
-}),
+        return `/courses?${params.toString()}`;
+      },
+      providesTags: ["Course"],
+    }),
+
+
+    getInstructorAllCourses: build.query<
+      ICoursesResponse,
+      { page?: number; limit?: number; search?: string; category?: string; sort?: string; showAll?: boolean } | void
+    >({
+      query: ({ page, limit, search, category, sort, showAll } = {}) => {
+        const params = new URLSearchParams();
+
+        if (page) params.append("page", page.toString());
+        if (limit) params.append("limit", limit.toString());
+        if (search) params.append("search", search);
+        if (category) params.append("category", category);
+        if (showAll) params.append("showAll", "true");
+
+        // 🔥 FIX: sort (NOT sortBy)
+        if (sort) params.append("sort", sort);
+
+        return `/courses/instructor?${params.toString()}`;
+      },
+      providesTags: ["Course"],
+    }),
 
 
     // Get Single Course
@@ -47,13 +66,10 @@ export const courseApi = baseApi.injectEndpoints({
     }),
 
     // Update Course
-    updateCourse: build.mutation<
-      ICourseResponse,
-      { id: string; data: Partial<ICourse> }
-    >({
+    updateCourse: build.mutation<ICourseResponse, { id: string; data: FormData }>({
       query: ({ id, data }) => ({
         url: `/courses/${id}`,
-        method: "PUT",
+        method: "PATCH",
         body: data,
       }),
       invalidatesTags: ["Course"],
@@ -93,14 +109,6 @@ export const courseApi = baseApi.injectEndpoints({
       }),
     }),
 
-    // Process Featured Request Checkout
-    createFeaturedCheckout: build.mutation<any, string>({
-      query: (courseId) => ({
-        url: `/payments/checkout-featured`,
-        method: "POST",
-        body: { courseId }
-      }),
-    }),
 
     // Process Refund / Cancel Enrollment
     refundCourse: build.mutation<any, string>({
@@ -154,13 +162,14 @@ export const courseApi = baseApi.injectEndpoints({
 // Hooks
 export const {
   useCreateCourseMutation,
-  useGetAllCoursesQuery,
+  useGetInstructorAllCoursesQuery,
+  useGetAllPublicCoursesQuery,
   useGetCourseByIdQuery,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
   useEnrollCourseMutation,
   useCreateCheckoutMutation,
-  useCreateFeaturedCheckoutMutation,
+
   useRefundCourseMutation,
   useGetMyCoursesQuery,
   useCompleteLessonMutation,

@@ -38,7 +38,6 @@ import {
 } from "@/components/ui/sidebar";
 import { logout } from "@/redux/features/auth/authSlice";
 import { useLogoutMutation } from "@/redux/features/auth/authApi";
-import { auth } from "@/lib/firebase";
 
 // -------- MENU BY ROLE --------
 export function AppSidebar() {
@@ -73,7 +72,6 @@ export function AppSidebar() {
   const adminItems = [
     { title: t("nav.platform_hub"), url: "/dashboard/admin", icon: ShieldCheck },
     { title: t("nav.manage_users"), url: "/dashboard/admin/manage-users", icon: Users },
-    { title: t("nav.featured_requests"), url: "/dashboard/admin/featured-requests", icon: Sparkles },
     { title: t("nav.manage_jobs"), url: "/dashboard/admin/manage-jobs", icon: Briefcase },
     { title: t("nav.revenue"), url: "/dashboard/admin/revenue", icon: BarChart3 },
     { title: t("nav.legal"), url: "/dashboard/admin/legal", icon: History },
@@ -98,7 +96,6 @@ export function AppSidebar() {
 
   const handleLogout = async () => {
     try {
-      await auth.signOut();
       await logoutApi(undefined).unwrap();
       dispatch(logout());
       window.location.href = "/";
@@ -120,7 +117,7 @@ export function AppSidebar() {
 
         {/* Separator */}
         <div className="px-6 mb-4">
-           <div className="h-[1px] w-full bg-foreground/10"></div>
+          <div className="h-[1px] w-full bg-foreground/10"></div>
         </div>
 
         {/* --- NAVIGATION SECTION --- */}

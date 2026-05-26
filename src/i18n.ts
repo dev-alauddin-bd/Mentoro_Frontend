@@ -7,18 +7,13 @@ import LanguageDetector from "i18next-browser-languagedetector";
  * Since your content key is "app", the file names are app.json.
  */
 import en from "../locales/en/translation.json"; // English translations
-import fr from "../locales/fr/translation.json"; // French translations
-import es from "../locales/es/translation.json";
+
 import bn from "../locales/bn/translation.json"; // Bengali translations
 import ar from "../locales/ar/translation.json";    // Arabic
 import hi from "../locales/hi/translation.json"; // Hindi
-import ur from "../locales/ur/translation.json"; // Urdu
-import ta from "../locales/ta/translation.json"; // Tamil
+
 import ja from "../locales/ja/translation.json"; // Japanese
 import ko from "../locales/ko/translation.json"; // Korean
-import de from "../locales/de/translation.json"; // German
-import it from "../locales/it/translation.json"; // Italian
-import pt from "../locales/pt/translation.json"; // Portuguese
 
 i18n
   // Detect user language automatically
@@ -29,25 +24,21 @@ i18n
   .init({
     resources: {
       en: { translation: en },
-      fr: { translation: fr },
-      es: { translation: es },
+
       bn: { translation: bn },
       ar: { translation: ar },
       hi: { translation: hi },
-      ur: { translation: ur },
-      ta: { translation: ta },
+
       ja: { translation: ja },
       ko: { translation: ko },
-      de: { translation: de },
-      it: { translation: it },
-      pt: { translation: pt },
+
     },
 
     // Default language if detection fails
     fallbackLng: "en",
 
     // List of all supported languages in your project
-    supportedLngs: ["en", "fr", "es", "bn", "ar", "hi", "ur", "ta", "ja", "ko", "de", "it", "pt"],
+    supportedLngs: ["en", "bn", "ar", "hi", "ja", "ko"],
 
     detection: {
       // Order in which user language is looked up
@@ -57,8 +48,8 @@ i18n
     },
 
     interpolation: {
-      // React already handles XSS protection
-      escapeValue: false, 
+      // React already handles XSS authenticationion
+      escapeValue: false,
     },
   });
 

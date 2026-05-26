@@ -3,10 +3,9 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useGetAdminAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi";
-import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi";
 import { 
   BarChart3, 
-  DollarSign, 
+  DollarSign,
   TrendingUp, 
   Users, 
   ArrowUpRight, 
@@ -16,6 +15,7 @@ import {
   Target
 } from "lucide-react";
 import { TableSkeleton, StatCardSkeleton } from "@/components/dashboard/skeletons";
+import { useGetAllPublicCoursesQuery } from "@/redux/features/course/courseAPi";
 
 export default function AdminRevenuePage() {
   return <AdminRevenueContent />;
@@ -25,7 +25,7 @@ function AdminRevenueContent() {
   const { t } = useTranslation();
   const { data: analyticsData, isLoading: analyticsLoading } = useGetAdminAnalyticsQuery();
 
-  const { data: coursesData, isLoading: coursesLoading } = useGetAllCoursesQuery({ limit: 100 });
+  const { data: coursesData, isLoading: coursesLoading } = useGetAllPublicCoursesQuery({ limit: 100 });
 
   const stats = useMemo(() => analyticsData?.data?.statistics || {}, [analyticsData]);
   const courses = useMemo(() => Array.isArray(coursesData?.data?.courses) ? coursesData?.data?.courses : [], [coursesData]);

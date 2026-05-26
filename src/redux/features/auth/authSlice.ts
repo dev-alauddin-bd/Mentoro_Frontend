@@ -1,5 +1,6 @@
 // features/auth/authSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { REHYDRATE } from "redux-persist";
 import { RootState } from "../../store";
 import { IUser } from "@/interfaces/user.interface";
 
@@ -53,6 +54,14 @@ const authSlice = createSlice({
     setLoading(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(REHYDRATE, (state, action) => {
+      const payload = (action as any).payload;
+      if (payload && payload.mentoroAuth) {
+        state.loading = false;
+      }
+    });
   },
 });
 

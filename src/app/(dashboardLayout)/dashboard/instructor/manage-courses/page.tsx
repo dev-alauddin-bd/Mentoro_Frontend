@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import CourseCreateForm from "@/components/course-form/CourseCreateForm";
-import { useGetAllCoursesQuery, useDeleteCourseMutation, useTogglePublishMutation, useCreateFeaturedCheckoutMutation } from "@/redux/features/course/courseAPi";
+import { useDeleteCourseMutation, useTogglePublishMutation,  useGetInstructorAllCoursesQuery } from "@/redux/features/course/courseAPi";
 import CourseList from "@/components/course-form/CourseList";
 import { ICourse } from "@/interfaces/course.interface";
 import { Plus, BookOpen } from "lucide-react";
@@ -22,27 +22,26 @@ export default function ManageCourses() {
   const router = useRouter();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [courseToEdit, setCourseToEdit] = useState<ICourse | null>(null);
-  
+
   // Pagination & Filters State
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const limit = 5;
 
-  const { data: courses, refetch, isLoading } = useGetAllCoursesQuery(
-    { 
-        instructorId: user?.id,
-        page,
-        limit,
-        search,
-        category
+  const { data: courses, refetch, isLoading } = useGetInstructorAllCoursesQuery(
+    {
+      page,
+      limit,
+      search,
+      category
     },
     { skip: !user?.id }
   );
 
   const [deleteCourse] = useDeleteCourseMutation();
   const [togglePublish] = useTogglePublishMutation();
-  const [createFeaturedCheckout] = useCreateFeaturedCheckoutMutation();
+
   const { data: categories } = useGetCategoriesQuery();
 
 
@@ -54,21 +53,21 @@ export default function ManageCourses() {
           {message}
         </p>
         <div className="flex gap-2">
-            <button 
-                onClick={() => toast.dismiss(t_toast.id)}
-                className="flex-1 bg-secondary text-foreground text-xs font-black uppercase tracking-widest py-2.5 rounded-xl hover:bg-secondary/80 transition-all"
-            >
-                Cancel
-            </button>
-            <button 
-                onClick={() => {
-                    toast.dismiss(t_toast.id);
-                    onConfirm();
-                }}
-                className="flex-1 bg-primary text-white text-xs font-black uppercase tracking-widest py-2.5 rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all"
-            >
-                Confirm
-            </button>
+          <button
+            onClick={() => toast.dismiss(t_toast.id)}
+            className="flex-1 bg-secondary text-foreground text-xs font-black uppercase tracking-widest py-2.5 rounded-xl hover:bg-secondary/80 transition-all"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => {
+              toast.dismiss(t_toast.id);
+              onConfirm();
+            }}
+            className="flex-1 bg-primary text-white text-xs font-black uppercase tracking-widest py-2.5 rounded-xl shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all"
+          >
+            Confirm
+          </button>
         </div>
       </div>
     ), { duration: Infinity });
@@ -117,40 +116,23 @@ export default function ManageCourses() {
     router.push(`/dashboard/instructor/modules?courseId=${course.id}&courseTitle=${encodeURIComponent(course.title)}&openModal=true`);
   };
 
-  const handleFeatureRequest = (id: string, title: string) => {
-    confirmAction(t("instructor.manage_courses.promote_confirm", { title }), async () => {
-      try {
-        const response = await toast.promise(
-          createFeaturedCheckout(id).unwrap(),
-          {
-            loading: "Preparing payment session...",
-            success: "Redirecting to secure payment...",
-            error: (err) => err?.data?.message || "Failed to initiate payment",
-          }
-        );
 
-        if (response?.data?.paymentUrl) {
-          window.location.href = response.data.paymentUrl;
-        }
-      } catch (err) {}
-    });
-  };
 
   return (
     <div className="container mx-auto p-4 md:p-8 space-y-10 max-w-7xl">
-      
+
       {/* Header Branding */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20">
-                <BookOpen className="w-3.5 h-3.5" /> {t("instructor.manage_courses.catalog")}
-            </div>
-            <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-foreground leading-tight italic">
-                {t("instructor.manage_courses.title")}
-            </h1>
-            <p className="text-muted-foreground font-medium max-w-xl">
-                {t("instructor.manage_courses.subtitle")}
-            </p>
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20">
+            <BookOpen className="w-3.5 h-3.5" /> {t("instructor.manage_courses.catalog")}
+          </div>
+          <h1 className="text-4xl md:text-5xl font-black tracking-tighter text-foreground leading-tight italic">
+            {t("instructor.manage_courses.title")}
+          </h1>
+          <p className="text-muted-foreground font-medium max-w-xl">
+            {t("instructor.manage_courses.subtitle")}
+          </p>
         </div>
 
         <button
@@ -164,42 +146,42 @@ export default function ManageCourses() {
       {/* Filters Bar */}
       <div className="flex flex-col md:flex-row gap-4 items-center bg-card border border-border/60 p-4 rounded-3xl shadow-sm">
         <div className="relative flex-1 w-full">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input 
-                type="text"
-                placeholder="Search your courses..."
-                value={search}
-                onChange={(e) => {
-                    setSearch(e.target.value);
-                    setPage(1);
-                }}
-                className="w-full h-12 pl-11 pr-4 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-sm placeholder:font-medium"
-            />
-            {search && (
-                <button 
-                    onClick={() => setSearch("")}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-                >
-                    <X className="w-4 h-4" />
-                </button>
-            )}
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Search your courses..."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setPage(1);
+            }}
+            className="w-full h-12 pl-11 pr-4 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-sm placeholder:font-medium"
+          />
+          {search && (
+            <button
+              onClick={() => setSearch("")}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
         </div>
 
         <div className="relative w-full md:w-64">
-            <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
-            <select
-                value={category}
-                onChange={(e) => {
-                    setCategory(e.target.value);
-                    setPage(1);
-                }}
-                className="w-full h-12 pl-11 pr-4 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-sm cursor-pointer appearance-none"
-            >
-                <option value="">All Categories</option>
-                {(categories?.data?.categories || [])?.map((cat: any) => (
-                    <option key={cat.id} value={cat.id}>{cat.name}</option>
-                ))}
-            </select>
+          <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+          <select
+            value={category}
+            onChange={(e) => {
+              setCategory(e.target.value);
+              setPage(1);
+            }}
+            className="w-full h-12 pl-11 pr-4 bg-secondary/30 border border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold text-sm cursor-pointer appearance-none"
+          >
+            <option value="">All Categories</option>
+            {(categories?.data?.categories || [])?.map((cat: any) => (
+              <option key={cat.id} value={cat.id}>{cat.name}</option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -213,18 +195,17 @@ export default function ManageCourses() {
           onDelete={(id: string) => handleDelete(id)}
           onTogglePublish={handleTogglePublish}
           onAddModule={handleAddModule}
-          onFeatureRequest={handleFeatureRequest}
         />
 
         {/* Pagination Controls */}
         {((courses as any)?.data?.totalPages || 0) > 1 && (
-            <div className="border-t border-border/50 bg-muted/5">
-                <Pagination 
-                    currentPage={page}
-                    totalPages={(courses as any)?.data?.totalPages || 0}
-                    onPageChange={(newPage) => setPage(newPage)}
-                />
-            </div>
+          <div className="border-t border-border/50 bg-muted/5">
+            <Pagination
+              currentPage={page}
+              totalPages={(courses as any)?.data?.totalPages || 0}
+              onPageChange={(newPage) => setPage(newPage)}
+            />
+          </div>
         )}
 
 
@@ -236,7 +217,7 @@ export default function ManageCourses() {
       {showCreateModal && (
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex justify-center items-center p-4">
           <div className="bg-card border border-border/60 rounded-[2.5rem] p-8 shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
-            
+
             {/* Modal Header */}
             <div className="flex justify-between items-center mb-8 border-b border-border/50 pb-4">
               <div>
@@ -263,6 +244,7 @@ export default function ManageCourses() {
               initialData={courseToEdit}
               onCreated={() => {
                 setShowCreateModal(false);
+
                 setCourseToEdit(null);
                 refetch();
               }}

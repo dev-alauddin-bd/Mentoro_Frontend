@@ -13,7 +13,7 @@ import { useLogoutMutation } from "@/redux/features/auth/authApi";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 
-import { auth } from "@/lib/firebase";
+
 import { GlobalSearch } from "./GlobalSearch";
 import { trackEvent } from "@/lib/gtag";
 
@@ -40,10 +40,11 @@ export function Header() {
 
   const pathname = usePathname();
   const [logoutApi] = useLogoutMutation();
-
+  console.log("user", user);
+  console.log("isAuthenticated", isAuthenticated);
   const handleLogout = async () => {
     try {
-      await auth.signOut();
+
       await logoutApi(undefined).unwrap();
       dispatch(logout());
       trackEvent('logout', { method: 'Manual' });

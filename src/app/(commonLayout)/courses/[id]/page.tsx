@@ -6,7 +6,9 @@ import { useParams, useRouter } from "next/navigation";
 import {
    useCreateCheckoutMutation,
    useEnrollCourseMutation,
-   useGetAllCoursesQuery,
+
+   useGetAllPublicCoursesQuery,
+
    useGetCourseByIdQuery,
 } from "@/redux/features/course/courseAPi";
 
@@ -42,7 +44,7 @@ export default function EnhancedCourseDetailsPage() {
 
    const course = data?.data;
 
-   const { data: relatedCoursesData } = useGetAllCoursesQuery({
+   const { data: relatedCoursesData } = useGetAllPublicCoursesQuery({
       limit: 5,
       category: course?.categoryId,
    });

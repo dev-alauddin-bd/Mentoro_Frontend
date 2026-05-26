@@ -8,7 +8,7 @@ import {
   useUpdateModuleMutation,
   useDeleteModuleMutation
 } from "@/redux/features/module/moduleApi";
-import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi";
+
 import DashboardHeader from "@/components/common/DashboardHeader";
 import DashboardCard from "@/components/common/DashboardCard";
 import DashboardFilterBar from "@/components/common/DashboardFilterBar";
@@ -17,12 +17,13 @@ import Pagination from "@/components/common/Pagination";
 import { Edit, Trash2, Layers, Plus, X, Loader2 } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { useGetInstructorAllCoursesQuery } from "@/redux/features/course/courseAPi";
 
 export default function ModulesPage() {
   const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const { data: modulesData, isLoading: queriesLoading } = useGetAllModulesQuery();
-  const { data: coursesData } = useGetAllCoursesQuery(
-    { instructorId: user?.id, limit: 100 },
+  const { data: coursesData } = useGetInstructorAllCoursesQuery(
+    { limit: 100 },
     { skip: !user?.id }
   );
   const modules = modulesData?.data || [];

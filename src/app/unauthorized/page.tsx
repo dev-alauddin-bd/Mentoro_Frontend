@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ShieldAlert, Home, ArrowLeft, Lock } from "lucide-react";
 
-export default function UnauthorizedPage() {
+export default function UnauthorizationdPage() {
   const router = useRouter();
 
   return (
@@ -18,10 +18,10 @@ export default function UnauthorizedPage() {
         <div className="relative mb-8 flex justify-center">
           <div className="relative">
             <div className="w-32 h-32 rounded-3xl bg-red-500/10 border border-red-500/20 flex items-center justify-center backdrop-blur-xl">
-               <ShieldAlert className="w-16 h-16 text-red-500 animate-bounce" />
+              <ShieldAlert className="w-16 h-16 text-red-500 animate-bounce" />
             </div>
             <div className="absolute -bottom-2 -right-2 w-12 h-12 rounded-2xl bg-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/20 border border-white/20">
-               <Lock className="w-6 h-6 text-white" />
+              <Lock className="w-6 h-6 text-white" />
             </div>
           </div>
         </div>

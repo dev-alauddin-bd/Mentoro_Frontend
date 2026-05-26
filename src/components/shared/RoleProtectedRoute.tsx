@@ -7,12 +7,12 @@ import { RootState } from "@/redux/store";
 import { Loader2 } from "lucide-react";
 import { Role } from "@/interfaces/user.interface";
 
-interface RoleProtectedRouteProps {
+interface RoleauthenticationedRouteProps {
   children: React.ReactNode;
   allowedRoles: Role[];
 }
 
-export function RoleProtectedRoute({ children, allowedRoles }: RoleProtectedRouteProps) {
+export function RoleauthenticationedRoute({ children, allowedRoles }: RoleauthenticationedRouteProps) {
   const { user, isAuthenticated, loading } = useSelector((state: RootState) => state.mentoroAuth);
   const router = useRouter();
 

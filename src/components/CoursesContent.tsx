@@ -12,11 +12,12 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi";
+
 import { useGetCategoriesQuery } from "@/redux/features/category/categoriesApi";
 import { CourseCard } from "@/components/shared/CourseCard";
 import { CourseSkeleton } from "@/components/ui/course-skeleton";
 import { trackEvent } from "@/lib/gtag";
+import { useGetAllPublicCoursesQuery } from '@/redux/features/course/courseAPi';
 
 export default function CoursesContent() {
   const { t } = useTranslation();
@@ -28,7 +29,7 @@ export default function CoursesContent() {
   const [debouncedSearch] = useDebounce(search, 800);
 
   // --- API Fetching ---
-  const { data, isLoading } = useGetAllCoursesQuery({
+  const { data, isLoading } = useGetAllPublicCoursesQuery({
     page,
     limit: 12,
     search: debouncedSearch,

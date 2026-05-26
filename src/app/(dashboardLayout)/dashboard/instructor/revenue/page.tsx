@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { useGetInstructorAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi";
-import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi";
+
 import { RootState } from "@/redux/store";
 import { 
   Zap, 
@@ -24,6 +24,7 @@ import DataTable, { Column } from "@/components/common/DataTable";
 import Pagination from "@/components/common/Pagination";
 import DashboardFilterBar from "@/components/common/DashboardFilterBar";
 import { useState } from "react";
+import { useGetInstructorAllCoursesQuery } from "@/redux/features/course/courseAPi";
 
 export default function InstructorRevenuePage() {
   return <InstructorRevenueContent />;
@@ -34,7 +35,7 @@ function InstructorRevenueContent() {
   const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const { data: analyticsData, isLoading: analyticsLoading } = useGetInstructorAnalyticsQuery();
 
-  const { data: coursesData, isLoading: coursesLoading } = useGetAllCoursesQuery({ limit: 100, instructorId: user?.id });
+  const { data: coursesData, isLoading: coursesLoading } = useGetInstructorAllCoursesQuery({ page: 1, limit: 10 });
 
   const stats = useMemo(() => analyticsData?.data?.statistics || {}, [analyticsData]);
   

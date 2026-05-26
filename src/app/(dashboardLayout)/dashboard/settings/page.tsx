@@ -16,10 +16,6 @@ import {
 } from "lucide-react";
 import { useState, useRef } from "react";
 import { toast } from "react-hot-toast";
-import { updateProfile } from "firebase/auth";
-import { auth } from "@/lib/firebase";
-import { useSyncFirebaseMutation } from "@/redux/features/auth/authApi";
-import { setUser } from "@/redux/features/auth/authSlice";
 import DashboardHeader from "@/components/common/DashboardHeader";
 import DashboardCard from "@/components/common/DashboardCard";
 
@@ -27,7 +23,6 @@ import DashboardCard from "@/components/common/DashboardCard";
 
 export default function ProfilePage() {
   const { user } = useSelector((state: RootState) => state.mentoroAuth);
-  const [syncFirebase] = useSyncFirebaseMutation();
   const dispatch = useDispatch();
   const [isUploading, setIsUploading] = useState(false);
   const [activeTab, setActiveTab] = useState<"profile" | "security">("profile");
@@ -55,7 +50,7 @@ export default function ProfilePage() {
           "https://api.cloudinary.com/v1_1/dyfamn6rm/image/upload",
           { method: "POST", body: cloudData }
         );
-        
+
         if (!cloudRes.ok) {
           throw new Error("Failed to upload image to Cloudinary");
         }
@@ -65,20 +60,7 @@ export default function ProfilePage() {
         toast.dismiss("uploading");
       }
 
-      if (auth.currentUser) {
-        await updateProfile(auth.currentUser, {
-          displayName: name,
-          photoURL: avatarUrl
-        });
-      }
 
-      const response = await syncFirebase({
-        email: user.email,
-        name: name,
-        avatar: avatarUrl,
-      }).unwrap();
-
-      dispatch(setUser({ user: response.data.user, token: response.data.accessToken }));
       setImagePreview(null);
       toast.success("Profile updated successfully!");
     } catch (err: any) {
@@ -147,26 +129,26 @@ export default function ProfilePage() {
             </div>
           </div>
 
-           <div className="bg-card border border-border/60 rounded-[2.5rem] p-8 space-y-6 shadow-xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-1000"></div>
-              <h4 className="text-[10px] font-black uppercase text-muted-foreground tracking-widest border-l-2 border-primary pl-3 relative z-10">
-                Account Status
-              </h4>
-              <div className="space-y-5 relative z-10">
-                <StatusItem
-                  icon={<CheckCircle2 className="w-4 h-4" />}
-                  label="Verified"
-                  status="Active"
-                  isDark={false}
-                />
-                <StatusItem
-                  icon={<Clock className="w-4 h-4" />}
-                  label="Member"
-                  status={user.createdAt ? new Date(user.createdAt).getFullYear().toString() : "2024"}
-                  isDark={false}
-                />
-              </div>
-           </div>
+          <div className="bg-card border border-border/60 rounded-[2.5rem] p-8 space-y-6 shadow-xl relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-3xl rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-1000"></div>
+            <h4 className="text-[10px] font-black uppercase text-muted-foreground tracking-widest border-l-2 border-primary pl-3 relative z-10">
+              Account Status
+            </h4>
+            <div className="space-y-5 relative z-10">
+              <StatusItem
+                icon={<CheckCircle2 className="w-4 h-4" />}
+                label="Verified"
+                status="Active"
+                isDark={false}
+              />
+              <StatusItem
+                icon={<Clock className="w-4 h-4" />}
+                label="Member"
+                status={user.createdAt ? new Date(user.createdAt).getFullYear().toString() : "2024"}
+                isDark={false}
+              />
+            </div>
+          </div>
         </div>
 
         {/* CONTENT AREA */}
@@ -215,45 +197,45 @@ export default function ProfilePage() {
                   <div className="space-y-4">
                     <label className="text-[10px] font-black text-muted-foreground uppercase tracking-widest ml-1">Avatar Identity</label>
                     <div className="relative border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5 rounded-[2rem] p-10 transition-all text-center cursor-pointer group overflow-hidden">
-                                    <input 
-                                        type="file" 
-                                        name="avatar" 
-                                        accept="image/*"
-                                        onChange={(e) => {
-                                            const file = e.target.files?.[0];
-                                            if (file) {
-                                                const reader = new FileReader();
-                                                reader.onloadend = () => setImagePreview(reader.result as string);
-                                                reader.readAsDataURL(file);
-                                            }
-                                        }}
-                                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
-                                    />
-                                    {imagePreview ? (
-                                        <div className="relative z-0">
-                                            <img src={imagePreview} alt="Preview" className="w-24 h-24 rounded-2xl mx-auto object-cover shadow-lg border-2 border-primary/20" />
-                                            <p className="mt-3 font-black text-xs uppercase text-primary">New Identity Selected</p>
-                                        </div>
-                                    ) : (
-                                        <div className="relative z-0 space-y-3">
-                                            <div className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
-                                                <Upload className="w-7 h-7 text-muted-foreground" />
-                                            </div>
-                                            <div>
-                                                <p className="font-black text-sm uppercase tracking-tight">Drop your visual identity here</p>
-                                                <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1">Supports JPG, PNG or WebP (Max 2MB)</p>
-                                            </div>
-                                        </div>
-                                    )}
-                                    {isUploading && (
-                                        <div className="absolute inset-0 bg-background/60 backdrop-blur-sm z-20 flex items-center justify-center animate-in fade-in">
-                                            <div className="flex flex-col items-center gap-3">
-                                                <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
-                                                <p className="text-[10px] font-black uppercase tracking-widest text-primary">Uploading...</p>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
+                      <input
+                        type="file"
+                        name="avatar"
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onloadend = () => setImagePreview(reader.result as string);
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                      />
+                      {imagePreview ? (
+                        <div className="relative z-0">
+                          <img src={imagePreview} alt="Preview" className="w-24 h-24 rounded-2xl mx-auto object-cover shadow-lg border-2 border-primary/20" />
+                          <p className="mt-3 font-black text-xs uppercase text-primary">New Identity Selected</p>
+                        </div>
+                      ) : (
+                        <div className="relative z-0 space-y-3">
+                          <div className="w-16 h-16 bg-secondary rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                            <Upload className="w-7 h-7 text-muted-foreground" />
+                          </div>
+                          <div>
+                            <p className="font-black text-sm uppercase tracking-tight">Drop your visual identity here</p>
+                            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1">Supports JPG, PNG or WebP (Max 2MB)</p>
+                          </div>
+                        </div>
+                      )}
+                      {isUploading && (
+                        <div className="absolute inset-0 bg-background/60 backdrop-blur-sm z-20 flex items-center justify-center animate-in fade-in">
+                          <div className="flex flex-col items-center gap-3">
+                            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-primary">Uploading...</p>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
 
                   <div className="flex justify-end pt-4">
@@ -281,7 +263,7 @@ export default function ProfilePage() {
                     </div>
                     <div>
                       <h3 className="text-2xl font-black italic">Lock Down Security.</h3>
-                      <p className="text-sm font-medium text-muted-foreground">Manage your credentials and protect your intellectual assets.</p>
+                      <p className="text-sm font-medium text-muted-foreground">Manage your credentials and authentication your intellectual assets.</p>
                     </div>
                   </div>
                 }
@@ -363,7 +345,7 @@ function StatusItem({ icon, label, status, isDark = true }: { icon: React.ReactN
   return (
     <div className="flex justify-between items-center text-xs">
       <span className={`flex items-center gap-3 font-bold uppercase tracking-widest text-[9px] ${isDark ? "text-zinc-400" : "text-muted-foreground"}`}>
-        <div className={`p-2 rounded-xl backdrop-blur-md border ${isDark ? "bg-zinc-800 text-primary border-zinc-700" : "bg-primary/10 text-primary border-primary/10"}`}>{icon}</div> 
+        <div className={`p-2 rounded-xl backdrop-blur-md border ${isDark ? "bg-zinc-800 text-primary border-zinc-700" : "bg-primary/10 text-primary border-primary/10"}`}>{icon}</div>
         {label}
       </span>
       <span className={`font-black italic text-sm ${isDark ? "text-primary" : "text-foreground"}`}>{status}</span>

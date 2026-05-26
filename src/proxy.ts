@@ -1,7 +1,7 @@
 // proxy.ts (Legacy reference - use middleware.ts for Next.js 13+)
 import { NextRequest, NextResponse } from "next/server";
 
-const PUBLIC_ROUTES = new Set(["/", "/courses", "/about", "/contact", "/unauthorized"]);
+const PUBLIC_ROUTES = new Set(["/", "/courses", "/about", "/contact", "/unauthorizationd"]);
 const LOGIN_REGISTER = new Set(["/login", "/register", "/signup"]);
 const DASHBOARD_BASE = "/dashboard";
 
@@ -14,6 +14,7 @@ const ROLE_DASHBOARDS: Record<string, string> = {
 export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("refreshToken")?.value;
+  console.log(token);
 
   if (
     pathname.startsWith("/_next") ||
@@ -34,8 +35,10 @@ export default async function proxy(request: NextRequest) {
           "Cookie": `refreshToken=${token}`,
         },
       });
+      // console.log("res",res);
       if (!res.ok) return null;
       const result = await res.json();
+      console.log("result", result.data);
       return result?.data?.role || null;
     } catch {
       return null;
@@ -80,7 +83,7 @@ export default async function proxy(request: NextRequest) {
     const requiredRole = pathname.split("/")[2];
 
     if (ROLE_DASHBOARDS[requiredRole] && userRole !== requiredRole) {
-      return NextResponse.redirect(new URL("/unauthorized", request.url));
+      return NextResponse.redirect(new URL("/unauthorizationd", request.url));
     }
 
     return NextResponse.next();

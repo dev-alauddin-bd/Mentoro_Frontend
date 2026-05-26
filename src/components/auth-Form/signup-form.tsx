@@ -12,9 +12,7 @@ import {
   setUser,
 } from "@/redux/features/auth/authSlice";
 import type { AppDispatch } from "@/redux/store";
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase";
-import { useSignUpMutation, useSyncFirebaseMutation } from "@/redux/features/auth/authApi";
+import { useSignUpMutation } from "@/redux/features/auth/authApi";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/gtag";
@@ -52,8 +50,7 @@ export function SignupForm() {
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const [signUp] = useSignUpMutation();
-  const [syncFirebase] = useSyncFirebaseMutation();
-
+ 
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -81,28 +78,7 @@ export function SignupForm() {
     { label: t("auth.password_requirements.special"), met: /[!@#$%^&*()_+\-=\[\]{};':"|,.<>/?]/.test(password) },
   ];
 
-  const onGoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-
-      // Sync with backend
-      const response = await syncFirebase({
-        name: user.displayName,
-        email: user.email,
-        avatar: user.photoURL,
-        role: "student", // Default role for social signup
-      }).unwrap();
-
-      dispatch(setUser({ user: response.data.user, token: response.data.accessToken }));
-      
-      trackEvent('sign_up', { method: 'Google' });
-      toast.success("Logged in with Google!");
-      router.push(callbackUrl);
-    } catch (error: any) {
-      toast.error(error.message || "Google signup failed");
-    }
-  };
+ 
 
   const onSubmit: SubmitHandler<SignupFormValues> = async (data) => {
     try {
@@ -287,25 +263,6 @@ export function SignupForm() {
             <p className="text-destructive text-xs font-bold mt-1 ml-1">{errors.terms.message}</p>
           )}
         </div>
-
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-border"></span>
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground font-bold">Or sign up with</span>
-          </div>
-        </div>
-
-        <Button
-          onClick={onGoogleLogin}
-          type="button"
-          variant="outline"
-          className="w-full h-12 gap-3 font-bold text-sm"
-        >
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5 h-5" alt="Google" />
-          Continue with Google
-        </Button>
 
         {/* Submit */}
         <Button

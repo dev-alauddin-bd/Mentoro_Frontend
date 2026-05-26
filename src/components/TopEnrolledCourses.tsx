@@ -3,15 +3,16 @@
 import Link from "next/link";
 import { ArrowRight, TrendingUp } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi";
+
 import { Section } from "./ui/section";
 import { CourseCard } from "./shared/CourseCard";
+import { useGetAllPublicCoursesQuery } from "@/redux/features/course/courseAPi";
 
 export function TopEnrolledCourses() {
   const { t } = useTranslation();
   const limit = 4;
 
-  const { data: courseData, isLoading } = useGetAllCoursesQuery({
+  const { data: courseData, isLoading } = useGetAllPublicCoursesQuery({
     page: 1,
     limit,
     sort: "popular",

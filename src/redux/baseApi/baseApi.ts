@@ -41,7 +41,7 @@ const baseQueryWithReauth: typeof baseQuery = async (
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 401) {
-    // console.warn('⚠️ 401 Unauthorized — trying to refresh token');
+    // console.warn('⚠️ 401 Unauthorizationd — trying to refresh token');
 
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
@@ -58,7 +58,7 @@ const baseQueryWithReauth: typeof baseQuery = async (
 
         if (resultData?.success) {
           const newToken = resultData.data.accessToken;
-          
+
           // Get the current user from state instead of relying on refresh response
           const currentUser = (api.getState() as any).mentoroAuth.user;
 

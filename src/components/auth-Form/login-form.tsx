@@ -11,9 +11,7 @@ import { AppDispatch } from "@/redux/store";
 import {
   setUser,
 } from "@/redux/features/auth/authSlice";
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "@/lib/firebase";
-import { useLoginMutation, useSyncFirebaseMutation } from "@/redux/features/auth/authApi";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { trackEvent } from "@/lib/gtag";
@@ -35,7 +33,6 @@ export function LoginForm() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [login] = useLoginMutation();
-  const [syncFirebase] = useSyncFirebaseMutation();
 
   const {
     register,
@@ -46,33 +43,12 @@ export function LoginForm() {
     resolver: zodResolver(loginSchema),
   });
 
-  const onGoogleLogin = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-
-      // Sync with backend
-      const response = await syncFirebase({
-        name: user.displayName,
-        email: user.email,
-        avatar: user.photoURL,
-        role: "student", // Default role
-      }).unwrap();
-
-      dispatch(setUser({ user: response.data.user, token: response.data.accessToken }));
-
-      trackEvent('login', { method: 'Google' });
-      toast.success("Logged in with Google!");
-      router.push(callbackUrl);
-    } catch (error: any) {
-      toast.error(error.message || "Google login failed");
-    }
-  };
 
   const onSubmit = async (data: LoginFormValues) => {
     try {
       const response = await login(data).unwrap();
-      
+      console.log("Login response:", response.data.user);
+
       dispatch(setUser({ user: response.data.user, token: response.data.accessToken }));
 
       trackEvent('login', { method: 'Email' });
@@ -134,15 +110,7 @@ export function LoginForm() {
           </div>
         </div>
 
-        <Button
-          onClick={onGoogleLogin}
-          type="button"
-          variant="outline"
-          className="w-full h-14 gap-3 font-bold text-sm"
-        >
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-5 h-5" alt="Google" />
-          Continue with Google
-        </Button>
+
 
         <div className="relative">
           <div className="absolute inset-0 flex items-center">
@@ -182,8 +150,8 @@ export function LoginForm() {
           {/* Password */}
           <div className="space-y-2">
             <div className="flex justify-between items-center px-1">
-                <label htmlFor="password" className="text-sm font-bold text-foreground">Password</label>
-                <button type="button" className="text-xs font-bold text-primary hover:underline">Forgot password?</button>
+              <label htmlFor="password" className="text-sm font-bold text-foreground">Password</label>
+              <button type="button" className="text-xs font-bold text-primary hover:underline">Forgot password?</button>
             </div>
             <InputGroup>
               <InputGroupAddon align="inline-start">

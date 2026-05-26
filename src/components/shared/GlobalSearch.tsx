@@ -3,20 +3,21 @@
 import { useState, useEffect, useRef } from "react"
 import { Search, Loader2, X, BookOpen, User, ExternalLink } from "lucide-react"
 import { useDebounce } from "@/hooks/useDebounce"
-import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi"
-import Link from "next/link"
-import { useTranslation } from "react-i18next"
+
+  import Link from "next/link"
+  import { useTranslation } from "react-i18next"
 
 import { trackEvent } from "@/lib/gtag";
+import { useGetAllPublicCoursesQuery } from "@/redux/features/course/courseAPi";
 
 export function GlobalSearch() {
   const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
   const [searchTerm, setSearchTerm] = useState("")
-  const debouncedSearch = useDebounce(searchTerm, 500)
+  const debouncedSearch = useDebounce(searchTerm, 500)  
   const modalRef = useRef<HTMLDivElement>(null)
 
-  const { data: coursesData, isLoading, isFetching } = useGetAllCoursesQuery(
+  const { data: coursesData, isLoading, isFetching } = useGetAllPublicCoursesQuery(
     { search: debouncedSearch, limit: 10 },
     { skip: debouncedSearch.length < 2 }
   )

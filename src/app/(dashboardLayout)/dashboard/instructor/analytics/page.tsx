@@ -1,7 +1,7 @@
 "use client"
 import { useState, useMemo } from "react";
 import { useGetInstructorAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi"
-import { useGetAllCoursesQuery } from "@/redux/features/course/courseAPi"
+
 import { useGetAllUsersQuery } from "@/redux/features/user/userApi"
 import { Users, BookOpen, DollarSign, Loader2, TrendingUp, Inbox } from "lucide-react"
 import { InstructorAnalytics } from "@/components/dashboard/InstructorAnalytics"
@@ -12,6 +12,7 @@ import DashboardCard from "@/components/common/DashboardCard";
 import DashboardFilterBar from "@/components/common/DashboardFilterBar";
 import DataTable, { Column } from "@/components/common/DataTable";
 import Pagination from "@/components/common/Pagination";
+import { useGetInstructorAllCoursesQuery } from "@/redux/features/course/courseAPi";
 
 export default function InstructorAnalyticsPage() {
   return <InstructorAnalyticsContent />
@@ -20,7 +21,7 @@ export default function InstructorAnalyticsPage() {
 function InstructorAnalyticsContent() {
   const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const { data: analyticsData, isLoading: analyticsLoading } = useGetInstructorAnalyticsQuery()
-  const { data: coursesData, isLoading: coursesLoading } = useGetAllCoursesQuery({ limit: 1000, instructorId: user?.id })
+  const { data: coursesData, isLoading: coursesLoading } = useGetInstructorAllCoursesQuery({ limit: 100 })
   
   const stats = analyticsData?.data?.statistics || {}
   const courses = coursesData?.data?.courses || []

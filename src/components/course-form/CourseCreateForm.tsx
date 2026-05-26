@@ -1,40 +1,38 @@
 "use client";
 
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import toast from "react-hot-toast";
+import { Sparkles } from "lucide-react";
 
 import {
   useCreateCourseMutation,
   useUpdateCourseMutation,
 } from "@/redux/features/course/courseAPi";
+
 import { useGetCategoriesQuery } from "@/redux/features/category/categoriesApi";
-import { useGenerateContentMutation } from "@/redux/features/ai/aiApi";
-import { Sparkles } from "lucide-react";
-import toast from "react-hot-toast";
-import { useEffect } from "react";
+import { useGenerateCourseContentMutation } from "@/redux/features/ai/aiApi";
 
 type FormValues = {
   title: string;
   description: string;
-  thumbnailFile?: File;
+  thumbnail?: File;
   previewVideo: string;
   price: number;
   categoryId: string;
-
   learningOutcomes?: string;
   requirements?: string;
   targetAudience?: string;
   tags?: string;
-
   hasCertificate?: boolean;
-  isFree?: boolean;
+
 };
 
-// Convert YouTube URL → embed URL
 const convertToEmbedUrl = (url: string) => {
   if (!url) return "";
-  if (url.includes("youtu.be/"))
+  if (url.includes("youtu.be/")) {
     return url.replace("https://youtu.be/", "https://www.youtube.com/embed/");
+  }
   if (url.includes("youtube.com/watch?v=")) {
     const videoId = url.split("v=")[1]?.split("&")[0];
     return `https://www.youtube.com/embed/${videoId}`;
@@ -44,60 +42,43 @@ const convertToEmbedUrl = (url: string) => {
 
 export default function CourseCreateForm({
   onCreated,
+  onClose,
   initialData,
 }: {
   onCreated?: (courseId: string) => void;
+  onClose?: () => void;
   initialData?: any;
 }) {
   const isEditMode = !!initialData;
-  const { register, handleSubmit, reset, setValue, watch } =
-    useForm<FormValues>({
-      defaultValues: (() => {
-        if (initialData) {
-          return {
-            title: initialData.title || "",
-            description: initialData.description || "",
-            previewVideo: initialData.previewVideo || "",
-            price: initialData.price || 0,
-            categoryId: initialData.categoryId || "",
-            learningOutcomes: initialData.learningOutcomes?.join(", ") || "",
-            requirements: initialData.requirements?.join(", ") || "",
-            targetAudience: initialData.targetAudience?.join(", ") || "",
-            tags: initialData.tags?.join(", ") || "",
-            hasCertificate: initialData.hasCertificate || false,
-            isFree: initialData.isFree || false,
-          };
-        }
 
-        if (typeof window !== "undefined") {
-          const draft = localStorage.getItem("courseDraft");
-          if (draft) {
-            try {
-              return JSON.parse(draft);
-            } catch (e) { }
-          }
-        }
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
 
-        return {
-          title: "",
-          description: "",
-          previewVideo: "",
-          price: 0,
-          categoryId: "",
-          learningOutcomes: "",
-          requirements: "",
-          targetAudience: "",
-          tags: "",
-          hasCertificate: false,
-          isFree: false,
-        };
-      })(),
-    });
+  } = useForm<FormValues>({
+    defaultValues: {
+      title: initialData?.title || "",
+      description: initialData?.description || "",
+      previewVideo: initialData?.previewVideo || "",
+      price: initialData?.price || 0,
+      categoryId: initialData?.categoryId || "",
+      learningOutcomes: initialData?.learningOutcomes?.join(", ") || "",
+      requirements: initialData?.requirements?.join(", ") || "",
+      targetAudience: initialData?.targetAudience?.join(", ") || "",
+      tags: initialData?.tags?.join(", ") || "",
+      hasCertificate: initialData?.hasCertificate || false,
 
-  const [createCourse] = useCreateCourseMutation();
-  const [updateCourse] = useUpdateCourseMutation();
-  const [generateContent, { isLoading: isGenerating }] =
-    useGenerateContentMutation();
+    },
+  });
+
+  const [createCourse, { isLoading: isCreating }] = useCreateCourseMutation();
+  const [updateCourse, { isLoading: isUpdating }] = useUpdateCourseMutation();
+  const [generateCourseContent, { isLoading: isGenerating }] =
+    useGenerateCourseContentMutation();
+  const loading = isCreating || isUpdating;
 
   const { data: categories, isLoading: catLoading, isError } =
     useGetCategoriesQuery();
@@ -105,47 +86,38 @@ export default function CourseCreateForm({
   const [thumbPreview, setThumbPreview] = useState<string | null>(
     initialData?.thumbnail || null
   );
-  const [loading, setLoading] = useState(false);
 
-  // Pre-fill form if initialData changes
+
+  const previewVideoUrl = watch("previewVideo");
+
+
   useEffect(() => {
-    if (initialData) {
-      reset({
-        title: initialData.title,
-        description: initialData.description,
-        previewVideo: initialData.previewVideo,
-        price: initialData.price,
-        categoryId: initialData.categoryId,
-        learningOutcomes: initialData.learningOutcomes?.join(", ") || "",
-        requirements: initialData.requirements?.join(", ") || "",
-        targetAudience: initialData.targetAudience?.join(", ") || "",
-        tags: initialData.tags?.join(", ") || "",
-        hasCertificate: initialData.hasCertificate || false,
-        isFree: initialData.isFree || false,
+    if (initialData) return;
+    const draft = localStorage.getItem('courseDraft');
+    if (draft) {
+      const data = JSON.parse(draft);
+      Object.entries(data).forEach(([key, value]) => {
+        setValue(key as any, value);
       });
-      setThumbPreview(initialData.thumbnail);
     }
-  }, [initialData, reset]);
+  }, []);
 
-  // Draft autosave
   useEffect(() => {
-    if (initialData) return; // Do not save drafts while editing existing data
+    if (initialData) return;
 
-    const subscription = watch((value) => {
-      if (typeof window !== "undefined") {
-        localStorage.setItem("courseDraft", JSON.stringify(value));
-      }
+    const sub = watch((value) => {
+      const { thumbnail, ...safe } = value as any;
+      localStorage.setItem("courseDraft", JSON.stringify(safe));
     });
 
-    return () => subscription.unsubscribe();
+    return () => sub.unsubscribe();
   }, [watch, initialData]);
 
-  // Thumbnail handler
   const handleThumbChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setValue("thumbnailFile" as any, file);
+    setValue("thumbnail", file);
 
     const reader = new FileReader();
     reader.onload = () => setThumbPreview(reader.result as string);
@@ -153,102 +125,76 @@ export default function CourseCreateForm({
   };
 
   const onSubmit = async (data: FormValues) => {
-    if (!isEditMode && !data.thumbnailFile) {
-      toast.error("Thumbnail is required for new courses!");
-      return;
-    }
-
-    if (!data.categoryId) {
-      toast.error("Category is required!");
-      return;
-    }
-
     try {
-      setLoading(true);
+      const formData = new FormData();
 
-      let thumbnailUrl = initialData?.thumbnail || "";
+      formData.append("title", data.title);
+      formData.append("description", data.description);
+      formData.append("previewVideo", data.previewVideo);
+      formData.append("price", String(data.price || 0));
+      formData.append("categoryId", data.categoryId);
 
-      // Upload to Cloudinary only if a new file is selected
-      if (data.thumbnailFile) {
-        const fd = new FormData();
-        fd.append("file", data.thumbnailFile);
-        fd.append("upload_preset", "course_thumbnails");
+      formData.append(
+        "learningOutcomes",
+        JSON.stringify(
+          data.learningOutcomes?.split(",").map((i) => i.trim()).filter(Boolean)
+        )
+      );
 
-        const res = await fetch(
-          "https://api.cloudinary.com/v1_1/dyfamn6rm/image/upload",
-          {
-            method: "POST",
-            body: fd,
-          }
-        );
+      formData.append(
+        "requirements",
+        JSON.stringify(
+          data.requirements?.split(",").map((i) => i.trim()).filter(Boolean)
+        )
+      );
 
-        const json = await res.json();
-        thumbnailUrl = json.secure_url;
+      formData.append(
+        "targetAudience",
+        JSON.stringify(
+          data.targetAudience?.split(",").map((i) => i.trim()).filter(Boolean)
+        )
+      );
 
-        if (!thumbnailUrl) {
-          toast.error("Thumbnail upload failed!");
-          return;
-        }
+      formData.append(
+        "tags",
+        JSON.stringify(
+          data.tags?.split(",").map((i) => i.trim()).filter(Boolean)
+        )
+      );
+
+      formData.append("hasCertificate", String(data.hasCertificate));
+
+      const thumbnail = data.thumbnail;
+      if (!isEditMode && !thumbnail) {
+        toast.error("Thumbnail is required");
+        return;
       }
 
-      // Convert video URL
-      const embedVideoUrl = convertToEmbedUrl(data.previewVideo);
+      if (thumbnail) {
+        formData.append("thumbnail", thumbnail);
+      }
 
-      // ✅ Correct payload
-      const payload: any = {
-        title: data.title,
-        description: data.description,
-        thumbnail: thumbnailUrl,
-        previewVideo: embedVideoUrl,
-        price: data.isFree ? 0 : Number(data.price),
-        categoryId: data.categoryId,
-        // New metadata fields – sent as comma‑separated strings; backend Prisma expects String[]
-        learningOutcomes: data.learningOutcomes?.split(",").map((s) => s.trim()).filter(Boolean) || [],
-        requirements: data.requirements?.split(",").map((s) => s.trim()).filter(Boolean) || [],
-        targetAudience: data.targetAudience?.split(",").map((s) => s.trim()).filter(Boolean) || [],
-        tags: data.tags?.split(",").map((s) => s.trim()).filter(Boolean) || [],
-        hasCertificate: data.hasCertificate ?? false,
-        isFree: data.isFree ?? false,
-      };
+      let res;
 
       if (isEditMode) {
-        await updateCourse({ id: initialData.id, data: payload }).unwrap();
-        toast.success("✅ Course updated successfully!");
+        res = await updateCourse({ id: initialData.id, data: formData }).unwrap();
+        toast.success("Course updated successfully!");
       } else {
-        const created = await createCourse(payload).unwrap();
-        toast.success("✅ Course created successfully!");
-
-        const createdCourseId =
-          (created as any)?.id ??
-          (created as any)?._id ??
-          (created as any)?.data?.id ??
-          (created as any)?.data?._id;
-
-        if (onCreated && createdCourseId) {
-          onCreated(createdCourseId);
+        res = await createCourse(formData).unwrap();
+        toast.success("Course created successfully!");
+        localStorage.removeItem("courseDraft");
+        if (onCreated) {
+          onCreated(res?.data?.id);
         }
-      }
-
-      if (!isEditMode) {
         reset();
         setThumbPreview(null);
-        if (typeof window !== "undefined") {
-          localStorage.removeItem("courseDraft");
-        }
-      } else if (onCreated) {
-        onCreated(initialData.id);
+        onClose?.();
       }
-    } catch (err) {
-      console.error("❌ Form submission error:", err);
-      toast.error(
-        isEditMode ? "Failed to update course." : "Failed to create course."
-      );
-    } finally {
-      setLoading(false);
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.data?.message || "Something went wrong");
     }
   };
-
-  const previewVideoUrl = watch("previewVideo");
 
   return (
     <div className="space-y-8">
@@ -264,48 +210,32 @@ export default function CourseCreateForm({
                 type="button"
                 disabled={isGenerating}
                 onClick={async () => {
-                  // use whatever the user already typed as the prompt
                   const title = watch("title");
                   const desc = watch("description");
-
                   if (!title && !desc) {
                     toast.error("Enter a title or description first.");
                     return;
                   }
-
                   try {
-                    const res = await generateContent({
+                    const res = await generateCourseContent({
                       topic: `${title?.trim() ?? ""} ${desc?.trim() ?? ""}`.trim(),
                     }).unwrap();
-
-                    // 👉  NOTE the extra `.data` here
                     const ai = res?.data?.data;
-
                     if (!ai) {
                       toast.error("AI returned no data.");
                       return;
                     }
-
-                    // ----- simple scalar fields -----
                     setValue("title", ai.title ?? "", { shouldValidate: true });
-                    setValue(
-                      "description",
-                      ai.description ?? "",
-                      { shouldValidate: true }
-                    );
-
-                    // ----- array fields (store as CSV strings) -----
+                    setValue("description", ai.description ?? "", { shouldValidate: true });
                     const toCsv = (arr?: any) => {
                       if (Array.isArray(arr)) return arr.join(", ");
                       if (typeof arr === "string") return arr;
                       return "";
                     };
-
                     setValue("tags", toCsv(ai.tags));
                     setValue("learningOutcomes", toCsv(ai.learningOutcomes));
                     setValue("requirements", toCsv(ai.requirements));
                     setValue("targetAudience", toCsv(ai.targetAudience));
-
                     toast.success("AI generated content has been applied!");
                   } catch (e) {
                     console.error(e);
@@ -387,11 +317,6 @@ export default function CourseCreateForm({
               <input type="checkbox" {...register("hasCertificate")} />
               Has Certificate
             </label>
-
-            <label className="flex items-center gap-2">
-              <input type="checkbox" {...register("isFree")} />
-              Free Course
-            </label>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -401,10 +326,7 @@ export default function CourseCreateForm({
               </label>
               <input
                 type="number"
-                disabled={watch("isFree")}
-                {...register("price", { required: !watch("isFree"), valueAsNumber: true })}
-                placeholder={watch("isFree") ? "Free" : "299"}
-                className={`w-full h-14 px-6 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50 ${watch("isFree") ? "opacity-50 cursor-not-allowed bg-muted" : ""}`}
+                className={`w-full h-14 px-6 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50`}
               />
             </div>
 
@@ -441,7 +363,6 @@ export default function CourseCreateForm({
             />
           </div>
 
-          {/* Video Preview */}
           {previewVideoUrl && (
             <div className="rounded-2xl overflow-hidden border border-border/50 relative pt-[56.25%]">
               <iframe
@@ -451,7 +372,6 @@ export default function CourseCreateForm({
             </div>
           )}
 
-          {/* Thumbnail */}
           <div className="space-y-2">
             <label className="text-xs font-black uppercase tracking-widest text-muted-foreground ml-1">
               Course Thumbnail

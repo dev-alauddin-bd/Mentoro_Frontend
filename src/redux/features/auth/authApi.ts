@@ -11,7 +11,7 @@ const authApi = baseApi.injectEndpoints({
     // ===== ✅ Signup user =====
     signUp: build.mutation({
       query: (body) => ({
-        url: '/auth/signup',
+        url: '/auth/register',
         method: 'POST',
         body,
       }),
@@ -27,14 +27,6 @@ const authApi = baseApi.injectEndpoints({
     }),
 
 
-    // ===== ✅ Sync Firebase user =====
-    syncFirebase: build.mutation({
-      query: (body) => ({
-        url: '/auth/sync-firebase',
-        method: 'POST',
-        body,
-      }),
-    }),
 
     // ===== ✅ Logout user =====
     logout: build.mutation<void, void>({
@@ -50,7 +42,7 @@ const authApi = baseApi.injectEndpoints({
 export const {
   useSignUpMutation,
   useLoginMutation,
-  useSyncFirebaseMutation,
+
   useLogoutMutation,
 } = authApi;
 

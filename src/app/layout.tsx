@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 };
 
 import { Suspense } from "react";
-import FirebaseAuthProvider from "@/providers/FirebaseAuthProvider";
+
 import AiAssistant from "@/components/shared/AiAssistant";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
 
@@ -34,13 +34,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Suspense fallback={null}>
             <GoogleAnalytics />
           </Suspense>
-          <FirebaseAuthProvider>
-   
-              <LenisProvider>{children}</LenisProvider>
-              <Toaster position="top-center" reverseOrder={false} />
-              <AiAssistant />
- 
-          </FirebaseAuthProvider>
+
+          <LenisProvider>{children}</LenisProvider>
+          <Toaster position="top-center" reverseOrder={false} />
+          <AiAssistant />
+
+
         </Providers>
       </body>
     </html>

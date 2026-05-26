@@ -7,33 +7,44 @@ import { RootState } from "@/redux/store";
 import { Loader2 } from "lucide-react";
 
 export default function DashboardPage() {
-  const { user, isAuthenticated, loading } = useSelector((state: RootState) => state.mentoroAuth);
   const router = useRouter();
 
+  const { user, token, loading } = useSelector(
+    (state: RootState) => state.mentoroAuth
+  );
+
+  console.log("from dashboard",user, token, loading);
+
   useEffect(() => {
-    if (!loading) {
-      if (!isAuthenticated) {
-        router.push(`/login?callbackUrl=${window.location.pathname}`);
-      } else if (user) {
-        // Redirect based on role
-        switch (user.role) {
-          case "admin":
-            router.push("/dashboard/admin");
-            break;
-          case "instructor":
-            router.push("/dashboard/instructor");
-            break;
-          case "student":
-          default:
-            router.push("/dashboard/student");
-            break;
-        }
-      }
+    // Wait for redux persist hydration and loading state
+    if (loading) return;
+    if (token === undefined) return;
+
+    // Not authenticated
+    if (!token || !user) {
+      router.replace(`/login?callbackUrl=/dashboard`);
+      return;
     }
-  }, [isAuthenticated, loading, user, router]);
+
+    // Redirect based on role
+    switch (user.role) {
+      case "admin":
+        router.replace("/dashboard/admin");
+        break;
+
+      case "instructor":
+        router.replace("/dashboard/instructor");
+        break;
+
+      case "student":
+      default:
+        router.replace("/dashboard/student");
+        break;
+    }
+  }, [router, token, user, loading]);
 
   return (
-    <div className="flex items-center justify-center min-h-[400px]">
+    <div className="flex items-center justify-center min-h-screen">
       <Loader2 className="w-8 h-8 animate-spin text-primary" />
     </div>
   );

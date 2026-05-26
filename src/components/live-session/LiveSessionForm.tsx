@@ -2,33 +2,19 @@
 
 import { useForm, SubmitHandler } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import * as z from "zod"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Loader2, Sparkles } from "lucide-react"
-import { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 import toast from "react-hot-toast"
 import { useTranslation } from "react-i18next"
-import {
-  useGenerateContentMutation,
+import { useGenerateLiveSessionMutation } from "@/redux/features/ai/aiApi"
+import { SessionFormValues } from "@/interfaces/liveSession.interfce"
+// =================== Session Form Values ===================
 
-} from "@/redux/features/ai/aiApi"
 
-export interface SessionFormValues {
-  title: string
-  description: string
-  thumbnail?: string
-  thumbnailFile?: File
-  sessionDate: string
-  sessionTime: string
-  registrationDeadlineDate: string
-  registrationDeadlineTime: string
-  maxCapacity?: number
-  meetingLink?: string
-  isPublished: boolean
-}
 
 interface LiveSessionFormProps {
   initialData?: any
@@ -44,60 +30,11 @@ export function LiveSessionForm({
   const { t } = useTranslation()
 
   // ✅ FIXED: initialize RTK Query mutations
-  const [generateContent, { isLoading: isGenerating }] =
-    useGenerateContentMutation()
+  const [generateLiveSession, { isLoading: isGenerating }] =
+    useGenerateLiveSessionMutation()
 
   const [thumbPreview, setThumbPreview] = useState<string | null>(
     initialData?.thumbnail || null
-  )
-
-  const sessionSchema = useMemo(
-    () =>
-      z.object({
-        title: z.string().min(3, t("live_sessions.validation.title_min")),
-        description: z
-          .string()
-          .min(10, t("live_sessions.validation.desc_min")),
-        thumbnail: z.string().optional(),
-        thumbnailFile: z.any().optional(),
-
-        sessionDate: z
-          .string()
-          .min(1, t("live_sessions.validation.date_required")),
-
-        sessionTime: z.string().min(1, "Time is required"),
-
-        registrationDeadlineDate: z
-          .string()
-          .min(1, t("live_sessions.validation.deadline_required")),
-
-        registrationDeadlineTime: z.string().min(1, "Time is required"),
-
-        maxCapacity: z.preprocess(
-          (val) =>
-            val === "" ||
-            val === null ||
-            val === undefined ||
-            (typeof val === "number" && isNaN(val))
-              ? undefined
-              : Number(val),
-          z
-            .number()
-            .min(1, t("live_sessions.validation.capacity_min"))
-            .optional()
-        ),
-
-        meetingLink: z.preprocess(
-          (val) => (val === "" ? undefined : val),
-          z
-            .string()
-            .url(t("live_sessions.validation.url_invalid"))
-            .optional()
-        ),
-
-        isPublished: z.boolean(),
-      }),
-    [t]
   )
 
   const {
@@ -107,149 +44,45 @@ export function LiveSessionForm({
     setValue,
     watch,
     formState: { errors },
-  } = useForm<SessionFormValues>({
-    resolver: zodResolver(sessionSchema as any),
+  } = useForm<SessionFormValues>()
 
-    defaultValues: useMemo(() => {
-      if (initialData) {
-        return {
-          title: initialData.title || "",
-          description: initialData.description || "",
-          thumbnail: initialData.thumbnail || "",
 
-          sessionDate: initialData.sessionDate
-            ? new Date(initialData.sessionDate)
-                .toISOString()
-                .slice(0, 10)
-            : "",
 
-          sessionTime: initialData.sessionDate
-            ? new Date(initialData.sessionDate)
-                .toISOString()
-                .slice(11, 16)
-            : "",
 
-          registrationDeadlineDate: initialData.registrationDeadline
-            ? new Date(initialData.registrationDeadline)
-                .toISOString()
-                .slice(0, 10)
-            : "",
+  const handleThumbChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+  setValue("thumbnailFile", file);
+  const reader = new FileReader();
+  reader.onload = () => setThumbPreview(reader.result as string);
+  reader.readAsDataURL(file);
+};
 
-          registrationDeadlineTime: initialData.registrationDeadline
-            ? new Date(initialData.registrationDeadline)
-                .toISOString()
-                .slice(11, 16)
-            : "",
 
-          maxCapacity: initialData.maxCapacity || undefined,
-          meetingLink: initialData.meetingLink || "",
-          isPublished: initialData.isPublished || false,
-        }
-      }
+const handleSaveDraft = () => {
+  const draftData: SessionFormValues = {
+    title: watch("title"),
+    description: watch("description"),
+    sessionDate: watch("sessionDate"),
+    sessionTime: watch("sessionTime"),
+    registrationDeadlineDate: watch("registrationDeadlineDate"),
+    registrationDeadlineTime: watch("registrationDeadlineTime"),
+    maxCapacity: watch("maxCapacity"),
+    meetingLink: watch("meetingLink"),
+    isPublished: watch("isPublished"),
+    level: watch("level"),
+    learningOutcomes: watch("learningOutcomes"),
+    whoShouldAttend: watch("whoShouldAttend"),
+    keyTopics: watch("keyTopics"),
+  };
+  localStorage.setItem("liveSessionDraft", JSON.stringify(draftData));
+  toast.success("Draft saved successfully!");
+};
 
-      if (typeof window !== "undefined") {
-        const draft = localStorage.getItem("liveSessionDraft")
 
-        if (draft) {
-          try {
-            return JSON.parse(draft)
-          } catch (e) {}
-        }
-      }
-
-      return {
-        title: "",
-        description: "",
-        thumbnail: "",
-        sessionDate: "",
-        sessionTime: "",
-        registrationDeadlineDate: "",
-        registrationDeadlineTime: "",
-        maxCapacity: undefined,
-        meetingLink: "",
-        isPublished: false,
-      }
-    }, [initialData]),
-  })
-
-  useEffect(() => {
-    if (initialData) {
-      reset({
-        title: initialData.title || "",
-        description: initialData.description || "",
-        thumbnail: initialData.thumbnail || "",
-
-        sessionDate: initialData.sessionDate
-          ? new Date(initialData.sessionDate)
-              .toISOString()
-              .slice(0, 10)
-          : "",
-
-        sessionTime: initialData.sessionDate
-          ? new Date(initialData.sessionDate)
-              .toISOString()
-              .slice(11, 16)
-          : "",
-
-        registrationDeadlineDate: initialData.registrationDeadline
-          ? new Date(initialData.registrationDeadline)
-              .toISOString()
-              .slice(0, 10)
-          : "",
-
-        registrationDeadlineTime: initialData.registrationDeadline
-          ? new Date(initialData.registrationDeadline)
-              .toISOString()
-              .slice(11, 16)
-          : "",
-
-        maxCapacity: initialData.maxCapacity || undefined,
-        meetingLink: initialData.meetingLink || "",
-        isPublished: initialData.isPublished || false,
-      })
-
-      setThumbPreview(initialData.thumbnail || null)
-    }
-  }, [initialData, reset])
-
-  useEffect(() => {
-    if (initialData) return
-
-    const subscription = watch((value) => {
-      if (typeof window !== "undefined") {
-        localStorage.setItem(
-          "liveSessionDraft",
-          JSON.stringify(value)
-        )
-      }
-    })
-
-    return () => subscription.unsubscribe()
-  }, [watch, initialData])
-
-  const handleThumbChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = e.target.files?.[0]
-
-    if (!file) return
-
-    setValue("thumbnailFile", file)
-
-    const reader = new FileReader()
-
-    reader.onload = () =>
-      setThumbPreview(reader.result as string)
-
-    reader.readAsDataURL(file)
-  }
-
-  return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6"
-    >
-      <div className="space-y-4">
+return (
+  <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <div className="space-y-4">
         {/* TITLE */}
         <div className="space-y-2">
           <div className="flex justify-between items-center">
@@ -271,24 +104,42 @@ export function LiveSessionForm({
                 }
 
                 try {
-                  const res = await generateContent({
-                    topic: `${currentTitle} ${currentDesc}`,
+                  const res = await generateLiveSession({
+                    title: `${currentTitle} ${currentDesc}`,
                   }).unwrap()
-
-                  if (res?.data?.title) {
-                    setValue("title", res.data.title, {
+                  console.log(res)
+                  if (res?.data?.data?.title) {
+                    setValue("title", res?.data?.data?.title, {
                       shouldValidate: true,
                     })
                   }
 
-                  if (res?.data?.description) {
+                  if (res?.data?.data?.fullDescription) {
                     setValue(
                       "description",
-                      res.data.description,
+                      res?.data?.data?.fullDescription,
                       {
                         shouldValidate: true,
                       }
                     )
+                  }
+
+                  // Set new fields from AI response if present
+                  if (res?.data?.data?.level) {
+                    setValue("level", res.data.level, { shouldValidate: true })
+                    console.log('AI level:', res.data.level)
+                  }
+                  if (res?.data?.data?.learningOutcomes) {
+                    setValue("learningOutcomes", res?.data?.data?.learningOutcomes, { shouldValidate: true })
+                    console.log('AI learningOutcomes:', res?.data?.data?.learningOutcomes)
+                  }
+                  if (res?.data?.data?.whoShouldAttend) {
+                    setValue("whoShouldAttend", res?.data?.data?.whoShouldAttend, { shouldValidate: true })
+                    console.log('AI whoShouldAttend:', res?.data?.data?.whoShouldAttend)
+                  }
+                  if (res?.data?.data?.keyTopics) {
+                    setValue("keyTopics", res?.data?.data?.keyTopics, { shouldValidate: true })
+                    console.log('AI keyTopics:', res?.data?.data?.keyTopics)
                   }
 
                   toast.success("AI Content Generated!")
@@ -325,6 +176,7 @@ export function LiveSessionForm({
               {errors.title.message}
             </p>
           )}
+
         </div>
 
         {/* DESCRIPTION */}
@@ -398,11 +250,11 @@ export function LiveSessionForm({
 
             {(errors.registrationDeadlineDate ||
               errors.registrationDeadlineTime) && (
-              <p className="text-xs text-destructive font-medium">
-                {errors.registrationDeadlineDate?.message ||
-                  errors.registrationDeadlineTime?.message}
-              </p>
-            )}
+                <p className="text-xs text-destructive font-medium">
+                  {errors.registrationDeadlineDate?.message ||
+                    errors.registrationDeadlineTime?.message}
+                </p>
+              )}
           </div>
         </div>
 
@@ -476,6 +328,74 @@ export function LiveSessionForm({
           {errors.meetingLink && (
             <p className="text-xs text-destructive font-medium">
               {errors.meetingLink.message}
+            </p>
+          )}
+        </div>
+
+        {/* LEVEL */}
+        <div className="space-y-2">
+          <label className="text-sm font-bold">
+            {t("live_sessions.form.level")}
+          </label>
+          <select {...register("level")} className="h-12 rounded-xl w-full">
+            <option value="BEGINNER">Beginner</option>
+            <option value="INTERMEDIATE">Intermediate</option>
+            <option value="ADVANCED">Advanced</option>
+          </select>
+          {errors.level && (
+            <p className="text-xs text-destructive font-medium">
+              {errors.level.message}
+            </p>
+          )}
+        </div>
+
+        {/* LEARNING OUTCOMES */}
+        <div className="space-y-2">
+          <label className="text-sm font-bold">
+            {t("live_sessions.form.learning_outcomes")}
+          </label>
+          <Textarea
+            {...register("learningOutcomes")}
+            placeholder={t("live_sessions.form.learning_outcomes_placeholder")}
+            className="min-h-[100px] rounded-xl"
+          />
+          {errors.learningOutcomes && (
+            <p className="text-xs text-destructive font-medium">
+              {errors.learningOutcomes.message}
+            </p>
+          )}
+        </div>
+
+        {/* WHO SHOULD ATTEND */}
+        <div className="space-y-2">
+          <label className="text-sm font-bold">
+            {t("live_sessions.form.who_should_attend")}
+          </label>
+          <Textarea
+            {...register("whoShouldAttend")}
+            placeholder={t("live_sessions.form.who_should_attend_placeholder")}
+            className="min-h-[100px] rounded-xl"
+          />
+          {errors.whoShouldAttend && (
+            <p className="text-xs text-destructive font-medium">
+              {errors.whoShouldAttend.message}
+            </p>
+          )}
+        </div>
+
+        {/* KEY TOPICS */}
+        <div className="space-y-2">
+          <label className="text-sm font-bold">
+            {t("live_sessions.form.key_topics")}
+          </label>
+          <Textarea
+            {...register("keyTopics")}
+            placeholder={t("live_sessions.form.key_topics_placeholder")}
+            className="min-h-[100px] rounded-xl"
+          />
+          {errors.keyTopics && (
+            <p className="text-xs text-destructive font-medium">
+              {errors.keyTopics.message}
             </p>
           )}
         </div>

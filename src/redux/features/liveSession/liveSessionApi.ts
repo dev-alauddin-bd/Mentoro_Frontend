@@ -1,4 +1,4 @@
-import baseApi from "../../baseApi/baseApi";
+import baseApi from "@/redux/baseApi/baseApi";
 
 const liveSessionApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
