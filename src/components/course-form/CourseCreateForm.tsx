@@ -326,6 +326,7 @@ export default function CourseCreateForm({
               </label>
               <input
                 type="number"
+                {...register("price", { valueAsNumber: true })}
                 className={`w-full h-14 px-6 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50`}
               />
             </div>

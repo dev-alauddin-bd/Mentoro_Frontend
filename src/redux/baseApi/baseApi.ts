@@ -1,7 +1,7 @@
 import { IUser } from "@/interfaces/user.interface";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Mutex } from "async-mutex";
-import { logout, setUser } from "../features/auth/authSlice";
+import { logout, setToken, setUser } from "../features/auth/authSlice";
 
 interface ITokenAndRefresh {
   accessToken: string;
@@ -15,7 +15,7 @@ interface IRefreshResponse {
 // Mutex to prevent multiple token refresh at once
 const mutex = new Mutex();
 
-const API_BASE = typeof window !== "undefined" ? "/api" : `${process.env.NEXT_PUBLIC_API_URL}/api`;
+const API_BASE =`${process.env.NEXT_PUBLIC_API_URL}/api`;
 
 const baseQuery = fetchBaseQuery({
   baseUrl: API_BASE,
@@ -36,17 +36,17 @@ const baseQueryWithReauth: typeof baseQuery = async (
 ) => {
   await mutex.waitForUnlock();
 
-  // console.log('🔵 API Request Initiated:', args);
+  console.log('🔵 API Request Initiated:', args);
 
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 401) {
-    // console.warn('⚠️ 401 Unauthorizationd — trying to refresh token');
+    console.warn('⚠️ 401 Unauthorizationd — trying to refresh token');
 
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
       try {
-        // console.log('🔁 Attempting token refresh...');
+        console.log('🔁 Attempting token refresh...');
 
         const refreshResult = await baseQuery(
           { url: "/auth/refresh-token", method: "GET" },
@@ -54,30 +54,30 @@ const baseQueryWithReauth: typeof baseQuery = async (
           extraOptions
         );
 
-        const resultData = refreshResult.data as any;
-
-        if (resultData?.success) {
+        if (refreshResult.data && (refreshResult.data as any).success) {
+          const resultData = refreshResult.data as any;
           const newToken = resultData.data.accessToken;
 
-          // Get the current user from state instead of relying on refresh response
-          const currentUser = (api.getState() as any).mentoroAuth.user;
-
-          api.dispatch(setUser({ user: currentUser, token: newToken }));
+          // We now just update the token without risking corrupting the user state
+          api.dispatch(setToken(newToken));
           result = await baseQuery(args, api, extraOptions);
-        } else {
+        } else if (
+          refreshResult.error &&
+          (refreshResult.error.status === 401 || refreshResult.error.status === 403)
+        ) {
           api.dispatch(logout());
         }
       } finally {
         release();
       }
     } else {
-      // console.log('⏳ Waiting for mutex unlock...');
+      console.log('⏳ Waiting for mutex unlock...');
       await mutex.waitForUnlock();
       result = await baseQuery(args, api, extraOptions);
     }
   }
 
-  // console.log('🟢 Final API Response:', result);
+  console.log('🟢 Final API Response:', result);
   return result;
 };
 
