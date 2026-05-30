@@ -49,6 +49,8 @@ export function LoginForm() {
       const response = await login(data).unwrap();
       console.log("Login response:", response.data.user);
 
+      // Store token in cookie for server-side authentication
+      document.cookie = `refreshToken=${response.data.refreshToken}; path=/;`;
       dispatch(setUser({ user: response.data.user, token: response.data.accessToken }));
 
       trackEvent('login', { method: 'Email' });
