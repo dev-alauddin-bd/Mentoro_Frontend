@@ -49,6 +49,8 @@ export function UpcomingLiveCourses() {
     )
   }
 
+  if (!isLoading && sessions.length === 0) return null;
+
   return (
     <Section className="from-transparent to-secondary/10">
       {/* Header */}
@@ -84,7 +86,7 @@ export function UpcomingLiveCourses() {
                   alt={session.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
-                
+
                 <div className="absolute top-4 left-4 z-10">
                   <div className="px-3 py-1 bg-primary text-white rounded-lg text-[9px] font-black uppercase tracking-widest shadow-xl shadow-primary/20">
                     {t("upcoming.card_badge")}
@@ -101,7 +103,7 @@ export function UpcomingLiveCourses() {
                       4.9
                     </div>
                   </div>
-                  
+
                   <Link href={`/live/${session.id}`} className="block">
                     <h3 className="text-xl font-black tracking-tight leading-tight group-hover:text-primary transition-colors line-clamp-2 min-h-[3.5rem] flex items-center">
                       {session.title}
@@ -111,16 +113,16 @@ export function UpcomingLiveCourses() {
                   <p className="text-muted-foreground text-sm font-medium italic line-clamp-2 min-h-[2.5rem]">
                     {session.description}
                   </p>
-                  
+
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="px-2 py-0.5 bg-primary/10 rounded text-[10px] font-black uppercase tracking-widest text-primary">
-                       {t("upcoming.card_type")}
+                      {t("upcoming.card_type")}
                     </span>
                     <span className="text-[11px] font-bold text-muted-foreground">
-                       • {session.instructor?.name || "Expert Instructor"}
+                      • {session.instructor?.name || "Expert Instructor"}
                     </span>
                     <span className="flex items-center gap-1 text-[11px] font-bold text-muted-foreground">
-                       • <Users className="w-3 h-3" /> {session._count?.registrations || 0} Registered
+                      • <Users className="w-3 h-3" /> {session._count?.registrations || 0} Registered
                     </span>
                   </div>
                 </div>

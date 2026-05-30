@@ -27,8 +27,6 @@ import {
 } from "lucide-react";
 
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "@/redux/features/auth/authSlice";
 import { useCreateReviewMutation } from "@/redux/features/review/reviewApi";
 import { IReview } from "@/interfaces/course.interface";
 
@@ -37,7 +35,6 @@ export default function EnhancedCourseDetailsPage() {
    const router = useRouter();
 
    const slug = params.slug as string;
-   console.log("slug", slug);
 
    const { data, isLoading, refetch } = useGetCourseBySlugQuery(slug, {
       skip: !slug,
@@ -66,7 +63,6 @@ export default function EnhancedCourseDetailsPage() {
 
    const [createReview] = useCreateReviewMutation();
 
-   const user = useSelector(selectCurrentUser);
 
    const [activeModule, setActiveModule] = useState<string | null>(null);
 
@@ -134,18 +130,21 @@ export default function EnhancedCourseDetailsPage() {
 
    const handleEnrollment = async () => {
       try {
+         if (!course?.id) return;
+
          if (isFree) {
-            await enrollCourse(slug).unwrap();
+            await enrollCourse(course.id).unwrap();
 
             toast.success("Successfully enrolled!");
 
             refetch();
 
             router.push(
-               `/dashboard/student/my-courses/${slug}`
+               `/dashboard/student/my-courses/${course.slug || course.id}`
             );
          } else {
-            const res = await createCheckout(slug).unwrap();
+            const res = await createCheckout(course.id).unwrap();
+            console.log("Res", res);
 
             if (res?.data?.paymentUrl) {
                window.location.href = res.data.paymentUrl;
@@ -286,11 +285,10 @@ export default function EnhancedCourseDetailsPage() {
                            <button
                               key={tab}
                               onClick={() => setActiveTab(tab)}
-                              className={`px-4 py-2 text-sm font-medium capitalize ${
-                                 activeTab === tab
+                              className={`px-4 py-2 text-sm font-medium capitalize ${activeTab === tab
                                     ? "border-b-2 border-primary text-primary"
                                     : "text-muted-foreground"
-                              }`}
+                                 }`}
                            >
                               {tab}
                            </button>
@@ -494,11 +492,10 @@ export default function EnhancedCourseDetailsPage() {
                                              {[...Array(5)].map((_, i) => (
                                                 <Star
                                                    key={i}
-                                                   className={`w-4 h-4 ${
-                                                      i < review.rating
+                                                   className={`w-4 h-4 ${i < review.rating
                                                          ? "fill-yellow-500 text-yellow-500"
                                                          : "text-gray-300"
-                                                   }`}
+                                                      }`}
                                                 />
                                              ))}
                                           </div>

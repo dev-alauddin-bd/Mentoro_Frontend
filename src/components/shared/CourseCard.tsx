@@ -10,7 +10,7 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ course }: CourseCardProps) {
-  console.log("course", course)
+
   const { t } = useTranslation();
   return (
     <Link

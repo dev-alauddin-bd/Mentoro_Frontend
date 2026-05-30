@@ -46,7 +46,21 @@ export default function MyCoursesPage() {
     }
   };
 
-  const courses: any[] = data?.data?.courses || data?.data || [];
+  let courses: any[] = [];
+  if (data?.data?.courses) {
+    courses = data.data.courses;
+  } else if (data?.data?.enrollments) {
+    courses = data.data.enrollments.map((e: any) => ({
+      ...(e.course || {}),
+      enrolledAt: e.enrolledAt,
+      lastActivity: e.lastActivity,
+      progressPercentage: e.progressPercentage || e.course?.progressPercentage || 0,
+      completedLessonsCount: e.completedLessonsCount || e.course?.completedLessonsCount || 0,
+      totalLessons: e.totalLessons || e.course?.totalLessons || 0
+    }));
+  } else if (Array.isArray(data?.data)) {
+    courses = data.data;
+  }
 
   if (isLoading) {
     return (

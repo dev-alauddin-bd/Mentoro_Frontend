@@ -40,7 +40,6 @@ export function Header() {
 
   const pathname = usePathname();
   const [logoutApi] = useLogoutMutation();
-  console.log("user", user);
   const handleLogout = async () => {  
     try {
 

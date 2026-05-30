@@ -179,6 +179,7 @@ export default function CourseCreateForm({
       if (isEditMode) {
         res = await updateCourse({ slug: initialData.slug || initialData.id, data: formData }).unwrap();
         toast.success("Course updated successfully!");
+        onClose?.();
       } else {
         res = await createCourse(formData).unwrap();
         toast.success("Course created successfully!");

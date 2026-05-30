@@ -8,11 +8,8 @@ interface ITokenAndRefresh {
   user: IUser;
 }
 
-interface IRefreshResponse {
-  data: ITokenAndRefresh;
-}
 
-// Mutex to prevent multiple token refresh at once
+
 const mutex = new Mutex();
 
 const API_BASE =`${process.env.NEXT_PUBLIC_API_URL}/api`;
@@ -36,17 +33,17 @@ const baseQueryWithReauth: typeof baseQuery = async (
 ) => {
   await mutex.waitForUnlock();
 
-  console.log('🔵 API Request Initiated:', args);
+  // console.log('🔵 API Request Initiated:', args);
 
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === 401) {
-    console.warn('⚠️ 401 Unauthorizationd — trying to refresh token');
+    // console.warn('⚠️ 401 Unauthorizationd — trying to refresh token');
 
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
       try {
-        console.log('🔁 Attempting token refresh...');
+        // console.log('🔁 Attempting token refresh...');
 
         const refreshResult = await baseQuery(
           { url: "/auth/refresh-token", method: "GET" },
@@ -71,13 +68,13 @@ const baseQueryWithReauth: typeof baseQuery = async (
         release();
       }
     } else {
-      console.log('⏳ Waiting for mutex unlock...');
+      // console.log('⏳ Waiting for mutex unlock...');
       await mutex.waitForUnlock();
       result = await baseQuery(args, api, extraOptions);
     }
   }
 
-  console.log('🟢 Final API Response:', result);
+  // console.log('🟢 Final API Response:', result);
   return result;
 };
 

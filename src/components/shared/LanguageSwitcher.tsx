@@ -10,15 +10,9 @@ const languages = [
   { code: "bn", name: "বাংলা" },
   { code: "ar", name: "العربية" },
   { code: "hi", name: "हिन्दी" },
-  { code: "ur", name: "اردو" },
-  { code: "ta", name: "தமிழ்" },
   { code: "ja", name: "日本語" },
   { code: "ko", name: "한국어" },
-  { code: "de", name: "Deutsch" },
-  { code: "it", name: "Italiano" },
-  { code: "pt", name: "Português" },
-  { code: "fr", name: "Français" },
-  { code: "es", name: "Español" },
+
 ];
 
 export function LanguageSwitcher() {

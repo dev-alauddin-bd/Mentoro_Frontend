@@ -5,6 +5,7 @@ import { IUser } from "./user.interface";
 
 export interface ICourse {
   id: string;
+  slug?: string;
   title: string;
   description?: string | null;
   thumbnail: string;
@@ -15,7 +16,7 @@ export interface ICourse {
   isPublished: boolean;
 
   categoryId: string;
-
+ 
 
   category?: ICategory;
   modules?: IModule[];
