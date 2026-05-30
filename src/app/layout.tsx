@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Script from 'next/script'
 import "./globals.css";
-import { Providers } from "@/components/ReduxProvider";
+
 import { cookies } from 'next/headers';
 import { Toaster } from "react-hot-toast";
 import LenisProvider from "./LenisProvider";
@@ -19,6 +19,7 @@ import { Suspense } from "react";
 
 import AiAssistant from "@/components/shared/AiAssistant";
 import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
+import { ReduxProvider } from "@/components/ReduxProvider";
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   // Read lang from cookie (set by i18n on client)
@@ -30,7 +31,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang={lang} dir={isRtl ? 'rtl' : 'ltr'} suppressHydrationWarning>
       <head />
       <body>
-        <Providers>
+        <ReduxProvider>
+
+
           <Suspense fallback={null}>
             <GoogleAnalytics />
           </Suspense>
@@ -38,9 +41,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <LenisProvider>{children}</LenisProvider>
           <Toaster position="top-center" reverseOrder={false} />
           <AiAssistant />
+        </ReduxProvider>
 
 
-        </Providers>
       </body>
     </html>
   );

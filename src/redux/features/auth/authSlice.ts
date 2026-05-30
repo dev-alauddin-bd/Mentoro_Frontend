@@ -7,7 +7,6 @@ import { IUser } from "@/interfaces/user.interface";
 interface AuthState {
   user: IUser | null;
   token: string | null;
-  isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -15,7 +14,6 @@ interface AuthState {
 const initialState: AuthState = {
   user: null,
   token: null,
-  isAuthenticated: false,
   loading: true, // Initialized to true to wait for auth check
   error: null,
 };
@@ -32,26 +30,25 @@ const authSlice = createSlice({
     setUser(state, action: PayloadAction<{ user: IUser; token: string }>) {
       state.user = action.payload.user;
       state.token = action.payload.token;
-      state.isAuthenticated = true;
+   
       state.loading = false;
       state.error = null;
     },
 
     setToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
-      state.isAuthenticated = true;
+
     },
 
     authFailure(state, action: PayloadAction<string>) {
       state.error = action.payload;
       state.loading = false;
-      state.isAuthenticated = false;
+
     },
 
     logout(state) {
       state.user = null;
       state.token = null;
-      state.isAuthenticated = false;
       state.loading = false;
       state.error = null;
     },
@@ -64,6 +61,12 @@ const authSlice = createSlice({
     builder.addCase(REHYDRATE, (state, action) => {
       const payload = (action as any).payload;
       if (payload && payload.mentoroAuth) {
+        state.user = payload.mentoroAuth.user;
+        state.token = payload.mentoroAuth.token;
+        state.error = payload.mentoroAuth.error;
+        state.loading = false;
+      } else {
+        // If there's no persisted state, we should also set loading to false
         state.loading = false;
       }
     });
@@ -76,7 +79,5 @@ export default authSlice.reducer;
 
 export const selectCurrentUser = (state: RootState) => state.mentoroAuth.user;
 export const selectCurrentToken = (state: RootState) => state.mentoroAuth.token;
-export const selectIsAuthenticated = (state: RootState) =>
-  state.mentoroAuth.isAuthenticated;
 export const selectAuthLoading = (state: RootState) => state.mentoroAuth.loading;
 export const selectAuthError = (state: RootState) => state.mentoroAuth.error;

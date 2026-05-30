@@ -59,19 +59,7 @@ interface AdminCoursesTableProps {
 
 
 
-  const handleApproveFeature = async (id: string, currentStatus: boolean, title: string) => {
-    const action = currentStatus ? "Remove from Featured" : "Approve as Featured";
-    try {
-      await toast.promise(
-        approveFeature({ id, isFeatured: !currentStatus }).unwrap(),
-        {
-          loading: `${currentStatus ? "Removing" : "Approving"}...`,
-          success: `Successfully ${currentStatus ? "removed" : "approved"} "${title}"!`,
-          error: (err) => err?.data?.message || "Operation failed",
-        }
-      );
-    } catch (err) {}
-  };
+
 
   if (isLoading) {
     return <TableSkeleton rows={limit} />;

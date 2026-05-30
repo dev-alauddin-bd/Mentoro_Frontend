@@ -177,7 +177,7 @@ export default function CourseCreateForm({
       let res;
 
       if (isEditMode) {
-        res = await updateCourse({ id: initialData.id, data: formData }).unwrap();
+        res = await updateCourse({ slug: initialData.slug || initialData.id, data: formData }).unwrap();
         toast.success("Course updated successfully!");
       } else {
         res = await createCourse(formData).unwrap();

@@ -129,7 +129,7 @@ export function StudentDashboard() {
               </div>
             </div>
             <Link
-              href={`/dashboard/student/my-courses/${continueCourses[0].id}`}
+              href={`/dashboard/student/my-courses/${continueCourses[0].slug || continueCourses[0].id}`}
               className="w-full md:w-auto h-14 px-10 bg-primary text-white rounded-2xl flex items-center justify-center gap-3 text-xs font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 transition-all"
             >
               {t("student.start_lesson")}
@@ -169,7 +169,7 @@ export function StudentDashboard() {
             {continueCourses.map((course: any) => (
               <Link
                 key={course.id}
-                href={`/dashboard/student/my-courses/${course.id}`}
+                href={`/dashboard/student/my-courses/${course.slug || course.id}`}
                 className="group relative bg-card border border-border rounded-[2.5rem] p-6 hover:border-primary/50 transition-all duration-500 hover:shadow-[0_40px_80px_-20px_rgba(var(--primary),0.12)]"
               >
                 <div className="flex flex-col sm:flex-row gap-6">

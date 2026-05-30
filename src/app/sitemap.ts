@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     
     if (result?.success && result.data?.courses) {
       courseUrls = result.data.courses.map((course: any) => ({
-        url: `${baseUrl}/courses/${course.id}`,
+        url: `${baseUrl}/courses/${course.slug || course.id}`,
         lastModified: new Date(course.updatedAt || new Date()),
         changeFrequency: 'weekly' as const,
         priority: 0.7,

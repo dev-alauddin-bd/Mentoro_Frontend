@@ -121,7 +121,7 @@ export function GlobalSearch() {
                   {results.map((course: any) => (
                     <Link 
                       key={course.id}
-                      href={`/courses/${course.id}`}
+                      href={`/courses/${course.slug || course.id}`}
                       onClick={() => setIsOpen(false)}
                       className="flex items-center gap-4 p-4 hover:bg-primary/5 rounded-2xl border border-transparent hover:border-primary/20 transition-all group"
                     >

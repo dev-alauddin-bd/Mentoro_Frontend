@@ -10,10 +10,11 @@ interface CourseCardProps {
 }
 
 export function CourseCard({ course }: CourseCardProps) {
+  console.log("course", course)
   const { t } = useTranslation();
   return (
     <Link
-      href={`/courses/${course.id}`}
+      href={`/courses/${course.slug}`}
       onClick={() => trackEvent('course_card_click', { course_id: course.id, course_title: course.title })}
       className="group relative flex flex-col h-full bg-card rounded-[2rem] overflow-hidden border border-border/50 hover:border-primary/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/10"
     >

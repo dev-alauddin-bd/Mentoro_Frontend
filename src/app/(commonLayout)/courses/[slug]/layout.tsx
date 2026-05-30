@@ -1,17 +1,17 @@
 import { Metadata } from 'next'
 
 type Props = {
-  params: Promise<{ id: string }>
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata(
   { params }: Props
 ): Promise<Metadata> {
-  const id = (await params).id
+  const slug = (await params).slug
   
   try {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
-    const response = await fetch(`${apiUrl}/api/courses/${id}`)
+    const response = await fetch(`${apiUrl}/api/courses/${slug}`)
     const result = await response.json()
     
     if (result?.success && result.data) {

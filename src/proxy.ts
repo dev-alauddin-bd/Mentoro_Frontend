@@ -14,7 +14,7 @@ const ROLE_DASHBOARDS: Record<string, string> = {
 export default async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const token = request.cookies.get("refreshToken")?.value;
-  console.log(token);
+  console.log("token",token);
 
   if (
     pathname.startsWith("/_next") ||
@@ -24,7 +24,7 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // console.log(`\x1b[36m[WATCHDOG]\x1b[0m 📡 Scanning: ${pathname}`);
+  console.log(`\x1b[36m[WATCHDOG]\x1b[0m 📡 Scanning: ${pathname}`);
 
   const verifySessionWithBackend = async (): Promise<string | null> => {
     if (!token) return null;
@@ -34,8 +34,9 @@ export default async function proxy(request: NextRequest) {
         headers: {
           "Cookie": `refreshToken=${token}`,
         },
+        cache:"no-store"
       });
-      // console.log("res",res);
+      console.log("res",res);
       if (!res.ok) return null;
       const result = await res.json();
       console.log("result", result.data);

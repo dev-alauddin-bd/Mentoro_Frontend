@@ -8,8 +8,8 @@ import {
    useEnrollCourseMutation,
 
    useGetAllPublicCoursesQuery,
+   useGetCourseBySlugQuery,
 
-   useGetCourseByIdQuery,
 } from "@/redux/features/course/courseAPi";
 
 import {
@@ -36,10 +36,11 @@ export default function EnhancedCourseDetailsPage() {
    const params = useParams();
    const router = useRouter();
 
-   const courseId = params.id as string;
+   const slug = params.slug as string;
+   console.log("slug", slug);
 
-   const { data, isLoading, refetch } = useGetCourseByIdQuery(courseId, {
-      skip: !courseId,
+   const { data, isLoading, refetch } = useGetCourseBySlugQuery(slug, {
+      skip: !slug,
    });
 
    const course = data?.data;
@@ -52,10 +53,10 @@ export default function EnhancedCourseDetailsPage() {
    const relatedCourses = useMemo(() => {
       return (
          relatedCoursesData?.data?.courses
-            ?.filter((c: any) => c.id !== courseId)
+            ?.filter((c: any) => c.id !== slug)
             .slice(0, 4) || []
       );
-   }, [relatedCoursesData, courseId]);
+   }, [relatedCoursesData, slug]);
 
    const [enrollCourse, { isLoading: isEnrolling }] =
       useEnrollCourseMutation();
@@ -134,17 +135,17 @@ export default function EnhancedCourseDetailsPage() {
    const handleEnrollment = async () => {
       try {
          if (isFree) {
-            await enrollCourse(courseId).unwrap();
+            await enrollCourse(slug).unwrap();
 
             toast.success("Successfully enrolled!");
 
             refetch();
 
             router.push(
-               `/dashboard/student/my-courses/${courseId}`
+               `/dashboard/student/my-courses/${slug}`
             );
          } else {
-            const res = await createCheckout(courseId).unwrap();
+            const res = await createCheckout(slug).unwrap();
 
             if (res?.data?.paymentUrl) {
                window.location.href = res.data.paymentUrl;
@@ -175,7 +176,7 @@ export default function EnhancedCourseDetailsPage() {
          setIsSubmittingReview(true);
 
          await createReview({
-            courseId,
+            courseId: slug,
             rating,
             content: comment,
          }).unwrap();
@@ -227,6 +228,13 @@ export default function EnhancedCourseDetailsPage() {
 
                   <div className="flex flex-wrap gap-8 pt-4">
 
+                     {course.instructor && (
+                        <div className="flex items-center gap-2">
+                           <img src={course.instructor.avatar || "/placeholder.svg"} alt={course.instructor.name} className="w-8 h-8 rounded-full" />
+                           <span className="font-medium text-foreground">{course.instructor.name}</span>
+                        </div>
+                     )}
+
                      <div className="flex items-center gap-2">
                         <Users className="w-4 h-4 text-primary" />
                         <span>
@@ -247,6 +255,17 @@ export default function EnhancedCourseDetailsPage() {
                      </div>
 
                   </div>
+
+                  {(course.tags ?? []).length > 0 && (
+                     <div className="flex flex-wrap gap-2 pt-2">
+                        {course.tags?.map((tag: string, index: number) => (
+                           <span key={index} className="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-xs font-semibold">
+                              {tag}
+                           </span>
+                        ))}
+                     </div>
+                  )}
+
                </div>
             </div>
          </section>
@@ -327,6 +346,27 @@ export default function EnhancedCourseDetailsPage() {
                            </div>
                         )}
 
+                        {(course.requirements ?? []).length > 0 && (
+                           <div>
+                              <h2 className="text-3xl font-black mb-6">Requirements</h2>
+                              <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                                 {course.requirements?.map((item: string, index: number) => (
+                                    <li key={index}>{item}</li>
+                                 ))}
+                              </ul>
+                           </div>
+                        )}
+
+                        {(course.targetAudience ?? []).length > 0 && (
+                           <div>
+                              <h2 className="text-3xl font-black mb-6">Who this course is for</h2>
+                              <ul className="list-disc pl-5 space-y-2 text-muted-foreground">
+                                 {course.targetAudience?.map((item: string, index: number) => (
+                                    <li key={index}>{item}</li>
+                                 ))}
+                              </ul>
+                           </div>
+                        )}
 
                      </div>
                   )}
@@ -525,7 +565,7 @@ export default function EnhancedCourseDetailsPage() {
                            <button
                               onClick={() =>
                                  router.push(
-                                    `/dashboard/student/my-courses/${courseId}`
+                                    `/dashboard/student/my-courses/${slug}`
                                  )
                               }
                               className="w-full h-14 rounded-2xl bg-secondary font-bold"
@@ -597,7 +637,7 @@ export default function EnhancedCourseDetailsPage() {
                      {relatedCourses.map((item: any) => (
                         <div
                            key={item.id}
-                           onClick={() => router.push(`/courses/${item.id}`)}
+                           onClick={() => router.push(`/courses/${item.slug || item.id}`)}
                            className="group border rounded-3xl overflow-hidden cursor-pointer hover:border-primary/40 transition-colors"
                         >
                            <div className="aspect-video overflow-hidden">
@@ -624,4 +664,3 @@ export default function EnhancedCourseDetailsPage() {
       </div>
    );
 }
-

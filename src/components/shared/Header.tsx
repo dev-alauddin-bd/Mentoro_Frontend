@@ -21,7 +21,7 @@ import { trackEvent } from "@/lib/gtag";
 export function Header() {
   const { t } = useTranslation();
   const dispatch = useDispatch<AppDispatch>();
-  const { isAuthenticated, user } = useSelector((state: RootState) => state.mentoroAuth);
+  const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -41,8 +41,7 @@ export function Header() {
   const pathname = usePathname();
   const [logoutApi] = useLogoutMutation();
   console.log("user", user);
-  console.log("isAuthenticated", isAuthenticated);
-  const handleLogout = async () => {
+  const handleLogout = async () => {  
     try {
 
       await logoutApi(undefined).unwrap();
@@ -129,7 +128,7 @@ export function Header() {
 
 
 
-            {isAuthenticated ? (
+            {user ? (
               <div className="relative hidden lg:block" ref={dropdownRef}>
                 <button
                   onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
@@ -246,7 +245,7 @@ export function Header() {
             </div>
           </div>
 
-          {isAuthenticated ? (
+          {user ? (
             <>
               <div className="h-[1px] bg-border/60 my-2" />
               <MobileNavLink href="/dashboard" label={t("nav.dashboard")} onClick={() => setIsMenuOpen(false)} />

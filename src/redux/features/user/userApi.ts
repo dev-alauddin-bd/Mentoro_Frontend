@@ -27,11 +27,20 @@ export const userApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["User"],
     }),
+    updateProfile: build.mutation<IApiResponse<any>, FormData>({
+      query: (data) => ({
+        url: `/users/profile`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
 export const { 
   useGetAllUsersQuery, 
   useUpdateUserRoleMutation, 
-  useUpdateUserStatusMutation 
+  useUpdateUserStatusMutation,
+  useUpdateProfileMutation
 } = userApi;

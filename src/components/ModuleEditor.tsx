@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 import {
 
-  useGetCourseByIdQuery,
+  useGetCourseBySlugQuery,
 } from "@/redux/features/course/courseAPi";
 import {
 
@@ -30,7 +30,7 @@ export default function ModuleEditor({
     setSelectedCourseId(propCourseId);
   }, [propCourseId]);
 
-  const { data: course, refetch } = useGetCourseByIdQuery(selectedCourseId!, {
+  const { data: course, refetch } = useGetCourseBySlugQuery(selectedCourseId!, {
     skip: !selectedCourseId,
   });
 

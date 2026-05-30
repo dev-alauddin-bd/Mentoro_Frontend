@@ -7,7 +7,7 @@ import { I18nextProvider } from 'react-i18next';
 import { store, persistor } from '@/redux/store';
 import i18n from '@/i18n';
 
-export function Providers({ children }: { children: ReactNode }) {
+export function ReduxProvider({ children }: { children: ReactNode }) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

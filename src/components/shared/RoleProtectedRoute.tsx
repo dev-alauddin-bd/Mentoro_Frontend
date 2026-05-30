@@ -13,18 +13,18 @@ interface RoleauthenticationedRouteProps {
 }
 
 export function RoleauthenticationedRoute({ children, allowedRoles }: RoleauthenticationedRouteProps) {
-  const { user, isAuthenticated, loading } = useSelector((state: RootState) => state.mentoroAuth);
+  const { user, loading } = useSelector((state: RootState) => state.mentoroAuth);
   const router = useRouter();
 
   useEffect(() => {
     if (!loading) {
-      if (!isAuthenticated) {
+      if (!user) {
         router.push("/login");
       } else if (user && !allowedRoles.includes(user.role)) {
         router.push("/dashboard");
       }
     }
-  }, [isAuthenticated, loading, user, allowedRoles, router]);
+  }, [user, loading, allowedRoles, router]);
 
   if (loading) {
     return (
@@ -34,7 +34,7 @@ export function RoleauthenticationedRoute({ children, allowedRoles }: Roleauthen
     );
   }
 
-  if (!isAuthenticated || (user && !allowedRoles.includes(user.role))) {
+  if (!user || (user && !allowedRoles.includes(user.role))) {
     return null;
   }
 

@@ -53,7 +53,7 @@ export function AppSidebar() {
     { title: t("nav.my_courses"), url: "/dashboard/student/my-courses", icon: BookOpen },
     { title: t("nav.payments"), url: "/dashboard/student/payments", icon: History },
     { title: t("nav.analytics"), url: "/dashboard/student/analytics", icon: Activity },
-    { title: t("nav.profile"), url: "/dashboard/settings", icon: GraduationCap },
+    { title: t("nav.profile"), url: "/dashboard/settings", icon: Settings },
   ];
 
 
@@ -67,6 +67,7 @@ export function AppSidebar() {
     { title: t("nav.live_workshops"), url: "/dashboard/instructor/manage-live-sessions", icon: Video },
     { title: t("nav.assignments"), url: "/dashboard/instructor/assignments", icon: ClipboardList },
     { title: t("nav.analytics"), url: "/dashboard/instructor/analytics", icon: Activity },
+    { title: t("nav.profile"), url: "/dashboard/settings", icon: Settings },
   ];
 
   const adminItems = [
@@ -76,18 +77,16 @@ export function AppSidebar() {
     { title: t("nav.revenue"), url: "/dashboard/admin/revenue", icon: BarChart3 },
     { title: t("nav.legal"), url: "/dashboard/admin/legal", icon: History },
     { title: t("nav.analytics"), url: "/dashboard/admin/analytics", icon: Activity },
+    { title: t("nav.profile"), url: "/dashboard/settings", icon: Settings },
   ];
 
-  const commonItems = [
-    { title: t("nav.courses"), url: "/courses", icon: BookOpen },
-    { title: t("nav.settings"), url: "/dashboard/settings", icon: Settings },
-  ];
 
   const getMenuByRole = () => {
     switch (role) {
-      case "admin": return [...adminItems, ...commonItems];
-      case "instructor": return [...instructorItems, ...commonItems];
-      default: return [...studentItems, ...commonItems];
+      case "admin": return [...adminItems];
+      case "instructor": return [...instructorItems];
+      case "student": return [...studentItems];
+      default: return [...studentItems];
     }
   };
 

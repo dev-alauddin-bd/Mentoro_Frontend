@@ -10,7 +10,7 @@ import { GA_MEASUREMENT_ID, pageview } from "@/lib/gtag";
 export default function GoogleAnalytics() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { user, loading, isAuthenticated } = useSelector((state: RootState) => state.mentoroAuth);
+  const { user, loading } = useSelector((state: RootState) => state.mentoroAuth);
 
   useEffect(() => {
     if (pathname && GA_MEASUREMENT_ID) {
@@ -21,7 +21,7 @@ export default function GoogleAnalytics() {
 
   useEffect(() => {
     if ((window as any).gtag) {
-      if (!loading && isAuthenticated && user?.id) {
+      if (!loading && user && user?.id) {
         // Set User ID for logged-in users
         (window as any).gtag('config', GA_MEASUREMENT_ID, {
           user_id: user.id,
@@ -33,7 +33,7 @@ export default function GoogleAnalytics() {
         });
       }
     }
-  }, [loading, isAuthenticated, user?.id]);
+  }, [loading, user, user?.id]);
 
   if (!GA_MEASUREMENT_ID) return null;
 

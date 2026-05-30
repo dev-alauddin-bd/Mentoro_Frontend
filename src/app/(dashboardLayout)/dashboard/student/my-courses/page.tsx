@@ -137,7 +137,7 @@ export default function MyCoursesPage() {
                      </div>
                   )}
 
-                  <Link href={`/dashboard/student/my-courses/${course.id}`} className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <Link href={`/dashboard/student/my-courses/${course.slug || course.id}`} className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="w-16 h-16 bg-primary/90 backdrop-blur-sm rounded-full flex items-center justify-center text-white scale-75 group-hover:scale-100 transition-transform duration-500 shadow-xl shadow-primary/30">
                         <Play className="w-6 h-6 ml-1" />
                     </div>
@@ -160,7 +160,7 @@ export default function MyCoursesPage() {
                 {/* Content Body */}
                 <div className="p-6 flex flex-col flex-1 bg-gradient-to-b from-card to-secondary/10">
                   <h3 className="font-black text-lg text-foreground line-clamp-2 leading-tight mb-2 group-hover:text-primary transition-colors">
-                    <Link href={`/dashboard/student/my-courses/${course.id}`}>{course.title}</Link>
+                    <Link href={`/dashboard/student/my-courses/${course.slug || course.id}`}>{course.title}</Link>
                   </h3>
                   
                   <div className="flex items-center gap-2 mb-6">
@@ -173,14 +173,14 @@ export default function MyCoursesPage() {
                   <div className="mt-auto space-y-3">
                       {isCompleted ? (
                           <Link
-                            href={`/dashboard/student/certificate/${course.id}`}
+                            href={`/dashboard/student/certificate/${course.slug || course.id}`}
                             className="w-full h-12 flex items-center justify-center gap-2 bg-emerald-50 text-emerald-600 border border-emerald-200 hover:bg-emerald-100 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:hover:bg-emerald-500/20 text-xs font-black uppercase tracking-widest rounded-xl transition-colors shadow-sm"
                           >
                             <GraduationCap className="w-4 h-4" /> {t("student.my_courses.view_certificate")}
                           </Link>
                       ) : (
                           <Link
-                            href={`/dashboard/student/my-courses/${course.id}`}
+                            href={`/dashboard/student/my-courses/${course.slug || course.id}`}
                             className="w-full h-12 flex items-center justify-center gap-2 bg-secondary hover:bg-primary hover:text-white hover:border-primary text-foreground border border-border text-xs font-black uppercase tracking-widest rounded-xl transition-all shadow-sm active:scale-95"
                           >
                             <PlayCircle className="w-4 h-4" /> {t("student.my_courses.resume")}

@@ -90,7 +90,8 @@ export default function CourseList({ courses, isLoading, onEdit, onAddModule, on
 
           <div className="flex items-center bg-secondary/30 p-1.5 rounded-2xl border border-border/50 gap-1.5">
             <Link
-              href={`/courses/${course.id}`}
+              href={`/courses/${course.slug || course.id}`}
+              target="_blank"
               className="h-9 w-9 bg-background border border-border/50 rounded-xl text-muted-foreground hover:bg-primary hover:text-white hover:border-primary transition-all flex items-center justify-center shadow-sm"
               title="View Public Page"
             >

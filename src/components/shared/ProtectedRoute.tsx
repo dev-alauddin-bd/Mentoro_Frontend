@@ -7,14 +7,14 @@ import { RootState } from "@/redux/store";
 import { Loader2 } from "lucide-react";
 
 export function authenticationedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated, loading } = useSelector((state: RootState) => state.mentoroAuth);
+  const { user, loading } = useSelector((state: RootState) => state.mentoroAuth);
   const router = useRouter();
 
   useEffect(() => {
-    if (!loading && !isAuthenticated) {
+    if (!loading && !user) {
       router.push("/login");
     }
-  }, [isAuthenticated, loading, router]);
+  }, [user, loading, router]);
 
   if (loading) {
     return (
@@ -24,7 +24,7 @@ export function authenticationedRoute({ children }: { children: React.ReactNode 
     );
   }
 
-  if (!isAuthenticated) {
+  if (!user) {
     return null;
   }
 

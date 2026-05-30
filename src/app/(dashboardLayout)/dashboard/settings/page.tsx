@@ -18,12 +18,15 @@ import { useState, useRef } from "react";
 import { toast } from "react-hot-toast";
 import DashboardHeader from "@/components/common/DashboardHeader";
 import DashboardCard from "@/components/common/DashboardCard";
+import { useUpdateProfileMutation } from "@/redux/features/user/userApi";
+import { setUser } from "@/redux/features/auth/authSlice";
 
 // ---------- COMPONENTS ----------
 
 export default function ProfilePage() {
-  const { user } = useSelector((state: RootState) => state.mentoroAuth);
+  const { user, token } = useSelector((state: RootState) => state.mentoroAuth);
   const dispatch = useDispatch();
+  const [updateProfile] = useUpdateProfileMutation();
   const [isUploading, setIsUploading] = useState(false);
   const [activeTab, setActiveTab] = useState<"profile" | "security">("profile");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -38,28 +41,15 @@ export default function ProfilePage() {
     const name = formData.get("name") as string;
 
     try {
-      let avatarUrl = user.avatar || "";
-
-      if (file && file.size > 0) {
-        toast.loading("Uploading image...", { id: "uploading" });
-        const cloudData = new FormData();
-        cloudData.append("file", file);
-        cloudData.append("upload_preset", "course_thumbnails");
-
-        const cloudRes = await fetch(
-          "https://api.cloudinary.com/v1_1/dyfamn6rm/image/upload",
-          { method: "POST", body: cloudData }
-        );
-
-        if (!cloudRes.ok) {
-          throw new Error("Failed to upload image to Cloudinary");
-        }
-
-        const cloudJson = await cloudRes.json();
-        avatarUrl = cloudJson.secure_url;
-        toast.dismiss("uploading");
+      if (!file || file.size === 0) {
+        formData.delete("avatar");
       }
 
+      const res = await updateProfile(formData).unwrap();
+      
+      if (res.success && res.data) {
+        dispatch(setUser({ user: res.data, token: token! }));
+      }
 
       setImagePreview(null);
       toast.success("Profile updated successfully!");

@@ -60,15 +60,15 @@ export const courseApi = baseApi.injectEndpoints({
 
 
     // Get Single Course
-    getCourseById: build.query<ICourseResponse, string>({
-      query: (id) => `/courses/${id}`,
+    getCourseBySlug: build.query<ICourseResponse, string>({
+      query: (slug) => `/courses/${slug}`,
       providesTags: ["Course"],
     }),
 
     // Update Course
-    updateCourse: build.mutation<ICourseResponse, { id: string; data: FormData }>({
-      query: ({ id, data }) => ({
-        url: `/courses/${id}`,
+    updateCourse: build.mutation<ICourseResponse, { slug: string; data: FormData }>({
+      query: ({ slug, data }) => ({
+        url: `/courses/${slug}`,
         method: "PATCH",
         body: data,
       }),
@@ -77,8 +77,8 @@ export const courseApi = baseApi.injectEndpoints({
 
     // Delete Course
     deleteCourse: build.mutation<IApiResponse<{ message: string }>, string>({
-      query: (id) => ({
-        url: `/courses/${id}`,
+      query: (slug) => ({
+        url: `/courses/${slug}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Course"],
@@ -131,8 +131,8 @@ export const courseApi = baseApi.injectEndpoints({
 
     // Toggle Publish Status
     togglePublish: build.mutation<ICourseResponse, string>({
-      query: (id) => ({
-        url: `/courses/${id}/toggle-publish`,
+      query: (slug) => ({
+        url: `/courses/${slug}/toggle-publish`,
         method: "PATCH",
       }),
       invalidatesTags: ["Course"],
@@ -140,17 +140,17 @@ export const courseApi = baseApi.injectEndpoints({
 
     // Request Feature
     requestFeature: build.mutation<ICourseResponse, string>({
-      query: (id) => ({
-        url: `/courses/${id}/request-feature`,
+      query: (slug) => ({
+        url: `/courses/${slug}/request-feature`,
         method: "POST",
       }),
       invalidatesTags: ["Course"],
     }),
 
     // Approve Feature
-    approveFeature: build.mutation<ICourseResponse, { id: string; isFeatured: boolean }>({
-      query: ({ id, isFeatured }) => ({
-        url: `/courses/${id}/approve-feature`,
+    approveFeature: build.mutation<ICourseResponse, { slug: string; isFeatured: boolean }>({
+      query: ({ slug, isFeatured }) => ({
+        url: `/courses/${slug}/approve-feature`,
         method: "PATCH",
         body: { isFeatured },
       }),
@@ -164,7 +164,7 @@ export const {
   useCreateCourseMutation,
   useGetInstructorAllCoursesQuery,
   useGetAllPublicCoursesQuery,
-  useGetCourseByIdQuery,
+  useGetCourseBySlugQuery,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
   useEnrollCourseMutation,

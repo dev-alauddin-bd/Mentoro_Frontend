@@ -7,12 +7,12 @@ import { RootState } from "@/redux/store";
 import { Loader2 } from "lucide-react";
 
 export default function DashboardPage() {
-  const { user, isAuthenticated, loading } = useSelector((state: RootState) => state.mentoroAuth);
+  const { user, loading } = useSelector((state: RootState) => state.mentoroAuth);
   const router = useRouter();
 
   useEffect(() => {
     if (!loading) {
-      if (!isAuthenticated) {
+      if (!user) {
         router.push(`/login?callbackUrl=${window.location.pathname}`);
       } else if (user) {
         // Redirect based on role
@@ -30,7 +30,7 @@ export default function DashboardPage() {
         }
       }
     }
-  }, [isAuthenticated, loading, user, router]);
+  }, [loading, user, router]);
 
   return (
     <div className="flex items-center justify-center min-h-[400px]">
