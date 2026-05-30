@@ -18,9 +18,10 @@ export default function CategoryPage() {
   const [createCategory, { isLoading: isCreating }] = useCreateCategoryMutation();
 
   const [updateCategory, { isLoading: isUpdating }] = useUpdateCategoryMutation();
-  const [deleteCategory] = useDeleteCategoryMutation();
+  const [deleteCategory, { isLoading: isDeleting }] = useDeleteCategoryMutation();
   const [editingCategory, setEditingCategory] = useState<ICategory | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [categoryToDelete, setCategoryToDelete] = useState<string | null>(null);
 
   const [search, setSearch] = useState("");
 
@@ -61,14 +62,15 @@ export default function CategoryPage() {
     setIsModalOpen(false);
   };
 
-  const handleDelete = async (id: string) => {
-    if (confirm("Permanently delete this category? All associated courses will be affected.")) {
-      try {
-        await deleteCategory(id).unwrap();
-        toast.success("Category removed from catalog");
-      } catch (err: any) {
-        toast.error(err?.data?.message || "Deletion failed");
-      }
+  const confirmDelete = async () => {
+    if (!categoryToDelete) return;
+    try {
+      await deleteCategory(categoryToDelete).unwrap();
+      toast.success("Category removed from catalog");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Deletion failed");
+    } finally {
+      setCategoryToDelete(null);
     }
   };
 
@@ -91,16 +93,16 @@ export default function CategoryPage() {
       header: "Actions",
       align: "right",
       accessor: (cat) => (
-        <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
+        <div className="flex items-center justify-end gap-3 transition-all duration-300">
             <button
                 onClick={() => handleEdit(cat)}
-                className="h-9 px-4 bg-background border border-border/50 rounded-xl text-xs font-black uppercase tracking-widest text-muted-foreground hover:bg-primary hover:text-white hover:border-primary transition-all flex items-center gap-2 shadow-sm"
+                className="h-9 px-4 bg-background border border-border/50 cursor-pointer rounded-xl text-xs font-black uppercase tracking-widest text-muted-foreground hover:bg-primary hover:text-white hover:border-primary transition-all flex items-center gap-2 shadow-sm"
             >
                 <Edit2 className="w-3.5 h-3.5" /> Edit
             </button>
             <button
-                onClick={() => handleDelete(cat.id!)}
-                className="h-9 w-9 bg-background border border-border/50 rounded-xl flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all shadow-sm"
+                onClick={() => setCategoryToDelete(cat.id!)}
+                className="h-9 w-9 bg-background border border-border/50 cursor-pointer rounded-xl flex items-center justify-center text-red-500 hover:bg-red-500 hover:text-white hover:border-red-500 transition-all shadow-sm"
             >
                 <Trash2 className="w-3.5 h-3.5" />
             </button>
@@ -119,7 +121,7 @@ export default function CategoryPage() {
         action={
             <button
               onClick={() => setIsModalOpen(true)}
-              className="h-14 px-8 bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+              className="h-14 cursor-pointer px-8 bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
             >
               <Plus className="w-4 h-4" /> Create Category
             </button>
@@ -158,11 +160,11 @@ export default function CategoryPage() {
 
       {/* Modal Form */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex justify-center items-center p-4">
+        <div className="fixed inset-0 bg-background/90 z-50 flex justify-center items-center p-4">
           <div className="bg-card border border-border/60 rounded-[2.5rem] p-8 shadow-2xl w-full max-w-lg animate-in fade-in zoom-in-95 duration-200 relative">
             <button 
                 onClick={closeModal}
-                className="absolute right-8 top-8 text-muted-foreground hover:text-foreground transition-colors"
+                className="absolute cursor-pointer right-8 top-8 text-muted-foreground hover:text-foreground transition-colors"
             >
                 <X className="w-5 h-5" />
             </button>
@@ -195,20 +197,51 @@ export default function CategoryPage() {
                     <button 
                         type="button" 
                         onClick={closeModal}
-                        className="h-14 flex-1 bg-secondary/50 text-foreground rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-secondary transition-all"
+                        className="h-14 flex-1 bg-secondary/50 cursor-pointer text-foreground rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-secondary transition-all"
                     >
                         Cancel
                     </button>
                     <button 
                         type="submit" 
                         disabled={isCreating || isUpdating}
-                        className="h-14 flex-[2] bg-primary text-white rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 disabled:opacity-50 transition-all"
+                        className="h-14 flex-[2] bg-primary cursor-pointer text-white rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 disabled:opacity-50 transition-all"
                     >
                         {isCreating || isUpdating ? <Loader2 className="w-4 h-4 animate-spin text-white" /> : editingCategory ? <Edit2 className="w-4 h-4 text-white" /> : <FolderPlus className="w-4 h-4 text-white" />}
                         {editingCategory ? "Apply Changes" : "Create Category"}
                     </button>
                 </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {categoryToDelete && (
+        <div className="fixed inset-0 bg-background/90 z-50 flex justify-center items-center p-4">
+          <div className="bg-card border border-red-500/20 rounded-[2.5rem] p-8 shadow-2xl w-full max-w-sm animate-in fade-in zoom-in-95 duration-200 text-center">
+            <div className="w-16 h-16 bg-red-500/10 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Trash2 className="w-8 h-8" />
+            </div>
+            <h3 className="text-2xl font-black tracking-tight mb-2">Delete Category?</h3>
+            <p className="text-sm font-medium text-muted-foreground mb-8">
+              Permanently delete this category? All associated courses will be affected. This cannot be undone.
+            </p>
+            <div className="flex flex-col gap-3">
+                <button 
+                    onClick={confirmDelete}
+                    disabled={isDeleting}
+                    className="h-12 w-full bg-red-500 text-white cursor-pointer rounded-xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 hover:bg-red-600 transition-colors disabled:opacity-50"
+                >
+                    {isDeleting ? <Loader2 className="w-4 h-4 animate-spin" /> : "Yes, Delete It"}
+                </button>
+                <button 
+                    onClick={() => setCategoryToDelete(null)}
+                    disabled={isDeleting}
+                    className="h-12 w-full cursor-pointer bg-secondary/50 text-foreground rounded-xl font-black uppercase tracking-widest text-xs hover:bg-secondary transition-colors"
+                >
+                    Cancel
+                </button>
+            </div>
           </div>
         </div>
       )}

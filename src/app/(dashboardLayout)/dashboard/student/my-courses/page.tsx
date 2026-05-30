@@ -8,6 +8,7 @@ import { useEffect, useMemo } from "react";
 import toast from "react-hot-toast";
 import { PlayCircle, GraduationCap, Sparkles, BookMarked, Loader2, Play } from "lucide-react";
 import { useGetMyCoursesQuery, useRefundCourseMutation } from "@/redux/features/course/courseAPi";
+import Head from 'next/head';
 
 interface Course {
   id: string;
@@ -87,6 +88,10 @@ export default function MyCoursesPage() {
   return (
     <main className="min-h-screen py-10 bg-background relative overflow-hidden selection:bg-primary/30">
       {/* Premium Background Decorators */}
+<Head>
+  <title>{t('student.my_courses.title')} - Mentoro</title>
+  <meta name="description" content={t('student.my_courses.seo_description')} />
+</Head>
       <div className="absolute top-[-10%] left-[-5%] w-[40vw] h-[40vw] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
       <div className="absolute bottom-[-10%] right-[-5%] w-[30vw] h-[30vw] bg-purple-500/5 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -133,7 +138,7 @@ export default function MyCoursesPage() {
               return (
               <div
                 key={course.id}
-                className="group relative bg-card border border-border/60 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-black/10 transition-all duration-500 hover:-translate-y-1 flex flex-col"
+                className="group relative bg-white/10 backdrop-blur-xl border border-white/20 rounded-[2rem] overflow-hidden shadow-sm hover:shadow-2xl hover:shadow-black/10 transition-all duration-500 hover:-translate-y-1 flex flex-col"
               >
                 {/* Thumbnail Header */}
                 <div className="relative h-48 w-full overflow-hidden bg-secondary">

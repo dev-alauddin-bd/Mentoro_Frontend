@@ -17,14 +17,7 @@ const aiApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
-
-    generateQuiz: builder.mutation({
-      query: (data: { lessonId: string }) => ({
-        url: `/ai/generate-quiz/${data.lessonId}`,
-        method: "POST",
-      }),
-    }),
   }),
 });
 
-export const { useGenerateCourseContentMutation, useGenerateLiveSessionMutation, useGenerateQuizMutation } = aiApi;
+export const { useGenerateCourseContentMutation, useGenerateLiveSessionMutation } = aiApi;

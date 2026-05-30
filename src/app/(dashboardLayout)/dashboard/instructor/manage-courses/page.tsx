@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CourseCreateForm from "@/components/course-form/CourseCreateForm";
 import { useDeleteCourseMutation, useTogglePublishMutation,  useGetInstructorAllCoursesQuery } from "@/redux/features/course/courseAPi";
 import CourseList from "@/components/course-form/CourseList";
@@ -22,6 +22,16 @@ export default function ManageCourses() {
   const router = useRouter();
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [courseToEdit, setCourseToEdit] = useState<ICourse | null>(null);
+
+  // Prevent body scrolling when modal is open
+  useEffect(() => {
+    if (showCreateModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; }
+  }, [showCreateModal]);
 
   // Pagination & Filters State
   const [page, setPage] = useState(1);
@@ -215,8 +225,9 @@ export default function ManageCourses() {
 
       {/* Create Course Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex justify-center items-center p-4">
-          <div className="bg-card border border-border/60 rounded-[2.5rem] p-8 shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto animate-in fade-in zoom-in-95 duration-200">
+        <div className="fixed inset-0 z-50">
+          <div className="absolute inset-0 bg-background/90" onClick={() => setShowCreateModal(false)}></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-card border border-border/60 rounded-[2.5rem] p-8 shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto overscroll-contain animate-in fade-in zoom-in-95 duration-200">
 
             {/* Modal Header */}
             <div className="flex justify-between items-center mb-8 border-b border-border/50 pb-4">
