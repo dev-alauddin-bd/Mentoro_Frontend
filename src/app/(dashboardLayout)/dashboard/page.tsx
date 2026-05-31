@@ -9,6 +9,7 @@ import { Loader2 } from "lucide-react";
 export default function DashboardPage() {
   const { user, loading } = useSelector((state: RootState) => state.mentoroAuth);
   const router = useRouter();
+  console.log("dashboard user", user);
 
   useEffect(() => {
     if (!loading) {
@@ -27,6 +28,7 @@ export default function DashboardPage() {
           default:
             router.push("/dashboard/student");
             break;
+
         }
       }
     }

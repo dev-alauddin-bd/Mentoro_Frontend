@@ -32,7 +32,7 @@ export default async function proxy(request: NextRequest) {
         headers: {
           "Cookie": `refreshToken=${token}`,
         },
-        cache:"no-store"
+        cache: "no-store"
       });
       if (!res.ok) return null;
       const result = await res.json();
