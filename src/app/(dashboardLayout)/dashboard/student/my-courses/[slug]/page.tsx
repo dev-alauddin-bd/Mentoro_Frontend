@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import QuizGeneratorModal from "@/components/shared/QuizGeneratorModal";
+
 import { Sparkles } from "lucide-react";
 
 // Flatten all navigable items from modules into a single ordered list
@@ -351,11 +351,7 @@ export default function CoursePlayerPage() {
                 </div>
               )}
 
-              <QuizGeneratorModal
-                lessonId={activeItem?.id}
-                isOpen={isQuizOpen}
-                onClose={() => setIsQuizOpen(false)}
-              />
+        
 
          
 

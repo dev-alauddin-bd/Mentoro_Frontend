@@ -7,36 +7,40 @@ import { RootState } from "@/redux/store";
 import { Loader2 } from "lucide-react";
 
 export default function DashboardPage() {
-  const { user, loading } = useSelector((state: RootState) => state.mentoroAuth);
+  const { user, loading } = useSelector(
+    (state: RootState) => state.mentoroAuth
+  );
+
   const router = useRouter();
-  console.log("dashboard user", user);
 
   useEffect(() => {
-    if (!loading) {
-      if (!user) {
-        router.push(`/login?callbackUrl=${window.location.pathname}`);
-      } else if (user) {
-        // Redirect based on role
-        switch (user.role) {
-          case "admin":
-            router.push("/dashboard/admin");
-            break;
-          case "instructor":
-            router.push("/dashboard/instructor");
-            break;
-          case "student":
-          default:
-            router.push("/dashboard/student");
-            break;
+    if (loading) return; // wait until redux ready
 
-        }
-      }
+    if (!user) {
+      router.replace(`/login?callbackUrl=${window.location.pathname}`);
+      return;
     }
-  }, [loading, user, router]);
 
-  return (
-    <div className="flex items-center justify-center min-h-[400px]">
-      <Loader2 className="w-8 h-8 animate-spin text-primary" />
-    </div>
-  );
+    // role-based redirect
+    const roleRoutes: Record<string, string> = {
+      admin: "/dashboard/admin",
+      instructor: "/dashboard/instructor",
+      student: "/dashboard/student",
+    };
+
+    const target = roleRoutes[user.role] || "/dashboard/student";
+
+    router.replace(target);
+  }, [user, loading, router]);
+
+  // show loader until auth resolved
+  if (loading || !user) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  return null;
 }

@@ -10,15 +10,15 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "**",
       },
-      
     ],
-    unoptimized: true
+    unoptimized: true,
   },
+
   async rewrites() {
     return [
       {
         source: "/api/:path*",
-        destination: `${process.env.NEXT_PUBLIC_API_URL}/api/:path*`,
+        destination: "https://mentoro-backend.onrender.com/api/:path*",
       },
     ];
   },

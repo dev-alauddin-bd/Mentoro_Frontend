@@ -176,7 +176,7 @@ export function AppSidebar() {
             className="group flex w-full items-center justify-center gap-2 h-12 rounded-xl bg-destructive/5 border border-destructive/10 text-destructive text-[10px] font-black uppercase tracking-widest transition-all hover:bg-destructive hover:text-white shadow-sm active:scale-95"
           >
             <LogOut className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-            <span>{t("nav.end_session")}</span>
+            <span>Logout</span>
           </button>
         </div>
 
