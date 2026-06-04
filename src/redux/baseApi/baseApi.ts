@@ -73,6 +73,7 @@ const baseApi = createApi({
     "Enroll",
     "Lesson",
     "Reviews",
+    "Payment",
     "LiveSession",
     "Job",
     "Newsletter"

@@ -20,8 +20,8 @@ export function AdminDashboard() {
   const { data: usersData } = useGetAllUsersQuery()
   
   const stats = analyticsData?.data?.statistics || {}
-  const courses = coursesData?.data?.courses || []
-  const users = usersData?.data?.users || usersData?.data || []
+  const courses = coursesData?.data || []
+  const users = usersData?.data || []
 
   return (
     <div className="max-w-7xl mx-auto space-y-16 animate-in fade-in slide-in-from-bottom-6 duration-1000">

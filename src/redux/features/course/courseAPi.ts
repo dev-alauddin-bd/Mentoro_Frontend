@@ -1,12 +1,26 @@
-// src/redux/features/course/courseApi.ts
+import { IApiResponse, ICourseDetail, ICourseResponse, ICoursesResponse } from "@/interfaces/course.interface";
 
-import { ICourse, ICourseResponse, ICoursesResponse, IApiResponse, IMyCourse } from "@/interfaces/course.interface";
 import baseApi from "@/redux/baseApi/baseApi";
 
+type CourseQueryParams = {
+  page?: number;
+  limit?: number;
+  search?: string;
+  category?: string;
+  sort?: string;
+  showAll?: boolean;
+};
+
+
+
+
+
 export const courseApi = baseApi.injectEndpoints({
+  overrideExisting: true,
   endpoints: (build) => ({
-    // Create Course
-    createCourse: build.mutation<ICourseResponse, FormData>({
+
+    /* ================= CREATE COURSE ================= */
+    createCourse: build.mutation<IApiResponse<ICourseResponse>, FormData>({
       query: (body) => ({
         url: "/courses",
         method: "POST",
@@ -15,165 +29,186 @@ export const courseApi = baseApi.injectEndpoints({
       invalidatesTags: ["Course"],
     }),
 
+    /* ================= PUBLIC COURSES ================= */
     getAllPublicCourses: build.query<
       ICoursesResponse,
-      { page?: number; limit?: number; search?: string; category?: string; sort?: string; showAll?: boolean } | void
+      CourseQueryParams | void
     >({
-      query: ({ page, limit, search, category, sort, showAll } = {}) => {
+      query: (arg) => {
         const params = new URLSearchParams();
 
-        if (page) params.append("page", page.toString());
-        if (limit) params.append("limit", limit.toString());
+        if (!arg) return "/courses";
+
+        const { page, limit, search, category, sort, showAll } = arg;
+
+        if (page) params.append("page", String(page));
+        if (limit) params.append("limit", String(limit));
         if (search) params.append("search", search);
         if (category) params.append("category", category);
         if (showAll) params.append("showAll", "true");
 
-        // 🔥 FIX: sort (NOT sortBy)
-        if (sort) params.append("sort", sort);
+        let backendSort = "createdAt";
+        let order = "desc";
+
+        if (sort === "price:asc") {
+          backendSort = "price";
+          order = "asc";
+        } else if (sort === "price:desc") {
+          backendSort = "price";
+          order = "desc";
+        }
+
+        params.append("sort", backendSort);
+        params.append("order", order);
 
         return `/courses?${params.toString()}`;
       },
+
       providesTags: ["Course"],
     }),
 
-
-    getInstructorAllCourses: build.query<
+    /* ================= INSTRUCTOR COURSES ================= */
+    /* ================= PUBLIC COURSES ================= */
+    getInstructorCourses: build.query<
       ICoursesResponse,
-      { page?: number; limit?: number; search?: string; category?: string; sort?: string; showAll?: boolean } | void
+      CourseQueryParams | void
     >({
-      query: ({ page, limit, search, category, sort, showAll } = {}) => {
+      query: (arg) => {
         const params = new URLSearchParams();
 
-        if (page) params.append("page", page.toString());
-        if (limit) params.append("limit", limit.toString());
+        if (!arg) return "/courses";
+
+        const { page, limit, search, category, sort, showAll } = arg;
+
+        if (page) params.append("page", String(page));
+        if (limit) params.append("limit", String(limit));
         if (search) params.append("search", search);
         if (category) params.append("category", category);
         if (showAll) params.append("showAll", "true");
 
-        // 🔥 FIX: sort (NOT sortBy)
-        if (sort) params.append("sort", sort);
+        let backendSort = "createdAt";
+        let order = "desc";
 
-        return `/courses/instructor?${params.toString()}`;
+        if (sort === "price:asc") {
+          backendSort = "price";
+          order = "asc";
+        } else if (sort === "price:desc") {
+          backendSort = "price";
+          order = "desc";
+        }
+
+        params.append("sort", backendSort);
+        params.append("order", order);
+
+        return `/courses/instructor/me?${params.toString()}`;
       },
+
       providesTags: ["Course"],
     }),
 
-
-    // Get Single Course
-    getCourseBySlug: build.query<ICourseResponse, string>({
-      query: (slug) => `/courses/${slug}`,
+    /* ================= SINGLE COURSE ================= */
+    getCourseBySlug: build.query<IApiResponse<ICourseDetail>, string>({
+      query: (slug) => `/courses/slug/${slug}`,
       providesTags: ["Course"],
     }),
 
-    // Update Course
-    updateCourse: build.mutation<ICourseResponse, { slug: string; data: FormData }>({
-      query: ({ slug, data }) => ({
-        url: `/courses/${slug}`,
+    /* ================= UPDATE COURSE ================= */
+    updateCourse: build.mutation<
+      ICourseResponse,
+      { id: string; data: FormData }
+    >({
+      query: ({ id, data }) => ({
+        url: `/courses/${id}`,
         method: "PATCH",
         body: data,
       }),
       invalidatesTags: ["Course"],
     }),
 
-    // Delete Course
-    deleteCourse: build.mutation<IApiResponse<{ message: string }>, string>({
-      query: (slug) => ({
-        url: `/courses/${slug}`,
+    /* ================= DELETE COURSE ================= */
+    deleteCourse: build.mutation<
+      IApiResponse<{ message: string }>,
+      string
+    >({
+      query: (id) => ({
+        url: `/courses/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Course"],
     }),
 
-    // ⬇⬇⬇ *** GET MY COURSES (Student enrolled courses) ***
-    getMyCourses: build.query<IApiResponse<any>, void>({
-      query: () => `/courses/my-courses`,
+    /* ================= STUDENT ENROLLED COURSES ================= */
+    getStudentEnrolledCourses: build.query<IApiResponse<any>, void>({
+      query: () => ({
+        url: "/courses/me/enrolled",
+        method: "GET",
+      }),
       providesTags: ["Course"],
     }),
 
     // Enroll in Course
     enrollCourse: build.mutation<any, string>({
       query: (courseId) => ({
-        url: `/enrollments`,
+        url: "/enrollments",
         method: "POST",
-        body: { courseId }
+        body: { courseId },
       }),
       invalidatesTags: ["Course"],
     }),
 
-    // Process Payment Checkout
-    createCheckout: build.mutation<any, string>({
+    /* ================= STUDENT COURSE MODULES (FIXED) ================= */
+    getStudentCourseModules: build.query<
+      IApiResponse<any>,
+      string
+    >({
       query: (courseId) => ({
-        url: `/payments/checkout`,
-        method: "POST",
-        body: { courseId }
+        url: `/courses/me/${courseId}/modules`,
+        method: "GET",
       }),
+      providesTags: ["Course"],
     }),
 
 
-    // Process Refund / Cancel Enrollment
-    refundCourse: build.mutation<any, string>({
-      query: (courseId) => ({
-        url: `/enrollments/cancel`,
-        method: "POST",
-        body: { courseId }
-      }),
-      invalidatesTags: ["Course"],
-    }),
 
-    completeLesson: build.mutation<IApiResponse<{ message: string }>, { courseId: string; lessonId: string }>({
-      query: ({ courseId, lessonId }) => ({
-        url: "/courses/complete-lesson",
+    /* ================= COMPLETE LESSON ================= */
+    completeLesson: build.mutation<
+      IApiResponse<{ message: string }>,
+      { courseId: string; lessonId: string }
+    >({
+      query: (body) => ({
+        url: "/courses/me/lesson/complete",
         method: "POST",
-        body: { courseId, lessonId },
+        body,
       }),
       invalidatesTags: ["Course"],
     }),
 
-    // Toggle Publish Status
+    /* ================= TOGGLE PUBLISH ================= */
     togglePublish: build.mutation<ICourseResponse, string>({
-      query: (slug) => ({
-        url: `/courses/${slug}/toggle-publish`,
+      query: (id) => ({
+        url: `/courses/${id}/toggle`,
         method: "PATCH",
       }),
       invalidatesTags: ["Course"],
     }),
 
-    // Request Feature
-    requestFeature: build.mutation<ICourseResponse, string>({
-      query: (slug) => ({
-        url: `/courses/${slug}/request-feature`,
-        method: "POST",
-      }),
-      invalidatesTags: ["Course"],
-    }),
-
-    // Approve Feature
-    approveFeature: build.mutation<ICourseResponse, { slug: string; isFeatured: boolean }>({
-      query: ({ slug, isFeatured }) => ({
-        url: `/courses/${slug}/approve-feature`,
-        method: "PATCH",
-        body: { isFeatured },
-      }),
-      invalidatesTags: ["Course"],
-    }),
   }),
 });
 
-// Hooks
+/* ================= HOOKS ================= */
 export const {
   useCreateCourseMutation,
-  useGetInstructorAllCoursesQuery,
+  useGetInstructorCoursesQuery,
   useGetAllPublicCoursesQuery,
   useGetCourseBySlugQuery,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
   useEnrollCourseMutation,
-  useCreateCheckoutMutation,
 
-  useRefundCourseMutation,
-  useGetMyCoursesQuery,
+  useGetStudentEnrolledCoursesQuery,
+  useGetStudentCourseModulesQuery,
+
+
   useCompleteLessonMutation,
   useTogglePublishMutation,
-  useRequestFeatureMutation,
-  useApproveFeatureMutation
 } = courseApi;

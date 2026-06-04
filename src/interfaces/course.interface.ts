@@ -1,132 +1,141 @@
-// src/interfaces/course.interface.ts
 
-import { ICategory } from "./category.interface";
-import { IUser } from "./user.interface";
 
-export interface ICourse {
-  id: string;
-  slug?: string;
-  title: string;
-  description?: string | null;
-  thumbnail: string;
-  previewVideo: string;
-  price: number;
-  instructorId: string;
-  instructor?: IUser;
-  isPublished: boolean;
 
-  categoryId: string;
- 
 
-  category?: ICategory;
-  modules?: IModule[];
-  createdAt: string | Date;
-  updatedAt: string | Date;
-  _count?: {
-    enrolledUsers: number;
-  }
-
-  // New fields added for richer course metadata
-  learningOutcomes?: string[];
-  requirements?: string[];
-  targetAudience?: string[];
-  tags?: string[];
-  hasCertificate?: boolean;
-  isFree?: boolean;
-  reviews?: IReview[];
-
-}
-
-export interface IReview {
-  id: string;
-  content: string;
-  rating: number;
-  userId: string;
-  courseId: string;
-  isPublished: boolean;
-  user?: {
-    name: string;
-    avatar?: string | null;
-  };
-  createdAt: string | Date;
-  updatedAt: string | Date;
-}
-
-export interface IModule {
+export interface Icourse {
   id: string;
   title: string;
-  courseId: string;
-  course?: ICourse;
-  lessons?: ILesson[];
-  assignment?: IAssignment | null;
-  order: number;
-}
-export interface IAssignment {
-  id: string;
   description: string;
-  moduleId: string;
-  module?: IModule;
-}
-
-export interface IEnrollment {
-  id: string;
-  userId: string;
-  user?: IUser;
-  courseId: string;
-  course?: ICourse;
-  enrolledAt: string | Date;
-  lastActivity: string | Date;
-}
-
-export interface ICompletedLesson {
-  id: string;
-  userId: string;
-  user?: IUser;
-  lessonId: string;
-  lesson?: ILesson;
-  completedAt: string | Date;
-}
-
-export interface ILesson {
-  id: string;
-  title: string;
-  videoUrl: string;
-  duration: number;
-  moduleId: string;
-  order: number;
-  completedByUsers?: ICompletedLesson[];
-  isCompleted?: boolean;
-  isUnlocked?: boolean;
-}
-
-
-// Result of getMyCourses in backend
-export interface IMyCourse {
-  id: string;
-  title: string;
+  slug: string;
   thumbnail: string;
-  instructor: {
-    name: string;
-    avatar?: string | null;
-  } | null;
-  totalLessons: number;
-  completedLessonsCount: number;
-  progressPercentage: number;
-  lastActivity: string | Date;
+  price: number;
+  enrollments: number;
+  category: string;
+  instructor: string;
+  instructorAvatar: string | null;
 }
 
-// Wrapper type for API response aligned with backend/src/app/utils/sendResponse.ts
+export interface ICoursesResponse {
+  success: boolean;
+  message: string;
+  data: Icourse[];
+  meta: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
+
+export interface ICourseResponse {
+  success: boolean;
+  message: string;
+  data: Icourse;
+}
+
 export interface IApiResponse<T> {
   success: boolean;
   message: string;
   data: T;
 }
 
-export type ICourseResponse = IApiResponse<ICourse & { isEnrolled?: boolean }>;
-export type ICoursesResponse = IApiResponse<{
-  courses: ICourse[];
-  total: number;
-  page: number;
-  totalPages: number;
-}>;
+export interface ILesson {
+  id: string;
+  title: string;
+  duration: number;
+  type: string;
+  videoUrl?: string;
+  text?: string;
+}
 
+export interface IReview {
+  id: string;
+  rating: number;
+  text: string;
+ 
+  userAvatar: string;
+  userId: string;
+  courseId: string;
+  createdAt: string;
+}
+
+export interface ICourseDetails extends Icourse {
+  lessons: ILesson[];
+  reviews: IReview[];
+  totalLessons: number;
+  totalVideos: number;
+  totalDuration: number;
+  enrolledStudents: number;
+  category: string;
+  tags: string[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ICourseDetailsResponse {
+  success: boolean;
+  message: string;
+  data: ICourseDetails;
+}
+export interface ILesson {
+  id: string;
+  title: string;
+  duration: number;
+}
+
+export interface IModule {
+  id: string;
+  title: string;
+  lessons: ILesson[];
+}
+
+export interface IReview {
+  id: string;
+  rating: number;
+  content: string;
+  user?: {
+    name: string;
+  };
+}
+
+export interface ICourseDetail {
+  id: string;
+  title: string;
+  slug: string;
+  description: string;
+  thumbnail?: string;
+  price: number;
+
+  enrollmentCount: number;
+
+  category: {
+    id: string;
+    name: string;
+  } | null;
+
+  instructor: {
+    id: string;
+    name: string;
+    avatar?: string;
+  } | null;
+
+  previewVideo?: string;
+
+  learningOutcomes: string[];
+  requirements: string[];
+  targetAudience: string[];
+  tags: string[];
+
+  modules: IModule[];
+  reviews: IReview[];
+
+  hasCertificate: boolean;
+
+  // backend computed
+  totalLessons: number;
+  totalDuration: number;
+
+  // optional (if you send later)
+  isEnrolled?: boolean;
+}

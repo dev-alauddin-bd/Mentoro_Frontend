@@ -41,11 +41,9 @@ const convertToEmbedUrl = (url: string) => {
 };
 
 export default function CourseCreateForm({
-  onCreated,
   onClose,
   initialData,
 }: {
-  onCreated?: (courseId: string) => void;
   onClose?: () => void;
   initialData?: any;
 }) {
@@ -78,6 +76,7 @@ export default function CourseCreateForm({
   const [updateCourse, { isLoading: isUpdating }] = useUpdateCourseMutation();
   const [generateCourseContent, { isLoading: isGenerating }] =
     useGenerateCourseContentMutation();
+  
   const loading = isCreating || isUpdating;
 
   const { data: categories, isLoading: catLoading, isError } =
@@ -177,16 +176,15 @@ export default function CourseCreateForm({
       let res;
 
       if (isEditMode) {
-        res = await updateCourse({ slug: initialData.slug || initialData.id, data: formData }).unwrap();
+        res = await updateCourse({ id:initialData.id, data: formData }).unwrap();
         toast.success("Course updated successfully!");
+        reset();
+        setThumbPreview(null);
         onClose?.();
       } else {
         res = await createCourse(formData).unwrap();
         toast.success("Course created successfully!");
         localStorage.removeItem("courseDraft");
-        if (onCreated) {
-          onCreated(res?.data?.id);
-        }
         reset();
         setThumbPreview(null);
         onClose?.();

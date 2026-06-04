@@ -1,9 +1,9 @@
-import { ICourse } from "./course.interface";
+import { Icourse } from "./course.interface";
 
 export interface ICategory {
   id: string;
   name: string;
-  courses?: ICourse[];
+  courses?: Icourse[];
   createdAt: Date;
   updatedAt: Date;
-}
+} 

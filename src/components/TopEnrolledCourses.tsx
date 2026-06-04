@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import { Section } from "./ui/section";
 import { CourseCard } from "./shared/CourseCard";
 import { useGetAllPublicCoursesQuery } from "@/redux/features/course/courseAPi";
+import { Icourse } from "@/interfaces/course.interface";
 
 export function TopEnrolledCourses() {
   const { t } = useTranslation();
@@ -18,7 +19,9 @@ export function TopEnrolledCourses() {
     sort: "popular",
   });
 
-  const courses: any[] = courseData?.data?.courses || [];
+  // ✅ FIXED
+  const courses: Icourse[] = courseData?.data || [];
+
   const skeletons = Array.from({ length: limit });
 
   if (!isLoading && courses.length === 0) return null;
@@ -33,10 +36,14 @@ export function TopEnrolledCourses() {
               <TrendingUp className="w-3 h-3" />
               {t("home.top_enrolled_start") || "Students' Favorites"}
             </div>
+
             <h2 className="text-5xl md:text-6xl font-black tracking-tighter text-foreground leading-[0.9]">
               {t("home.top_enrolled_start")}{" "}
-              <span className="text-primary  italic font-serif">{t("home.top_enrolled_end")}</span>
+              <span className="text-primary italic font-serif">
+                {t("home.top_enrolled_end")}
+              </span>
             </h2>
+
             <p className="text-muted-foreground text-lg max-w-xl font-medium">
               {t("home.top_enrolled_desc")}
             </p>

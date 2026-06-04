@@ -24,7 +24,7 @@ import DataTable, { Column } from "@/components/common/DataTable";
 import Pagination from "@/components/common/Pagination";
 import DashboardFilterBar from "@/components/common/DashboardFilterBar";
 import { useState } from "react";
-import { useGetInstructorAllCoursesQuery } from "@/redux/features/course/courseAPi";
+import { useGetInstructorCoursesQuery } from "@/redux/features/course/courseAPi";
 
 export default function InstructorRevenuePage() {
   return <InstructorRevenueContent />;
@@ -35,7 +35,7 @@ function InstructorRevenueContent() {
   const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const { data: analyticsData, isLoading: analyticsLoading } = useGetInstructorAnalyticsQuery();
 
-  const { data: coursesData, isLoading: coursesLoading } = useGetInstructorAllCoursesQuery({ page: 1, limit: 10 });
+  const { data: coursesData, isLoading: coursesLoading } = useGetInstructorCoursesQuery({ page: 1, limit: 10 });
 
   const stats = useMemo(() => analyticsData?.data?.statistics || {}, [analyticsData]);
   
@@ -43,7 +43,7 @@ function InstructorRevenueContent() {
 
   // Filter courses created by this instructor
   const myCreatedCourses = useMemo(() => {
-    const allCourses = Array.isArray(coursesData?.data?.courses) ? coursesData?.data?.courses : [];
+    const allCourses = Array.isArray(coursesData?.data) ? coursesData?.data : [];
     return allCourses.filter((c: any) => c.instructorId === user?.id);
   }, [coursesData, user]);
 

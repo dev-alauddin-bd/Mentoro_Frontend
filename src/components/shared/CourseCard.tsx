@@ -50,7 +50,7 @@ export function CourseCard({ course }: CourseCardProps) {
 
             <div className="flex items-center gap-1.5 px-3 py-1 bg-secondary rounded-lg border border-border">
               <Users className="w-3.5 h-3.5 text-muted-foreground" />
-              <span className="text-[10px] font-black tabular-nums">{course._count?.enrolledUsers || 0}</span>
+              <span className="text-[10px] font-black tabular-nums">{course.enrollmentCount || 0}</span>
             </div>
           </div>
         </div>

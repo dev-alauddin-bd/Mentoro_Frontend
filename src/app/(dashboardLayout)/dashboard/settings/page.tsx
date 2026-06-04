@@ -46,7 +46,7 @@ export default function ProfilePage() {
       }
 
       const res = await updateProfile(formData).unwrap();
-      
+
       if (res.success && res.data) {
         dispatch(setUser({ user: res.data, token: token! }));
       }

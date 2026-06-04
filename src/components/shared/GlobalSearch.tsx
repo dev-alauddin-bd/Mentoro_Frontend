@@ -28,7 +28,7 @@ export function GlobalSearch() {
     }
   }, [debouncedSearch]);
 
-  const results = coursesData?.data?.courses || []
+  const results = coursesData?.data || []
 
   // Close modal on outside click
   useEffect(() => {

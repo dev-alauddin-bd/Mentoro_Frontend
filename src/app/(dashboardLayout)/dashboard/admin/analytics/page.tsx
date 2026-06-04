@@ -17,8 +17,8 @@ function AdminAnalyticsContent() {
   const { data: usersData, isLoading: usersLoading } = useGetAllUsersQuery({ limit: 100 })
   
   const stats = analyticsData?.data?.statistics || {}
-  const courses = coursesData?.data?.courses || []
-  const users = usersData?.data?.users || []
+  const courses = coursesData?.data || []
+  const users = usersData?.data || []
 
   if (analyticsLoading || coursesLoading || usersLoading) {
     return (

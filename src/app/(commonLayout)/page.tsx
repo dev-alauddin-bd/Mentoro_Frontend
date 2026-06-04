@@ -28,7 +28,7 @@ export default function Home() {
       <HeroAnimated />
       <TrustBar />
       <TopEnrolledCourses />
-      <NewArrivalCourses />
+      {/* <NewArrivalCourses /> */}
       <UpcomingLiveCourses />
       <InstructorCTA />
       <ContactSection />

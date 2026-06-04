@@ -2,7 +2,6 @@
 
 import { useTranslation, Trans } from "react-i18next";
 
-import { useGetInstructorAllCoursesQuery } from "@/redux/features/course/courseAPi";
 import { Users, BookOpen, Inbox, DollarSign, Sparkles, FolderOpen, ArrowRight } from "lucide-react";
 import { AdminCoursesTable } from "./admin-courses-table";
 import { DashboardStatCard } from "./dashboard/stat-card";
@@ -14,6 +13,7 @@ import { RootState } from "@/redux/store";
 
 import { InstructorAnalytics } from "./dashboard/InstructorAnalytics";
 import { useGetInstructorAnalyticsQuery } from "@/redux/features/dashboard/dashboardApi";
+import { useGetInstructorCoursesQuery } from "@/redux/features/course/courseAPi";
 
 
 export function InstructorDashboard() {
@@ -21,9 +21,9 @@ export function InstructorDashboard() {
   const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const { data, isLoading, isError } = useGetInstructorAnalyticsQuery();
   const statistics = useMemo(() => data?.data?.statistics || {}, [data]);
-  const { data: coursesData } = useGetInstructorAllCoursesQuery({ limit: 1000 });
+  const { data: coursesData } = useGetInstructorCoursesQuery({ limit: 1000 });
 
-  const courses = coursesData?.data?.courses || [];
+  const courses = coursesData?.data || [];
 
   if (isLoading) {
     return (

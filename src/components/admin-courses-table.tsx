@@ -2,7 +2,7 @@
 
 import { useMemo } from "react"
 import { Eye, Edit, Trash2, Send, PowerOff, Star, CheckCircle } from "lucide-react"
-import {  useTogglePublishMutation, useRequestFeatureMutation, useApproveFeatureMutation,  useGetAllPublicCoursesQuery } from "@/redux/features/course/courseAPi";
+import { useTogglePublishMutation,  useGetAllPublicCoursesQuery } from "@/redux/features/course/courseAPi";
 import { TableSkeleton } from "./dashboard/skeletons";
 import { toast } from "react-hot-toast";
 
@@ -20,10 +20,8 @@ interface AdminCoursesTableProps {
   );
   
   const [togglePublish, { isLoading: isToggling }] = useTogglePublishMutation();
-  const [requestFeature, { isLoading: isRequesting }] = useRequestFeatureMutation();
-  const [approveFeature, { isLoading: isApproving }] = useApproveFeatureMutation();
 
-  const fetchedCourses = useMemo(() => data?.data?.courses || [], [data]);
+  const fetchedCourses = useMemo(() => data?.data || [], [data]);
 
   const courses = useMemo(() => fetchedCourses.map((c: any) => ({
     id: c.id,

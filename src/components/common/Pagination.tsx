@@ -26,7 +26,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="h-10 w-10 flex items-center justify-center rounded-xl border border-border/50 bg-card text-muted-foreground hover:bg-primary hover:text-white disabled:opacity-30 disabled:hover:bg-card disabled:hover:text-muted-foreground transition-all shadow-sm"
+        className="h-10 w-10 flex items-center cursor-pointer justify-center rounded-xl border border-border/50 bg-card text-muted-foreground hover:bg-primary hover:text-white disabled:opacity-30 disabled:hover:bg-card disabled:hover:text-muted-foreground transition-all shadow-sm"
       >
         <ChevronLeft className="w-4 h-4" />
       </button>
@@ -48,7 +48,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
             <button
               key={page}
               onClick={() => onPageChange(page)}
-              className={`h-10 w-10 flex items-center justify-center rounded-xl border transition-all shadow-sm text-xs font-black tracking-widest ${
+              className={`h-10 w-10 flex items-center cursor-pointer justify-center rounded-xl border transition-all shadow-sm text-xs font-black tracking-widest ${
                 currentPage === page
                   ? "bg-primary border-primary text-white scale-110"
                   : "border-border/50 bg-card text-muted-foreground hover:bg-secondary"
@@ -63,7 +63,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="h-10 w-10 flex items-center justify-center rounded-xl border border-border/50 bg-card text-muted-foreground hover:bg-primary hover:text-white disabled:opacity-30 disabled:hover:bg-card disabled:hover:text-muted-foreground transition-all shadow-sm"
+        className="h-10 w-10 flex items-center cursor-pointer justify-center rounded-xl border border-border/50 bg-card text-muted-foreground hover:bg-primary hover:text-white disabled:opacity-30 disabled:hover:bg-card disabled:hover:text-muted-foreground transition-all shadow-sm"
       >
         <ChevronRight className="w-4 h-4" />
       </button>

@@ -1,4 +1,3 @@
-import { ICompletedLesson, IEnrollment } from "./course.interface";
 
 // User role
 export enum Role {
@@ -27,8 +26,8 @@ export interface IUser {
   role: Role;
   status: UserStatus;
   avatar?: string | null;
-  enrolledCourses?: IEnrollment[];
-  completedLessons?: ICompletedLesson[];
+  enrolledCourses?: any;
+  completedLessons?:any;
   createdAt: string;
   updatedAt: string;
   joinDate?: string;

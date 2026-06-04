@@ -28,7 +28,7 @@ function AdminRevenueContent() {
   const { data: coursesData, isLoading: coursesLoading } = useGetAllPublicCoursesQuery({ limit: 100 });
 
   const stats = useMemo(() => analyticsData?.data?.statistics || {}, [analyticsData]);
-  const courses = useMemo(() => Array.isArray(coursesData?.data?.courses) ? coursesData?.data?.courses : [], [coursesData]);
+  const courses = useMemo(() => Array.isArray(coursesData?.data) ? coursesData?.data : [], [coursesData]);
 
   const topCourses = useMemo(() => {
     return courses.map((c: any) => ({

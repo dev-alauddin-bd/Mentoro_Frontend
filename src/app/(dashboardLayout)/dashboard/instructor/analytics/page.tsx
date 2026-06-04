@@ -12,7 +12,7 @@ import DashboardCard from "@/components/common/DashboardCard";
 import DashboardFilterBar from "@/components/common/DashboardFilterBar";
 import DataTable, { Column } from "@/components/common/DataTable";
 import Pagination from "@/components/common/Pagination";
-import { useGetInstructorAllCoursesQuery } from "@/redux/features/course/courseAPi";
+import { useGetInstructorCoursesQuery } from "@/redux/features/course/courseAPi";
 
 export default function InstructorAnalyticsPage() {
   return <InstructorAnalyticsContent />
@@ -21,10 +21,10 @@ export default function InstructorAnalyticsPage() {
 function InstructorAnalyticsContent() {
   const { user } = useSelector((state: RootState) => state.mentoroAuth);
   const { data: analyticsData, isLoading: analyticsLoading } = useGetInstructorAnalyticsQuery()
-  const { data: coursesData, isLoading: coursesLoading } = useGetInstructorAllCoursesQuery({ limit: 100 })
+  const { data: coursesData, isLoading: coursesLoading } = useGetInstructorCoursesQuery({ limit: 100 })
   
   const stats = analyticsData?.data?.statistics || {}
-  const courses = coursesData?.data?.courses || []
+  const courses = coursesData?.data || []
 
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
