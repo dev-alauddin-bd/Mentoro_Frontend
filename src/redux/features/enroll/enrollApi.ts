@@ -7,12 +7,12 @@ export const enrollApi = baseApi.injectEndpoints({
     // enrollments
 
     // enroll course
-    enrollCourse: build.mutation<IApiResponse<any>, { courseId: string }>(
+    enrollCourse: build.mutation(
       {
-        query: ({ courseId }) => ({
+        query: (body) => ({
           url: "/enrollments",
           method: "POST",
-          body: { courseId },
+          body,
         }),
         invalidatesTags: ["Enroll"],
       }

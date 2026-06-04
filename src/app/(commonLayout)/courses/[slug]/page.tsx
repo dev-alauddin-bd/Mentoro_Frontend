@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 
 import {
-   useEnrollCourseMutation,
    useGetCourseBySlugQuery,
 } from "@/redux/features/course/courseAPi";
 
@@ -24,6 +23,7 @@ import toast from "react-hot-toast";
 import { useCreateReviewMutation } from "@/redux/features/review/reviewApi";
 import { IReview } from "@/interfaces/course.interface";
 import { useCreateCheckoutMutation } from "@/redux/features/payment/paymentAPi";
+import { useEnrollCourseMutation } from "@/redux/features/enroll/enrollApi";
 
 export default function CourseDetailsPage() {
    const params = useParams();
@@ -83,28 +83,31 @@ export default function CourseDetailsPage() {
 
    // ================= ENROLL =================
    const handleEnrollment = async () => {
+
       try {
-         if (!course?.id) return;
 
-         const res = await enrollCourse(course.id).unwrap();
+         const res = await enrollCourse({ slug: slug as string }).unwrap()
+         console.log(res)
 
-         if (res.data.status) {
-            const checkOutRes = await createCheckout({
-               courseId: course.id,
+         if (res?.success) {
+            const checkout = await createCheckout({
+               courseId: res.data.courseId,
                enrollId: res.data.id,
-            }).unwrap();
+            }).unwrap()
 
-            if (checkOutRes?.data?.paymentUrl) {
-               window.location.href = checkOutRes.data.paymentUrl;
-            } else {
-               toast.error(checkOutRes?.message || "Payment failed");
+            console.log(checkout)
+
+            if(checkout?.success && checkout?.data?.paymentUrl){
+               window.location.href = checkout.data.paymentUrl
             }
-         } else {
-            toast.error(res?.message || "Enrollment failed");
          }
-      } catch (err: any) {
-         toast.error(err?.data?.message || "Enrollment failed");
+
+
+
+      } catch (error: any) {
+         toast.error(error?.data?.message || "Enrollment failed");
       }
+
    };
 
    // ================= REVIEW =================

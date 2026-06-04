@@ -146,15 +146,6 @@ export const courseApi = baseApi.injectEndpoints({
       providesTags: ["Course"],
     }),
 
-    // Enroll in Course
-    enrollCourse: build.mutation<any, string>({
-      query: (courseId) => ({
-        url: "/enrollments",
-        method: "POST",
-        body: { courseId },
-      }),
-      invalidatesTags: ["Course"],
-    }),
 
     /* ================= STUDENT COURSE MODULES (FIXED) ================= */
     getStudentCourseModules: build.query<
@@ -203,8 +194,7 @@ export const {
   useGetCourseBySlugQuery,
   useUpdateCourseMutation,
   useDeleteCourseMutation,
-  useEnrollCourseMutation,
-
+  
   useGetStudentEnrolledCoursesQuery,
   useGetStudentCourseModulesQuery,
 

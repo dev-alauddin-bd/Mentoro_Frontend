@@ -81,6 +81,7 @@ export default function CourseCreateForm({
 
   const { data: categories, isLoading: catLoading, isError } =
     useGetCategoriesQuery();
+    console.log(categories);
 
   const [thumbPreview, setThumbPreview] = useState<string | null>(
     initialData?.thumbnail || null
