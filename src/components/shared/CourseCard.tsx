@@ -44,13 +44,13 @@ export function CourseCard({ course }: CourseCardProps) {
 
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
-              <span className="text-[11px] font-bold text-foreground">{course.instructor?.name || t("course_card.academy_expert")}</span>
+              <span className="text-[11px] font-bold text-foreground">{course.instructor || t("course_card.academy_expert")}</span>
               <span className="text-[9px] font-black text-muted-foreground uppercase tracking-widest">{t("course_card.instructor")}</span>
             </div>
 
             <div className="flex items-center gap-1.5 px-3 py-1 bg-secondary rounded-lg border border-border">
               <Users className="w-3.5 h-3.5 text-muted-foreground" />
-              <span className="text-[10px] font-black tabular-nums">{course.enrollmentCount || 0}</span>
+              <span className="text-[10px] font-black tabular-nums">{course.enrollments || 0}</span>
             </div>
           </div>
         </div>

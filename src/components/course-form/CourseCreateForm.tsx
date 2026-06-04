@@ -209,6 +209,7 @@ export default function CourseCreateForm({
               <button
                 type="button"
                 disabled={isGenerating}
+                
                 onClick={async () => {
                   const title = watch("title");
                   const desc = watch("description");
@@ -242,7 +243,7 @@ export default function CourseCreateForm({
                     toast.error("Failed to generate AI content.");
                   }
                 }}
-                className="text-xs font-bold text-primary flex items-center gap-1 hover:opacity-80 active:scale-95 transition-all disabled:opacity-50"
+                className="text-xs font-bold text-primary cursor-pointer flex items-center gap-1 hover:opacity-80 active:scale-95 transition-all disabled:opacity-50"
               >
                 <Sparkles size={14} className={isGenerating ? "animate-pulse" : ""} />
                 {isGenerating ? "Generating…" : "Auto‑Generate with AI"}

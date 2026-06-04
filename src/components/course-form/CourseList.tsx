@@ -113,7 +113,7 @@ export default function CourseList({
             onClick={() =>
               onTogglePublish(course.id, course.isPublished, course.title)
             }
-            className={`h-9 w-9 rounded-xl flex items-center justify-center ${
+            className={`h-9 w-9 rounded-xl cursor-pointer flex items-center justify-center ${
               course.isPublished
                 ? "bg-orange-500 text-white"
                 : "bg-green-500 text-white"
@@ -130,7 +130,7 @@ export default function CourseList({
           <Link
             href={`/courses/${course.slug || course.id}`}
             target="_blank"
-            className="h-9 w-9 flex items-center justify-center border rounded-xl"
+            className="h-9 w-9 flex items-center cursor-pointer justify-center border rounded-xl"
           >
             <Eye className="w-4 h-4" />
           </Link>
@@ -138,7 +138,7 @@ export default function CourseList({
           {/* Edit */}
           <button
             onClick={() => onEdit(course)}
-            className="h-9 w-9 border rounded-xl flex items-center justify-center"
+            className="h-9 w-9 border rounded-xl cursor-pointer flex items-center justify-center"
           >
             <Edit2 className="w-4 h-4" />
           </button>
@@ -146,7 +146,7 @@ export default function CourseList({
           {/* Module */}
           <button
             onClick={() => onAddModule(course)}
-            className="h-9 w-9 border rounded-xl flex items-center justify-center"
+            className="h-9 w-9 border rounded-xl cursor-pointer flex items-center justify-center"
           >
             <Layers className="w-4 h-4" />
           </button>
@@ -154,7 +154,7 @@ export default function CourseList({
           {/* Delete */}
           <button
             onClick={() => onDelete(course.id)}
-            className="h-9 w-9 border rounded-xl flex items-center justify-center"
+            className="h-9 w-9 border rounded-xl cursor-pointer flex items-center justify-center"
           >
             <Trash2 className="w-4 h-4" />
           </button>

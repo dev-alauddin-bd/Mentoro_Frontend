@@ -44,9 +44,9 @@ export default function LiveSessionManagement() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedSession, setSelectedSession] = useState<any>(null)
 
-  const sessionsData = response?.data?.sessions || []
-  const totalPages = response?.data?.totalPages || 0
-  const totalSessions = response?.data?.total || 0
+  const sessionsData = response?.data || []
+  const totalPages = response?.meta?.totalPages || 0
+  const totalSessions = response?.meta?.total || 0
 
   const [search, setSearch] = useState("")
 

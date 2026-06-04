@@ -32,7 +32,7 @@ export default function CoursesContent() {
 
   const { data, isLoading } = useGetAllPublicCoursesQuery({
     page,
-    limit: 4,
+    limit: 8,
     search: debouncedSearch,
     category,
     sort: sortBy,

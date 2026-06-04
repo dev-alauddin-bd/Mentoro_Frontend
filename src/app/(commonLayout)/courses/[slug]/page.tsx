@@ -24,6 +24,7 @@ import { useCreateReviewMutation } from "@/redux/features/review/reviewApi";
 import { IReview } from "@/interfaces/course.interface";
 import { useCreateCheckoutMutation } from "@/redux/features/payment/paymentAPi";
 import { useEnrollCourseMutation } from "@/redux/features/enroll/enrollApi";
+import YouTubePreviewCard from "@/components/shared/youtube";
 
 export default function CourseDetailsPage() {
    const params = useParams();
@@ -97,7 +98,7 @@ export default function CourseDetailsPage() {
 
             console.log(checkout)
 
-            if(checkout?.success && checkout?.data?.paymentUrl){
+            if (checkout?.success && checkout?.data?.paymentUrl) {
                window.location.href = checkout.data.paymentUrl
             }
          }
@@ -368,10 +369,11 @@ export default function CourseDetailsPage() {
                </div>
 
                {/* RIGHT */}
-               <div className="lg:col-span-4">
+               <div className="lg:col-span-4 space-y-4">
+
+                  <YouTubePreviewCard  url={course.previewVideo} thumbnail={course.thumbnail} />
 
                   <div className="border p-5 rounded-xl sticky top-24">
-
                      <div className="text-center text-3xl font-bold mb-4">
                         {isFree ? "Free" : `$${course.price}`}
                      </div>
@@ -387,7 +389,6 @@ export default function CourseDetailsPage() {
                            "Enroll Now"
                         )}
                      </button>
-
                   </div>
 
                </div>

@@ -13,7 +13,7 @@ import {
 
 import { useGetCategoriesQuery } from "@/redux/features/category/categoriesApi";
 
-import { Plus, BookOpen, Search, Filter, X } from "lucide-react";
+import { Plus, BookOpen, Search, X } from "lucide-react";
 import toast from "react-hot-toast";
 
 import { useSelector } from "react-redux";
@@ -35,9 +35,8 @@ export default function ManageCourses() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
 
-  const limit = 5;
+  const limit = 8;
 
-  // ✅ FIXED API RESPONSE
   const {
     data: coursesData,
     refetch,
@@ -49,7 +48,6 @@ export default function ManageCourses() {
 
   const courses = coursesData?.data || [];
   const meta = coursesData?.meta;
-
   const totalPages = meta?.totalPages || 1;
 
   const [deleteCourse] = useDeleteCourseMutation();
@@ -57,7 +55,20 @@ export default function ManageCourses() {
 
   const { data: categories } = useGetCategoriesQuery();
 
-  // body scroll lock
+  // ================= ESC CLOSE =================
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setShowCreateModal(false);
+        setCourseToEdit(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
+
+  // ================= BODY SCROLL LOCK =================
   useEffect(() => {
     document.body.style.overflow = showCreateModal ? "hidden" : "";
     return () => {
@@ -65,11 +76,13 @@ export default function ManageCourses() {
     };
   }, [showCreateModal]);
 
+  // ================= CONFIRM TOAST =================
   const confirmAction = (message: string, onConfirm: () => void) => {
     toast.custom((t_toast) => (
       <div
-        className={`${t_toast.visible ? "animate-enter" : "animate-leave"
-          } max-w-sm w-full bg-card border border-border shadow-2xl rounded-2xl p-4`}
+        className={`${
+          t_toast.visible ? "animate-enter" : "animate-leave"
+        } max-w-sm w-full bg-card border border-border shadow-2xl rounded-2xl p-4`}
       >
         <p className="text-sm font-bold text-center">{message}</p>
 
@@ -95,6 +108,7 @@ export default function ManageCourses() {
     ));
   };
 
+  // ================= DELETE =================
   const handleDelete = (id: string) => {
     confirmAction("Delete this course?", async () => {
       await deleteCourse(id).unwrap();
@@ -103,6 +117,7 @@ export default function ManageCourses() {
     });
   };
 
+  // ================= TOGGLE PUBLISH =================
   const handleTogglePublish = (
     id: string,
     currentStatus: boolean,
@@ -121,11 +136,13 @@ export default function ManageCourses() {
     });
   };
 
+  // ================= EDIT =================
   const handleEdit = (course: any) => {
     setCourseToEdit(course);
     setShowCreateModal(true);
   };
 
+  // ================= ADD MODULE =================
   const handleAddModule = (course: any) => {
     router.push(
       `/dashboard/instructor/modules?courseId=${course.id}&courseTitle=${encodeURIComponent(
@@ -135,7 +152,7 @@ export default function ManageCourses() {
   };
 
   return (
-    <div className="container mx-auto p-4 md:p-8 space-y-10 container">
+    <div className="container mx-auto p-4 md:p-8 space-y-10">
       {/* HEADER */}
       <div className="flex justify-between items-end">
         <div>
@@ -214,30 +231,48 @@ export default function ManageCourses() {
       )}
 
       {/* MODAL */}
-      {showCreateModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+   {showCreateModal && (
+  <div className="fixed inset-0 z-[9999] flex items-center justify-center">
 
-          {/* overlay */}
-          <div
-            className="absolute inset-0 bg-black/60"
-            onClick={() => setShowCreateModal(false)}
-          />
+    {/* overlay */}
+    <div
+      className="absolute inset-0 bg-black/60"
+      onClick={() => {
+        setShowCreateModal(false);
+        setCourseToEdit(null);
+      }}
+    />
 
-          {/* modal box */}
-          <div className="relative w-full max-w-3xl mx-4 bg-card rounded-2xl shadow-2xl border border-border overflow-hidden">
+    {/* modal */}
+    <div className="relative w-full max-w-3xl mx-4 bg-card rounded-2xl shadow-2xl border border-border overflow-hidden z-[10000]">
 
-            {/* scroll container */}
-            <div className="max-h-[90vh] overflow-y-auto p-6">
-              <CourseCreateForm
-                initialData={courseToEdit}
-                onClose={() => setShowCreateModal(false)} 
-              
-              />
-            </div>
+      {/* HEADER (always on top) */}
+      <div className="relative z-[10001] flex justify-end p-3 bg-card border-b border-border">
+        <button
+          onClick={() => {
+            setShowCreateModal(false);
+            setCourseToEdit(null);
+          }}
+          className="w-9 h-9 flex items-center cu cursor-pointer justify-center rounded-full bg-background border border-border hover:bg-red-500 hover:text-white transition-all"
+        >
+          ✕
+        </button>
+      </div>
 
-          </div>
-        </div>
-      )}
+      {/* scroll area */}
+      <div className="max-h-[90vh] overflow-y-auto p-6 relative z-[9999]">
+        <CourseCreateForm
+          initialData={courseToEdit}
+          onClose={() => {
+            setShowCreateModal(false);
+            setCourseToEdit(null);
+          }}
+        />
+      </div>
+
+    </div>
+  </div>
+)}
     </div>
   );
 }
