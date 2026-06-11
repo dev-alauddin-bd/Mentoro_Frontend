@@ -119,7 +119,7 @@ export function LiveSessionForm({
       Object.entries(data).forEach(([key, value]) => {
         setValue(key as any, value);
       });
-    } catch {}
+    } catch { }
   }, [initialData, setValue]);
 
   // ================= AUTO DRAFT SAVE =================

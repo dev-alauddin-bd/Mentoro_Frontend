@@ -25,6 +25,7 @@ import { IReview } from "@/interfaces/course.interface";
 import { useCreateCheckoutMutation } from "@/redux/features/payment/paymentAPi";
 import { useEnrollCourseMutation } from "@/redux/features/enroll/enrollApi";
 import YouTubePreviewCard from "@/components/shared/youtube";
+import RegistrationCard from "@/components/course-detail/RegistrationCard";
 
 export default function CourseDetailsPage() {
    const params = useParams();
@@ -147,69 +148,87 @@ export default function CourseDetailsPage() {
 
    // ================= UI =================
    return (
-      <div className="min-h-screen max-w-7xl mx-auto bg-background">
+       <div className="min-h-screen max-w-7xl mx-auto grid lg:grid-cols-12 gap-8">
+      
 
          {/* HERO */}
-         <section className="border-b py-16">
-            <div className="px-4">
+      <div className="lg:col-span-8 relative overflow-hidden rounded-3xl mb-12 mt-8">
 
-               <button
-                  onClick={() => router.push("/courses")}
-                  className="flex items-center gap-2 text-sm mb-5"
-               >
-                  <ArrowLeft className="w-4 h-4" />
-                  Back
-               </button>
+  <div className="absolute inset-0 " />
 
-               <div className="space-y-4">
+  <div className="relative grid lg:grid-cols-12 gap-8 p-8 lg:p-12">
 
-                  <span className="text-xs px-3 py-1 bg-primary/10 text-primary rounded-full">
-                     {course.category?.name || "Course"}
-                  </span>
+    <div className="lg:col-span-8 space-y-6">
 
-                  <h1 className="text-4xl font-black">{course.title}</h1>
+      <button
+        onClick={() => router.back()}
+        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back
+      </button>
 
-                  <p className="text-muted-foreground">
-                     {course.description}
-                  </p>
+      <span className="inline-flex items-center rounded-full bg-primary/10 text-primary px-4 py-2 text-sm font-medium">
+        Premium Course
+      </span>
 
-                  <div className="flex flex-wrap gap-6 text-sm">
+      <h1 className="text-4xl lg:text-6xl font-black leading-tight">
+        {course.title}
+      </h1>
 
-                     <div className="flex items-center gap-2">
-                        <Users className="w-4 h-4 " />
-                        {course.enrollmentCount} students
-                     </div>
+      <p className="text-lg text-muted-foreground max-w-3xl">
+        {course.description}
+      </p>
 
-                     <div className="flex items-center gap-2">
-                        <BookOpen className="w-4 h-4" />
-                        {course.modules?.length || 0} modules
-                     </div>
+      <div className="flex flex-wrap gap-6">
 
-                     <div className="flex items-center gap-2">
-                        <BookOpen className="w-4 h-4" />
-                        {course.totalLessons || 0} lessons
-                     </div>
+        <div className="flex items-center gap-2">
+          <Users className="w-5 h-5 text-primary" />
+          <span>{course.enrollmentCount}+ Students</span>
+        </div>
 
-                     <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4" />
-                        {course?.totalDuration} mins
-                     </div>
+        <div className="flex items-center gap-2">
+          <BookOpen className="w-5 h-5 text-primary" />
+          <span>{course.modules?.length || 0} Modules</span>
+        </div>
 
-                     {/* // backend return hasCertificate: boolean; */}
-                     {course.hasCertificate && (
-                        <div className="flex items-center gap-2">
-                           <CheckCircle className="w-4 h-4" />
-                           Certificate available
-                        </div>
-                     )}
+        <div className="flex items-center gap-2">
+          <BookOpen className="w-5 h-5 text-primary" />
+          <span>{course.totalLessons || 0} Lessons</span>
+        </div>
 
+        <div className="flex items-center gap-2">
+          <Clock className="w-5 h-5 text-primary" />
+          <span>{course.totalDuration} mins</span>
+        </div>
 
-                  </div>
+      </div>
 
-               </div>
+      {course.hasCertificate && (
+        <div className="inline-flex items-center gap-2 rounded-xl border bg-background px-4 py-3">
+          <CheckCircle className="w-5 h-5 text-green-500" />
+          Certificate Included
+        </div>
+      )}
+    </div>
 
-            </div>
-         </section>
+    <div className="lg:col-span-4">
+      <div className="sticky top-24">
+        <RegistrationCard
+          title={course.title}
+          previewVideo={course.previewVideo}
+          thumb={course.thumbnail}
+          price={course.price}
+          isFree={isFree}
+          isEnrolled={isEnrolled}
+          isLoading={isEnrolling}
+          onEnroll={handleEnrollment}
+        />
+      </div>
+    </div>
+
+  </div>
+</div>
 
          {/* BODY */}
          <section className="px-4 py-12">
@@ -368,30 +387,7 @@ export default function CourseDetailsPage() {
 
                </div>
 
-               {/* RIGHT */}
-               <div className="lg:col-span-4 space-y-4">
-
-                  <YouTubePreviewCard  url={course.previewVideo} thumbnail={course.thumbnail} />
-
-                  <div className="border p-5 rounded-xl sticky top-24">
-                     <div className="text-center text-3xl font-bold mb-4">
-                        {isFree ? "Free" : `$${course.price}`}
-                     </div>
-
-                     <button
-                        onClick={handleEnrollment}
-                        disabled={isEnrolling}
-                        className="w-full bg-primary text-white py-3 rounded-lg"
-                     >
-                        {isEnrolling ? (
-                           <Loader2 className="animate-spin mx-auto" />
-                        ) : (
-                           "Enroll Now"
-                        )}
-                     </button>
-                  </div>
-
-               </div>
+        
 
             </div>
 

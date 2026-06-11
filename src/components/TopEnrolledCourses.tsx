@@ -8,6 +8,7 @@ import { Section } from "./ui/section";
 import { CourseCard } from "./shared/CourseCard";
 import { useGetAllPublicCoursesQuery } from "@/redux/features/course/courseAPi";
 import { Icourse } from "@/interfaces/course.interface";
+import { useState, useMemo } from "react";
 
 export function TopEnrolledCourses() {
   const { t } = useTranslation();
@@ -22,6 +23,12 @@ export function TopEnrolledCourses() {
   // ✅ FIXED
   const courses: Icourse[] = courseData?.data || [];
 
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const categories = useMemo(() => {
+    const set = new Set<string>(courses.map((c) => c.category));
+    return ['All', ...Array.from(set)];
+  }, [courses]);
+
   const skeletons = Array.from({ length: limit });
 
   if (!isLoading && courses.length === 0) return null;
@@ -29,37 +36,65 @@ export function TopEnrolledCourses() {
   return (
     <Section className="from-transparent to-secondary/20">
       {/* HEADER */}
-      <div className="space-y-6 border-b border-[--section-popular]/10 pb-0">
-        <div className="flex flex-col md:flex-row justify-between gap-6">
-          <div className="space-y-4 text-center md:text-left">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-[--section-popular]/10 rounded-full border border-[--section-popular]/20 text-xs font-black uppercase text-[--section-popular] tracking-widest">
-              <TrendingUp className="w-3 h-3" />
-              {t("home.top_enrolled_start") || "Students' Favorites"}
-            </div>
 
-            <h2 className="text-5xl md:text-6xl font-black tracking-tighter text-foreground leading-[0.9]">
-              {t("home.top_enrolled_start")}{" "}
-              <span className="text-primary italic font-serif">
-                {t("home.top_enrolled_end")}
-              </span>
-            </h2>
+<div className="border-b border-[--section-popular]/10 pb-6 space-y-6">
 
-            <p className="text-muted-foreground text-lg max-w-xl font-medium">
-              {t("home.top_enrolled_desc")}
-            </p>
-          </div>
-        </div>
+  {/* TOP TITLE SECTION */}
+  <div className="text-center md:text-left space-y-3">
 
-        <div className="flex justify-end pb-0">
-          <Link
-            href="/courses?sort=popular"
-            className="hidden md:flex items-center gap-2 group text-sm font-black uppercase tracking-widest text-muted-foreground hover:text-[--section-popular] transition-colors"
-          >
-            {t("home.view_all")}
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </div>
-      </div>
+    {/* Badge */}
+    <div className="inline-flex items-center text-primary gap-2 px-3 py-1 bg-primary/10 rounded-full border border-primary/20 text-xs font-bold uppercase text-primary tracking-widest w-fit mx-auto md:mx-0">
+      <TrendingUp className="w-3 h-3" />
+      Students' Favorites
+    </div>
+
+    {/* Title */}
+    <h2 className="text-3xl md:text-5xl font-black tracking-tight text-foreground leading-tight">
+      {t('home.top_enrolled_start')}{' '}
+      <span className="text-primary italic font-serif">
+        {t('home.top_enrolled_end')}
+      </span>
+    </h2>
+
+    {/* Description */}
+    <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto md:mx-0 font-medium">
+      {t('home.top_enrolled_desc')}
+    </p>
+  </div>
+
+  {/* BOTTOM ROW (CATEGORIES + VIEW ALL) */}
+  <div className="flex items-center justify-between gap-4 flex-wrap">
+
+    {/* LEFT: CATEGORY TABS */}
+    <div className="flex flex-wrap justify-center md:justify-start gap-2">
+      {categories.map((cat) => (
+        <button
+          key={cat}
+          onClick={() => setSelectedCategory(cat)}
+          className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all border cursor-pointer ${
+            selectedCategory === cat
+              ? 'bg-primary text-white border-primary shadow-sm'
+              : 'bg-transparent text-muted-foreground border-gray-300 hover:border-primary hover:text-primary'
+          }`}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    {/* RIGHT: VIEW ALL */}
+    <div className="flex justify-center md:justify-end w-full md:w-auto">
+      <Link
+        href="/courses?sort=popular"
+        className="flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-muted-foreground hover:text-[--section-popular] transition-all group"
+      >
+        {t('home.view_all')}
+        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+      </Link>
+    </div>
+
+  </div>
+</div>
 
       {/* COURSES */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -77,7 +112,7 @@ export function TopEnrolledCourses() {
               </div>
             </div>
           ))
-          : courses.map((course) => (
+          : (selectedCategory === 'All' ? courses : courses.filter((c) => c.category === selectedCategory)).map((course) => (
             <CourseCard key={course.id} course={course} />
           ))}
       </div>

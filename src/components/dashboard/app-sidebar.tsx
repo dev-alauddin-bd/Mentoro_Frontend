@@ -179,6 +179,7 @@ export function AppSidebar() {
             <span>Logout</span>
           </button>
         </div>
+        
 
       </SidebarContent>
     </Sidebar>
