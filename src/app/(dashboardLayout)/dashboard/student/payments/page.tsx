@@ -6,6 +6,9 @@ import { TableSkeleton } from "@/components/dashboard/skeletons";
 import jsPDF from "jspdf";
 import { useGetMyEnrollmentsQuery } from "@/redux/features/enroll/enrollApi";
 import { History, CreditCard, Calendar, ArrowUpRight, CheckCircle2, PrinterIcon } from "lucide-react";
+import DashboardHeader from "@/components/common/DashboardHeader";
+import DashboardCard from "@/components/common/DashboardCard";
+import DataTable, { Column } from "@/components/common/DataTable";
 
 // Type representing a single enrollment entry
 interface Enrollment {
@@ -27,10 +30,10 @@ export default function StudentPaymentsPage() {
    const { t } = useTranslation();
    const { data, isLoading } = useGetMyEnrollmentsQuery();
    const enrollments: Enrollment[] = useMemo(() => {
-   const list = Array.isArray(data?.data?.enrollments) ? data.data.enrollments : (Array.isArray(data?.data) ? data.data : []);
-   return list.map((e: any) => ({ ...e, user: e.student }));
-}, [data]);
-   console.log(enrollments)
+      const list = Array.isArray(data?.data?.enrollments) ? data.data.enrollments : (Array.isArray(data?.data) ? data.data : []);
+      return list.map((e: any) => ({ ...e, user: e.student }));
+   }, [data]);
+
    const totalInvestment = useMemo(() =>
       enrollments.reduce((sum, item) => sum + (item.course?.price || 0), 0),
       [enrollments]);
@@ -69,6 +72,59 @@ export default function StudentPaymentsPage() {
       doc.save(`receipt-${enrollment.id}.pdf`);
    };
 
+   const columns: Column<any>[] = [
+      {
+         header: t("student.payments.table.details"),
+         accessor: (item) => (
+            <div className="flex items-center gap-4">
+               <div className="h-12 w-12 rounded-xl bg-muted overflow-hidden">
+                  <img src={item.course?.thumbnail || "/placeholder.png"} className="w-full h-full object-cover" />
+               </div>
+               <div>
+                  <p className="text-sm font-black text-foreground">{item.course?.title}</p>
+                  <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{t("student.payments.table.verified")}</p>
+               </div>
+            </div>
+         )
+      },
+      {
+         header: t("student.payments.table.date"),
+         accessor: (item) => (
+            <div className="flex items-center gap-2 text-muted-foreground">
+               <Calendar className="w-3.5 h-3.5" />
+               <span className="text-xs font-bold">{new Date(item.enrolledAt).toLocaleDateString()}</span>
+            </div>
+         )
+      },
+      {
+         header: t("student.payments.table.status"),
+         accessor: (item) => (
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 rounded-full text-[9px] font-black uppercase tracking-widest">
+               <CheckCircle2 className="w-3 h-3" />
+               {t("student.payments.table.completed")}
+            </span>
+         )
+      },
+      {
+         header: t("student.payments.table.amount"),
+         align: "right",
+         accessor: (item) => (
+            <p className="text-lg font-black text-foreground tracking-tighter">
+               ${item.course?.price?.toLocaleString() || 0}
+            </p>
+         )
+      },
+      {
+         header: "Download",
+         align: "center",
+         accessor: (item) => (
+            <button type="button" className="btn-outline cursor-pointer" onClick={() => downloadReceipt(item)}>
+               <PrinterIcon className="w-4 h-4" />
+            </button>
+         )
+      }
+   ];
+
    if (isLoading) {
       return (
          <div className="space-y-10 animate-pulse">
@@ -85,23 +141,12 @@ export default function StudentPaymentsPage() {
 
    return (
       <div className="max-w-7xl mx-auto space-y-12 animate-in fade-in slide-in-from-bottom-6 duration-1000 pb-20">
-
-         {/* ================= PREMIUM HEADER ================= */}
-         <section className="flex flex-col md:flex-row justify-between items-end gap-8">
-            <div className="space-y-4">
-               <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/5 border border-primary/10 rounded-full">
-                  <History className="w-4 h-4 text-primary" />
-                  <span className="text-[10px] font-black uppercase tracking-widest text-primary">{t("student.payments.badge")}</span>
-               </div>
-               <h1 className="text-5xl md:text-6xl font-black tracking-tighter text-foreground leading-[0.9]">
-                  {t("student.payments.title")} <br />
-                  <span className="text-primary italic font-serif">{t("student.payments.subtitle_italic")}</span>
-               </h1>
-               <p className="text-muted-foreground text-lg font-medium max-w-xl leading-relaxed">
-                  {t("student.payments.description")}
-               </p>
-            </div>
-         </section>
+         <DashboardHeader 
+            badgeIcon={<History className="w-3.5 h-3.5" />}
+            badgeText={t("student.payments.badge")}
+            title={t("student.payments.title")}
+            subtitle={t("student.payments.description")}
+         />
 
          {/* ================= SUMMARY STATS ================= */}
          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -126,73 +171,26 @@ export default function StudentPaymentsPage() {
          </div>
 
          {/* ================= TRANSACTION TABLE ================= */}
-         <div className="bg-card border border-border rounded-[3.5rem] overflow-hidden">
-            <div className="p-10 border-b border-border/50 bg-secondary/20">
-               <h2 className="text-2xl font-black tracking-tight">{t("student.payments.recent_transactions")}</h2>
-               <p className="text-muted-foreground font-medium text-xs">{t("student.payments.transaction_subtitle")}</p>
-            </div>
-
-            <div className="overflow-x-auto">
-               <table className="w-full text-left">
-                  <thead>
-                     <tr className="bg-secondary/10 border-b border-border/50">
-                        <th className="px-10 py-6 text-[10px] font-black uppercase tracking-widest text-muted-foreground">{t("student.payments.table.details")}</th>
-                        <th className="px-10 py-6 text-[10px] font-black uppercase tracking-widest text-muted-foreground">{t("student.payments.table.date")}</th>
-                        <th className="px-10 py-6 text-[10px] font-black uppercase tracking-widest text-muted-foreground">{t("student.payments.table.status")}</th>
-                        <th className="px-10 py-6 text-[10px] font-black uppercase tracking-widest text-muted-foreground text-right">{t("student.payments.table.amount")}</th>
-                        <th className="px-10 py-6 text-[10px] font-black uppercase tracking-widest text-muted-foreground">Download</th>
-                     </tr>
-                  </thead>
-                  <tbody className="divide-y divide-border/50">
-                     {enrollments.map((item) => (
-                        <tr key={item.id} className="hover:bg-secondary/5 transition-colors group">
-                           <td className="px-10 py-8">
-                              <div className="flex items-center gap-4">
-                                 <div className="h-12 w-12 rounded-xl bg-muted overflow-hidden">
-                                    <img src={item.course?.thumbnail || "/placeholder.png"} className="w-full h-full object-cover" />
-                                 </div>
-                                 <div>
-                                    <p className="text-sm font-black text-foreground">{item.course?.title}</p>
-                                    <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">{t("student.payments.table.verified")}</p>
-                                 </div>
-                              </div>
-                           </td>
-                           <td className="px-10 py-8">
-                              <div className="flex items-center gap-2 text-muted-foreground">
-                                 <Calendar className="w-3.5 h-3.5" />
-                                 <span className="text-xs font-bold">{new Date(item.enrolledAt).toLocaleDateString()}</span>
-                              </div>
-                           </td>
-                           <td className="px-10 py-8">
-                              <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-500 rounded-full text-[9px] font-black uppercase tracking-widest">
-                                 <CheckCircle2 className="w-3 h-3" />
-                                 {t("student.payments.table.completed")}
-                              </span>
-                           </td>
-                           <td className="px-10 py-8 text-right">
-                              <p className="text-lg font-black text-foreground tracking-tighter">
-                                 ${item.course?.price?.toLocaleString() || 0}
-                              </p>
-                           </td>
-                           <td className="px-10 py-8">
-                              <button type="button" className="btn-outline cursor-pointer" onClick={() => downloadReceipt(item)}>
-                                 <PrinterIcon className="w-4 h-4" />
-                              </button>
-                           </td>
-                        </tr>
-                     ))}
-                     {enrollments.length === 0 && (
-                        <tr>
-                           <td colSpan={5} className="px-10 py-20 text-center">
-                              <p className="text-muted-foreground font-medium italic">{t("student.payments.table.no_data")}</p>
-                           </td>
-                        </tr>
-                     )}
-                  </tbody>
-               </table>
-            </div>
-         </div>
-
+         <DashboardCard
+            header={
+               <div>
+                  <h2 className="text-2xl font-black tracking-tight">{t("student.payments.recent_transactions")}</h2>
+                  <p className="text-muted-foreground font-medium text-xs">{t("student.payments.transaction_subtitle")}</p>
+               </div>
+            }
+         >
+            <DataTable 
+               columns={columns}
+               data={enrollments}
+               isLoading={isLoading}
+               loadingMessage="Loading transactions..."
+               emptyState={{
+                  title: t("student.payments.table.no_data") || "No transactions found",
+                  description: "You have not completed any payments yet.",
+                  icon: <History className="w-12 h-12" />
+               }}
+            />
+         </DashboardCard>
       </div>
    );
 }

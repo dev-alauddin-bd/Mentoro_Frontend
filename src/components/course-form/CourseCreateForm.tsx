@@ -209,7 +209,6 @@ export default function CourseCreateForm({
               <button
                 type="button"
                 disabled={isGenerating}
-                
                 onClick={async () => {
                   const title = watch("title");
                   const desc = watch("description");
@@ -243,17 +242,32 @@ export default function CourseCreateForm({
                     toast.error("Failed to generate AI content.");
                   }
                 }}
-                className="text-xs font-bold text-primary cursor-pointer flex items-center gap-1 hover:opacity-80 active:scale-95 transition-all disabled:opacity-50"
+                className={`relative overflow-hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 cursor-pointer ${
+                  isGenerating
+                    ? "bg-gradient-to-r from-orange-600 via-amber-500 to-rose-600 text-white shadow-lg shadow-orange-500/35 scale-105 animate-shimmer"
+                    : "bg-primary/10 hover:bg-primary/20 text-primary border border-primary/25 hover:border-primary/40"
+                }`}
               >
-                <Sparkles size={14} className={isGenerating ? "animate-pulse" : ""} />
-                {isGenerating ? "Generating…" : "Auto‑Generate with AI"}
+                {isGenerating ? (
+                  <>
+                    <Sparkles size={13} className="animate-spin text-white" />
+                    <span>AI Generating...</span>
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={13} className="animate-bounce text-primary" />
+                    <span>Auto‑Generate with AI</span>
+                  </>
+                )}
               </button>
             </div>
 
             <input
               {...register("title", { required: true })}
               placeholder="Ex. Advanced Next.js Patterns"
-              className="w-full h-14 px-6 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50"
+              className={`w-full h-14 px-6 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50 ${
+                isGenerating ? "animate-ai-input" : ""
+              }`}
             />
           </div>
 
@@ -265,7 +279,9 @@ export default function CourseCreateForm({
               {...register("description", { required: true })}
               placeholder="Describe what students will learn..."
               rows={4}
-              className="w-full px-6 py-4 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50 resize-none"
+              className={`w-full px-6 py-4 bg-background border border-border rounded-2xl focus:ring-2 focus:ring-primary/20 outline-none transition-all font-bold placeholder:opacity-50 resize-none ${
+                isGenerating ? "animate-ai-input" : ""
+              }`}
             />
           </div>
 
@@ -276,7 +292,9 @@ export default function CourseCreateForm({
             <input
               {...register("learningOutcomes")}
               placeholder="Ex: Build apps, Deploy projects"
-              className="w-full h-14 px-6 bg-background border border-border rounded-2xl"
+              className={`w-full h-14 px-6 bg-background border border-border rounded-2xl ${
+                isGenerating ? "animate-ai-input" : ""
+              }`}
             />
           </div>
 
@@ -287,7 +305,9 @@ export default function CourseCreateForm({
             <input
               {...register("requirements")}
               placeholder="Ex: Basic JS, React knowledge"
-              className="w-full h-14 px-6 bg-background border border-border rounded-2xl"
+              className={`w-full h-14 px-6 bg-background border border-border rounded-2xl ${
+                isGenerating ? "animate-ai-input" : ""
+              }`}
             />
           </div>
 
@@ -298,7 +318,9 @@ export default function CourseCreateForm({
             <input
               {...register("targetAudience")}
               placeholder="Ex: Beginners, Developers"
-              className="w-full h-14 px-6 bg-background border border-border rounded-2xl"
+              className={`w-full h-14 px-6 bg-background border border-border rounded-2xl ${
+                isGenerating ? "animate-ai-input" : ""
+              }`}
             />
           </div>
 
@@ -309,7 +331,9 @@ export default function CourseCreateForm({
             <input
               {...register("tags")}
               placeholder="Ex: react, nextjs, backend"
-              className="w-full h-14 px-6 bg-background border border-border rounded-2xl"
+              className={`w-full h-14 px-6 bg-background border border-border rounded-2xl ${
+                isGenerating ? "animate-ai-input" : ""
+              }`}
             />
           </div>
 

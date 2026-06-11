@@ -160,3 +160,48 @@ html {
 .animate-marquee-reverse {
   animation: marquee-reverse 50s linear infinite;
 }
+
+@keyframes ai-pulse-border {
+  0%, 100% {
+    border-color: rgba(238, 123, 0, 0.3);
+    box-shadow: 0 0 4px rgba(238, 123, 0, 0.1);
+  }
+  50% {
+    border-color: rgba(238, 123, 0, 0.85);
+    box-shadow: 0 0 16px rgba(238, 123, 0, 0.4);
+  }
+}
+
+.animate-ai-input {
+  animation: ai-pulse-border 1.5s infinite ease-in-out;
+  background: linear-gradient(to right, rgba(238, 123, 0, 0.03), rgba(244, 63, 94, 0.03)) !important;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shimmer::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 20%,
+    rgba(255, 255, 255, 0.6) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 1.8s infinite;
+  content: '';
+}

@@ -98,7 +98,7 @@ function InstructorAnalyticsContent() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16 animate-in fade-in slide-in-from-bottom-6 duration-1000 pb-20">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16 animate-in fade-in slide-in-from-bottom-6 duration-1000 pb-20">
       
       <DashboardHeader 
         badgeIcon={<TrendingUp className="w-4 h-4" />}

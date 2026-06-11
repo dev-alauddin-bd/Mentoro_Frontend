@@ -157,7 +157,7 @@ export default function LiveSessionManagement() {
   ];
 
   return (
-    <div className="container mx-auto p-4 md:p-8 max-w-7xl space-y-12 animate-in fade-in slide-in-from-bottom-6 duration-1000">
+    <div className="container mx-auto p-4 md:p-8  space-y-12 animate-in fade-in slide-in-from-bottom-6 duration-1000">
       <DashboardHeader 
         badgeIcon={<Video className="w-3.5 h-3.5" />}
         badgeText="Broadcast Management"

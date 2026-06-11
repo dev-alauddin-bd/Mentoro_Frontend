@@ -125,7 +125,7 @@ export default function AssignmentsPage() {
       header: "Actions",
       align: "right",
       accessor: (assignment) => (
-        <div className="flex items-center justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+        <div className="flex items-center justify-end gap-3">
           <button
             onClick={() => openModal(assignment)}
             className="h-9 px-4 bg-background border border-border/50 rounded-xl text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:bg-primary hover:text-white hover:border-primary transition-all flex items-center gap-2 shadow-sm"
@@ -144,7 +144,7 @@ export default function AssignmentsPage() {
   ];
 
   return (
-    <div className="container mx-auto p-4 md:p-8 space-y-10 max-w-7xl">
+    <div className="container mx-auto p-4 md:p-8 space-y-10">
       <DashboardHeader 
         badgeIcon={<FileText className="w-3.5 h-3.5" />}
         badgeText="Course Evaluation"

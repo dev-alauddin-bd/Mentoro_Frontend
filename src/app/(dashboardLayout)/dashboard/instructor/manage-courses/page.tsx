@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import CourseCreateForm from "@/components/course-form/CourseCreateForm";
 import CourseList from "@/components/course-form/CourseList";
 import Pagination from "@/components/common/Pagination";
+import DashboardHeader from "@/components/common/DashboardHeader";
+import DashboardFilterBar from "@/components/common/DashboardFilterBar";
+import DashboardCard from "@/components/common/DashboardCard";
 
 import {
   useDeleteCourseMutation,
@@ -35,14 +38,19 @@ export default function ManageCourses() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
 
-  const limit = 8;
+  const limit = 6;
 
   const {
     data: coursesData,
     refetch,
     isLoading,
   } = useGetInstructorCoursesQuery(
-    { page, limit, search, category },
+    {
+      page,
+      limit,
+      ...(search.trim() ? { search: search.trim() } : {}),
+      ...(category ? { category } : {}),
+    },
     { skip: !user?.id }
   );
 
@@ -80,9 +88,8 @@ export default function ManageCourses() {
   const confirmAction = (message: string, onConfirm: () => void) => {
     toast.custom((t_toast) => (
       <div
-        className={`${
-          t_toast.visible ? "animate-enter" : "animate-leave"
-        } max-w-sm w-full bg-card border border-border shadow-2xl rounded-2xl p-4`}
+        className={`${t_toast.visible ? "animate-enter" : "animate-leave"
+          } max-w-sm w-full bg-card border border-border shadow-2xl rounded-2xl p-4`}
       >
         <p className="text-sm font-bold text-center">{message}</p>
 
@@ -152,127 +159,106 @@ export default function ManageCourses() {
   };
 
   return (
-    <div className="container mx-auto p-4 md:p-8 space-y-10">
-      {/* HEADER */}
-      <div className="flex justify-between items-end">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary rounded-full text-xs font-black uppercase">
-            <BookOpen className="w-4 h-4" />
-            {t("instructor.manage_courses.catalog")}
-          </div>
-
-          <h1 className="text-4xl font-black">
-            {t("instructor.manage_courses.title")}
-          </h1>
-        </div>
-
-        <button
-          onClick={() => setShowCreateModal(true)}
-          className="h-12 px-6 bg-primary text-white cursor-pointer rounded-2xl font-black"
-        >
-          <Plus className="w-4 h-4 inline mr-2" />
-          Add Course
-        </button>
-      </div>
-
-      {/* FILTERS */}
-      <div className="flex gap-4 bg-card p-4 rounded-2xl">
-        <div className="flex-1 relative">
-          <Search className="absolute left-4 top-3 w-4 h-4" />
-          <input
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setPage(1);
-            }}
-            placeholder="Search..."
-            className="w-full pl-10 h-10"
-          />
-          {search && (
-            <button onClick={() => setSearch("")}>
-              <X className="w-4 h-4 cursor-pointer" />
-            </button>
-          )}
-        </div>
-
-        <select
-          value={category}
-          onChange={(e) => {
-            setCategory(e.target.value);
-            setPage(1);
-          }}
-        >
-          <option value="">All</option>
-          {(categories?.data?.categories || []).map((c: any) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      {/* LIST */}
-      <CourseList
-        courses={courses}
-        isLoading={isLoading}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onTogglePublish={handleTogglePublish}
-        onAddModule={handleAddModule}
+    <div className="container mx-auto p-4 md:p-8 space-y-10  animate-in fade-in slide-in-from-bottom-6 duration-1000">
+      <DashboardHeader
+        badgeIcon={<BookOpen className="w-3.5 h-3.5" />}
+        badgeText={t("instructor.manage_courses.catalog")}
+        title={t("instructor.manage_courses.title")}
+        subtitle="Organize, build, and publish premium courses for your students."
+        action={
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="h-14 px-8 bg-primary text-white cursor-pointer rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center gap-2 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all"
+          >
+            <Plus className="w-4.5 h-4.5" />
+            Add Course
+          </button>
+        }
       />
 
-      {/* PAGINATION */}
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={setPage}
+      <DashboardFilterBar
+        search={search}
+        onSearchChange={(val) => { setSearch(val); setPage(1); }}
+        searchPlaceholder="Search courses..."
+        filterValue={category}
+        onFilterChange={(val) => { setCategory(val); setPage(1); }}
+        filterPlaceholder="All Categories"
+        filterOptions={(categories?.data ?? []).map((c: any) => ({ value: `${c.id}`, label: c.name }))}
+      />
+
+      <DashboardCard
+        header={
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center text-primary">
+              <BookOpen className="w-6 h-6" />
+            </div>
+            <div>
+              <h3 className="text-2xl font-black italic">Course Catalog.</h3>
+              <p className="text-sm font-medium text-muted-foreground">Monitor and organize your online courses.</p>
+            </div>
+          </div>
+        }
+        footer={
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
+        }
+      >
+        <CourseList
+          courses={courses}
+          isLoading={isLoading}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onTogglePublish={handleTogglePublish}
+          onAddModule={handleAddModule}
         />
-      )}
+      </DashboardCard>
 
       {/* MODAL */}
-   {showCreateModal && (
-  <div className="fixed inset-0 z-[9999] flex items-center justify-center">
+      {showCreateModal && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center">
 
-    {/* overlay */}
-    <div
-      className="absolute inset-0 bg-black/60"
-      onClick={() => {
-        setShowCreateModal(false);
-        setCourseToEdit(null);
-      }}
-    />
+          {/* overlay */}
+          <div
+            className="absolute inset-0 bg-black/60"
+            onClick={() => {
+              setShowCreateModal(false);
+              setCourseToEdit(null);
+            }}
+          />
 
-    {/* modal */}
-    <div className="relative w-full max-w-3xl mx-4 bg-card rounded-2xl shadow-2xl border border-border overflow-hidden z-[10000]">
+          {/* modal */}
+          <div className="relative w-full max-w-3xl mx-4 bg-card rounded-2xl shadow-2xl border border-border overflow-hidden z-[10000]">
 
-      {/* HEADER (always on top) */}
-      <div className="relative z-[10001] flex justify-end p-3 bg-card border-b border-border">
-        <button
-          onClick={() => {
-            setShowCreateModal(false);
-            setCourseToEdit(null);
-          }}
-          className="w-9 h-9 flex items-center cu cursor-pointer justify-center rounded-full bg-background border border-border hover:bg-red-500 hover:text-white transition-all"
-        >
-          ✕
-        </button>
-      </div>
+            {/* HEADER (always on top) */}
+            <div className="relative z-[10001] flex justify-end p-3 bg-card border-b border-border">
+              <button
+                onClick={() => {
+                  setShowCreateModal(false);
+                  setCourseToEdit(null);
+                }}
+                className="w-9 h-9 flex items-center cu cursor-pointer justify-center rounded-full bg-background border border-border hover:bg-red-500 hover:text-white transition-all"
+              >
+                ✕
+              </button>
+            </div>
 
-      {/* scroll area */}
-      <div className="max-h-[90vh] overflow-y-auto p-6 relative z-[9999]">
-        <CourseCreateForm
-          initialData={courseToEdit}
-          onClose={() => {
-            setShowCreateModal(false);
-            setCourseToEdit(null);
-          }}
-        />
-      </div>
+            {/* scroll area */}
+            <div className="max-h-[90vh] overflow-y-auto p-6 relative z-[9999]">
+              <CourseCreateForm
+                initialData={courseToEdit}
+                onClose={() => {
+                  setShowCreateModal(false);
+                  setCourseToEdit(null);
+                }}
+              />
+            </div>
 
-    </div>
-  </div>
-)}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -32,51 +32,36 @@ export function LiveSessionModal({ isOpen, onClose, session, onSuccess }: LiveSe
   const handleSubmit = async (data: any) => {
     try {
       setIsUploading(true)
-      let thumbnailUrl = data.thumbnail || (session?.thumbnail || "")
 
-      // Upload to Cloudinary if a new file is selected
+      // Combine date and time fields into ISO strings for Prisma
+      const sessionDateISO = new Date(`${data.sessionDate}T${data.sessionTime}`).toISOString()
+      const registrationDeadlineISO = new Date(`${data.registrationDeadlineDate}T${data.registrationDeadlineTime}`).toISOString()
+
+      // Build FormData payload
+      const formData = new FormData()
+      // Append scalar fields
+      formData.append("title", data.title)
+      formData.append("description", data.description || "")
+      formData.append("sessionDate", sessionDateISO)
+      formData.append("registrationDeadline", registrationDeadlineISO)
+      if (data.maxCapacity) formData.append("maxCapacity", String(data.maxCapacity))
+      if (data.meetingLink) formData.append("meetingLink", data.meetingLink)
+      formData.append("isPublished", String(data.isPublished))
+      formData.append("level", data.level)
+      // Append array fields as JSON strings
+      if (data.learningOutcomes?.length) formData.append("learningOutcomes", JSON.stringify(data.learningOutcomes))
+      if (data.whoShouldAttend?.length) formData.append("whoShouldAttend", JSON.stringify(data.whoShouldAttend))
+      if (data.keyTopics?.length) formData.append("keyTopics", JSON.stringify(data.keyTopics))
+      // Append thumbnail file if present
       if (data.thumbnailFile) {
-        const fd = new FormData()
-        fd.append("file", data.thumbnailFile)
-        fd.append("upload_preset", "course_thumbnails")
-
-        const res = await fetch(
-          "https://api.cloudinary.com/v1_1/dyfamn6rm/image/upload",
-          {
-            method: "POST",
-            body: fd,
-          }
-        )
-
-        const json = await res.json()
-        if (json.secure_url) {
-          thumbnailUrl = json.secure_url
-        } else {
-          toast.error(t("live_sessions.modal.error_upload"))
-          setIsUploading(false)
-          return
-        }
+        formData.append("thumbnail", data.thumbnailFile)
       }
-
-      // Ensure date fields are properly formatted as full ISO-8601 DateTime strings for Prisma
-      const payload = {
-        ...data,
-        thumbnail: thumbnailUrl,
-        sessionDate: new Date(`${data.sessionDate}T${data.sessionTime}`).toISOString(),
-        registrationDeadline: new Date(`${data.registrationDeadlineDate}T${data.registrationDeadlineTime}`).toISOString(),
-      }
-      
-      // Remove separate time/date fields from payload as they're not needed by the backend
-      delete (payload as any).thumbnailFile
-      delete (payload as any).sessionTime
-      delete (payload as any).registrationDeadlineDate
-      delete (payload as any).registrationDeadlineTime
 
       if (session) {
-        await updateSession({ id: session.id, ...payload }).unwrap()
+        await updateSession({ id: session.id, body: formData }).unwrap()
         toast.success(t("live_sessions.modal.success_update"))
       } else {
-        await createSession(payload).unwrap()
+        await createSession(formData).unwrap()
         if (typeof window !== "undefined") {
           localStorage.removeItem("liveSessionDraft")
         }

@@ -21,19 +21,24 @@ const liveSessionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["LiveSession"] as any,
     }),
+    // createSession mutation without JSON headers
     createSession: builder.mutation({
       query: (data) => ({
         url: "/live-sessions",
         method: "POST",
         body: data,
+        // Let fetch set correct multipart headers
+        headers: {},
       }),
       invalidatesTags: ["LiveSession"] as any,
     }),
+    // updateSession mutation accepting FormData directly
     updateSession: builder.mutation({
-      query: ({ id, ...data }) => ({
+      query: ({ id, body }) => ({
         url: `/live-sessions/${id}`,
         method: "PATCH",
-        body: data,
+        body: body,
+        headers: {},
       }),
       invalidatesTags: ["LiveSession"] as any,
     }),

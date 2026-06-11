@@ -112,7 +112,7 @@ export default function CategoryPage() {
   ];
 
   return (
-    <div className="container mx-auto p-4 md:p-8 space-y-10 max-w-7xl">
+    <div className="container mx-auto p-4 md:p-8 space-y-10">
       <DashboardHeader 
         badgeIcon={<Tag className="w-3.5 h-3.5" />}
         badgeText="Taxonomy Management"

@@ -46,6 +46,7 @@ export function LiveSessionForm({
   onSuccess,
 }: LiveSessionFormProps) {
   const { t } = useTranslation();
+  const [hasSubmitted, setHasSubmitted] = React.useState(false);
 
   const [generateLiveSession, { isLoading: isGenerating }] =
     useGenerateLiveSessionMutation();
@@ -125,13 +126,14 @@ export function LiveSessionForm({
   // ================= AUTO DRAFT SAVE =================
   useEffect(() => {
     if (initialData) return;
+    if (hasSubmitted) return; // stop saving draft after successful submit
 
     const sub = watch((value) => {
       localStorage.setItem("liveSessionDraft", JSON.stringify(value));
     });
 
     return () => sub.unsubscribe();
-  }, [watch, initialData]);
+  }, [watch, initialData, hasSubmitted]);
 
   // ================= THUMB =================
   const handleThumbChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -159,15 +161,12 @@ export function LiveSessionForm({
   const submitHandler: SubmitHandler<SessionFormValues> = async (data) => {
     try {
       await onSubmit(data);
-
-      toast.success(initialData ? "Updated!" : "Created!");
-
       reset();
+      setThumbPreview(null);
       localStorage.removeItem("liveSessionDraft");
-
-      onSuccess?.(); // modal close
-    } catch (err: any) {
-      toast.error(err?.message || "Failed");
+      setHasSubmitted(true);
+    } catch (err) {
+      // Errors are caught and handled by the parent component's onSubmit handler
     }
   };
 
@@ -220,17 +219,36 @@ export function LiveSessionForm({
           type="button"
           onClick={handleAIGenerate}
           disabled={isGenerating}
-          className="text-xs text-primary flex gap-1"
+          className={`relative overflow-hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 cursor-pointer ${
+            isGenerating
+              ? "bg-gradient-to-r from-orange-600 via-amber-500 to-rose-600 text-white shadow-lg shadow-orange-500/35 scale-105 animate-shimmer"
+              : "bg-primary/10 hover:bg-primary/20 text-primary border border-primary/25 hover:border-primary/40"
+          }`}
         >
-          <Sparkles size={14} />
-          {isGenerating ? "Generating..." : "AI Generate"}
+          {isGenerating ? (
+            <>
+              <Sparkles size={13} className="animate-spin text-white" />
+              <span>AI Generating...</span>
+            </>
+          ) : (
+            <>
+              <Sparkles size={13} className="animate-bounce text-primary" />
+              <span>AI Generate</span>
+            </>
+          )}
         </button>
       </div>
 
-      <Input {...register("title")} />
+      <Input 
+        {...register("title")} 
+        className={isGenerating ? "animate-ai-input" : ""}
+      />
 
       {/* DESCRIPTION */}
-      <Textarea {...register("description")} />
+      <Textarea 
+        {...register("description")} 
+        className={isGenerating ? "animate-ai-input" : ""}
+      />
 
       {/* DATE / TIME */}
       <div className="grid grid-cols-2 gap-4">
@@ -256,7 +274,10 @@ export function LiveSessionForm({
       <Input {...register("meetingLink")} />
 
       {/* LEVEL */}
-      <select {...register("level")} className="w-full h-12 rounded">
+      <select 
+        {...register("level")} 
+        className={`w-full h-12 rounded ${isGenerating ? "animate-ai-input" : ""}`}
+      >
         <option value="BEGINNER">Beginner</option>
         <option value="INTERMEDIATE">Intermediate</option>
         <option value="ADVANCED">Advanced</option>
@@ -267,18 +288,21 @@ export function LiveSessionForm({
         value={watch("learningOutcomes")?.join(", ")}
         onChange={(e) => handleArrayChange("learningOutcomes", e.target.value)}
         placeholder="Learning outcomes"
+        className={isGenerating ? "animate-ai-input" : ""}
       />
 
       <Textarea
         value={watch("whoShouldAttend")?.join(", ")}
         onChange={(e) => handleArrayChange("whoShouldAttend", e.target.value)}
         placeholder="Who should attend"
+        className={isGenerating ? "animate-ai-input" : ""}
       />
 
       <Textarea
         value={watch("keyTopics")?.join(", ")}
         onChange={(e) => handleArrayChange("keyTopics", e.target.value)}
         placeholder="Key topics"
+        className={isGenerating ? "animate-ai-input" : ""}
       />
 
       {/* PUBLISH */}
