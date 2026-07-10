@@ -15,7 +15,8 @@ import { LanguageSwitcher } from "./LanguageSwitcher";
 
 
 import { GlobalSearch } from "./GlobalSearch";
-import { trackEvent } from "@/lib/gtag";
+
+import Image from "next/image";
 
 // --- Main Component: Header ---
 export function Header() {
@@ -26,26 +27,16 @@ export function Header() {
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdown on click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsUserDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
 
   const pathname = usePathname();
   const [logoutApi] = useLogoutMutation();
-  const handleLogout = async () => {  
+  const handleLogout = async () => {
     try {
 
       await logoutApi(undefined).unwrap();
       dispatch(logout());
-      trackEvent('logout', { method: 'Manual' });
+
       window.location.href = "/";
     } catch (error) {
       console.error("Logout failed:", error);
@@ -92,7 +83,7 @@ export function Header() {
           {/* 1. Logo Section (Left) */}
           <div className="flex-shrink-0">
             <Link href="/" className="group flex items-center transition-all duration-300">
-              <img src="/logo.svg" alt="Mentoro" className="h-16 w-auto" />
+              <Image src="/logo.svg" alt="Mentoro" loading="eager" width={64} height={64} className="h-16 w-auto" />
             </Link>
           </div>
 
@@ -110,10 +101,10 @@ export function Header() {
                   <ChevronDown className="w-3 h-3 transition-transform group-hover:rotate-180" />
                 </button>
                 <div className="absolute top-full right-0 mt-2 w-48 bg-background border border-border/50 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-2 z-50">
-                  <Link href="/refund-policy" onClick={() => trackEvent('policy_view', { type: 'refund' })} className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.refund_policy")}</Link>
-                  <Link href="/privacy-policy" onClick={() => trackEvent('policy_view', { type: 'privacy' })} className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.privacy")}</Link>
-                  <Link href="/terms-of-service" onClick={() => trackEvent('policy_view', { type: 'terms' })} className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.terms")}</Link>
-                  <Link href="/cookie-policy" onClick={() => trackEvent('policy_view', { type: 'cookie' })} className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.cookie")}</Link>
+                  <Link href="/refund-policy"  className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.refund_policy")}</Link>
+                  <Link href="/privacy-policy"  className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.privacy")}</Link>
+                  <Link href="/terms-of-service"  className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.terms")}</Link>
+                  <Link href="/cookie-policy"  className="block px-4 py-2 text-[10px] font-black uppercase tracking-widest text-muted-foreground hover:text-primary hover:bg-primary/5 transition-colors">{t("footer.cookie")}</Link>
                 </div>
               </div>
             </nav>
@@ -277,7 +268,7 @@ function NavLink({ href, label, active }: { href: string; label: string; active?
   return (
     <Link
       href={href}
-      onClick={() => trackEvent('nav_click', { label, href })}
+    
       className={`rounded-xl px-5 py-2.5 text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${active
         ? "bg-primary text-white shadow-lg shadow-primary/20 scale-105"
         : "text-muted-foreground hover:bg-primary/5 hover:text-primary"

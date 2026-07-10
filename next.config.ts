@@ -11,7 +11,8 @@ const nextConfig: NextConfig = {
         hostname: "**",
       },
     ],
-    unoptimized: true,
+    // Enable image optimization
+    unoptimized: false,
   },
 
   async rewrites() {
@@ -22,6 +23,8 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+
+  compress: true,
 };
 
 export default withIntlayer(nextConfig);

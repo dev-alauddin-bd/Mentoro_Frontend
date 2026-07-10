@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from 'next/script'
 import "./globals.css";
 
 import { cookies } from 'next/headers';
@@ -10,15 +9,11 @@ export const metadata: Metadata = {
   title: "Mentoro - Learn Better",
   description: "Best platform for online learning and courses",
   keywords: ["online courses", "learning platform", "masterclass", "education", "skill development"],
-  verification: {
-    google: "VR414iWeKSX3qANinXf7vE9r6e2svLfOmALfRo_5g04",
-  },
+  
 };
 
-import { Suspense } from "react";
-
 import AiAssistant from "@/components/shared/AiAssistant";
-import GoogleAnalytics from "@/components/shared/GoogleAnalytics";
+
 import { ReduxProvider } from "@/components/ReduxProvider";
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -28,16 +23,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const isRtl = lang === 'ar';
 
   return (
-    <html lang={lang} dir={isRtl ? 'rtl' : 'ltr'} suppressHydrationWarning>
+    <html lang={lang} dir={isRtl ? 'rtl' : 'ltr'} suppressHydrationWarning data-scroll-behavior="smooth">
       <head />
       <body>
         <ReduxProvider>
-
-
-          <Suspense fallback={null}>
-            <GoogleAnalytics />
-          </Suspense>
-
           <LenisProvider>{children}</LenisProvider>
           <Toaster position="top-center" reverseOrder={false} />
           <AiAssistant />
