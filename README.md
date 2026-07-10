@@ -19,13 +19,12 @@ Whether you are looking to monetize your expertise or upskill with new knowledge
 | 🏫 **Comprehensive Dashboards** | Dedicated intuitive dashboards for Students, Instructors, and Admins. |
 | 📚 **Course Management** | Powerful tools for instructors to create, edit, delete courses, and structure modules and lessons. |
 | ☁️ **Media Uploads** | Seamless image and video uploads integrated with Cloudinary for course thumbnails and previews. |
-| 🤖 **AI Mentor & Quiz Gen** | Persistent 24/7 AI assistant for instant support and on‑the‑fly quiz generation to test knowledge. |
+| 🤖 **AI Mentor** | Persistent 24/7 AI assistant for instant support and on‑the‑fly content generation to test knowledge. |
 | 🔍 **Intelligent Search** | Semantic AI search with insights, smart course matching, and filtering capabilities. |
 | 🌍 **Multi‑Language (i18n)** | Native support for multiple languages including English, Bengali, Arabic (RTL), French, and Spanish, powered by Intlayer & AI. |
 | 💼 **Jobs & Careers Board** | Dedicated job portal for users to apply to platform careers, with admin application tracking. |
 | 📹 **Live Sessions** | Integrated live session management for instructors to schedule and host real‑time classes. |
 | 📊 **Advanced Analytics** | Comprehensive admin analytics dashboard with data visualization and CSV/PDF export capabilities. |
-| 📈 **Google Analytics 4** | Integrated GA4 with automated pageview tracking and custom event logging for user behavior insights. |
 | ✉️ **Dynamic Contact Forms** | Fully functional contact pages utilizing EmailJS for reliable communication. |
 | 💳 **Stripe Integration** | Seamless and secure payment flow for paid course enrollments. |
 | 🔐 **Secure Authentication** | Firebase‑powered Email/Password and Google Social Login with state synced via Redux Toolkit. |
@@ -41,11 +40,9 @@ Whether you are looking to monetize your expertise or upskill with new knowledge
 | **React Hook Form & Zod** | Dynamic, validated, and performant forms |
 | **Redux Toolkit (RTK Query)** | State management and efficient data fetching |
 | **Tailwind CSS 4** | Utility‑first styling for a highly customizable UI |
-| **Firebase** | Authentication (Email/Google) |
 | **Intlayer 8.6 & OpenRouter** | AI‑Driven Content Management and Automated Translations |
 | **Stripe** | Payment processing |
 | **EmailJS** | Client‑side email sending |
-| **Google Analytics 4** | User behavior tracking and marketing analytics |
 | **React Hot Toast** | Beautiful, lightweight global notifications |
 | **React Leaflet** | Interactive mapping for contact sections |
 | **Lucide React** | Modern, clean iconography |
@@ -56,13 +53,13 @@ Whether you are looking to monetize your expertise or upskill with new knowledge
 
 ### Prerequisites
 - Node.js v20+
-- **pnpm** (Preferred package manager)
+- **yarn** (Preferred package manager)
 
 ### 1. Clone & Install
 ```bash
 git clone https://github.com/dev-alauddin-bd/Mentoro_Frontend.git
 cd Mentoro_Frontend
-pnpm install
+yarn install
 ```
 
 ### 2. Environment Variables
@@ -80,16 +77,7 @@ NEXT_PUBLIC_EMAILJS_SERVICE_ID=your_service_id
 NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=your_template_id
 NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=your_public_key
 
-# Google Analytics
-NEXT_PUBLIC_GA_MEASUREMENT_ID=your_ga_measurement_id
 
-# Firebase Configuration
-NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
-NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
-NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
 
 # Quick Login Credentials (Development)
 NEXT_PUBLIC_ADMIN_EMAIL=admin@mentoro.com
