@@ -74,9 +74,9 @@ export function CourseCard({ course }: CourseCardProps) {
 
         {/* --- VIEW DETAILS BUTTON --- */}
         <div className="mt-6">
-          <div className="w-full py-4 bg-secondary border border-border rounded-xl text-[10px] font-black uppercase tracking-widest text-center group-hover:bg-primary group-hover:text-white transition-all">
+          <button type="button" aria-label={t("course_card.view_details")} className="w-full py-4 bg-secondary border border-border rounded-xl text-[10px] font-black uppercase tracking-widest text-center group-hover:bg-primary group-hover:text-white transition-all">
             {t("course_card.view_details")}
-          </div>
+          </button>
         </div>
       </div>
     </Link>
