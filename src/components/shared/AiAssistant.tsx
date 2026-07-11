@@ -207,6 +207,7 @@ const AiAssistant = () => {
             </div>
             <button
               onClick={() => setIsOpen(false)}
+              aria-label="Close chat window"
               className="hover:bg-background/20 p-2 rounded-xl transition-all hover:rotate-90 duration-300"
             >
               <X size={20} />
@@ -283,6 +284,7 @@ const AiAssistant = () => {
               <button
                 onClick={toggleSpeechRecognition}
                 disabled={isLoading}
+                aria-label={isListening ? "Stop listening" : "Start voice input"}
                 className={`p-2.5 rounded-xl transition-all shadow-lg duration-300 disabled:opacity-50 mr-2 ${
                   isListening
                     ? "bg-red-500 hover:bg-red-600 animate-pulse text-white shadow-red-500/20"
@@ -307,6 +309,7 @@ const AiAssistant = () => {
               <button
                 onClick={handleSendMessage}
                 disabled={isLoading}
+                aria-label="Send message"
                 className="bg-primary hover:scale-105 active:scale-95 text-primary-foreground p-2.5 rounded-xl transition-all shadow-lg shadow-primary/20 disabled:opacity-50"
               >
                 <Send size={18} />
@@ -319,6 +322,7 @@ const AiAssistant = () => {
       {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
+         aria-label="Toggle AI assistant"
         className="bg-primary text-primary-foreground p-5 rounded-[2rem] shadow-[0_20px_50px_rgba(var(--primary),0.3)] hover:scale-110 active:scale-90 transition-all duration-500 group relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>

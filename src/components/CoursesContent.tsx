@@ -187,6 +187,7 @@ export default function CoursesContent() {
           )}
         </div>
 
+      
         {/* PAGINATION */}
         <div className="mt-24 flex flex-col items-center gap-8">
           <div className="flex items-center gap-4">
@@ -195,6 +196,7 @@ export default function CoursesContent() {
             <button
               disabled={page === 1}
               onClick={() => setPage(page - 1)}
+              aria-label="Previous page"
               className="w-14 h-14 border rounded-2xl flex items-center justify-center disabled:opacity-30"
             >
               <ChevronLeft />
@@ -206,11 +208,12 @@ export default function CoursesContent() {
                 <button
                   key={p}
                   onClick={() => setPage(p)}
-                  className={`w-12 h-12 rounded-xl font-black ${
-                    page === p
+                  aria-label={`Go to page ${p}`}
+                  aria-current={page === p ? "page" : undefined} 
+                  className={`w-12 h-12 rounded-xl font-black ${page === p
                       ? "bg-primary text-white"
                       : "text-muted-foreground"
-                  }`}
+                    }`}
                 >
                   {p}
                 </button>
@@ -221,6 +224,7 @@ export default function CoursesContent() {
             <button
               disabled={page === totalPages}
               onClick={() => setPage(page + 1)}
+              aria-label="Next page"
               className="w-14 h-14 border rounded-2xl flex items-center justify-center disabled:opacity-30"
             >
               <ChevronRight />
