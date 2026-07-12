@@ -109,7 +109,7 @@ npx intlayer build
 
 ### 4. Run Development Server
 ```bash
-pnpm dev
+yarn dev
 ```
 
 ---
