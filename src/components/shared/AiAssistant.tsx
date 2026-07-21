@@ -62,7 +62,7 @@ const AiAssistant = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://144.79.249.98:8000/api/v1/chat", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
