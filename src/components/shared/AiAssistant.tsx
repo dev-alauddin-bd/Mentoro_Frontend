@@ -55,73 +55,107 @@ const AiAssistant = () => {
 
     const userMessage = { role: "user", content: message };
     const currentMessage = message; // keep a copy for the API call
+
+    // Optimistically update chat history with the user's message
     setChatHistory((prev) => [...prev, userMessage]);
     setMessage("");
     setIsLoading(true);
 
     try {
-      const API_URL =
-        typeof window !== "undefined"
-          ? "/api"
-          : `${process.env.NEXT_PUBLIC_API_URL}/api`;
-      const response = await fetch(`${API_URL}/ai/chat`, {
+      const response = await fetch("http://144.79.249.98:8000/api/v1/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          message: currentMessage,
-          history: chatHistory,
+          question: currentMessage,
+          course_id: null,   // Map structural constraints if needed dynamically
+          student_id: null,  // Map structural constraints if needed dynamically
         }),
       });
 
-      if (!response.body) throw new Error("No response body");
+      console.log('currentMessage', currentMessage);
 
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      // Check if response body is readable to initialize stream consumption hooks
+      if (!response.body) {
+        throw new Error("ReadableStream is not supported or response body is empty.");
+      }
+
+      // Initialize the network stream reader and text decoder components
       const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let aiContent = "";
+      const decoder = new TextDecoder("utf-8");
 
-      // placeholder for the assistant response
+      let streamBuffer = ""; // Temporary storage buffer for handling partial network fragments
+
+      // Push an empty placeholder message for the assistant into the state array
       setChatHistory((prev) => [...prev, { role: "assistant", content: "" }]);
 
+      // Asynchronous stream processing engine loop
       while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+        const { value, done } = await reader.read();
+        if (done) break; // Break loop execution cleanly when network stream completes
 
-        const chunk = decoder.decode(value);
-        const lines = chunk.split("\n");
+        // Decode binary stream uint8 chunks into clean text strings
+        streamBuffer += decoder.decode(value, { stream: true });
+
+        // Split streaming fragments strictly by the server's SSE boundary marker (\n\n)
+        const lines = streamBuffer.split("\n\n");
+
+        // Save the last potentially incomplete chunk back into the structural buffer
+        streamBuffer = lines.pop() || "";
 
         for (const line of lines) {
-          if (line.startsWith("data: ")) {
-            const dataStr = line.slice(6).trim();
-            if (dataStr === "[DONE]") continue;
+          const cleanLine = line.trim();
+          if (!cleanLine.startsWith("data: ")) continue;
 
-            try {
-              const data = JSON.parse(dataStr);
-              if (data.chunk) {
-                aiContent += data.chunk;
-                setChatHistory((prev) => {
-                  const newHistory = [...prev];
-                  const lastIdx = newHistory.length - 1;
-                  newHistory[lastIdx] = {
-                    ...newHistory[lastIdx],
-                    content: aiContent,
+          // Strip down the SSE prefix protocol targeting the raw payload string
+          const jsonString = cleanLine.replace(/^data:\s*/, "");
+
+          try {
+            const parsedData = JSON.parse(jsonString);
+
+            // Conditional router branch mapping to the backend payload schemas
+            if (parsedData.type === "token") {
+              // Functional update targeting specifically the last array index item (the assistant placeholder)
+              setChatHistory((prev) => {
+                const updatedHistory = [...prev];
+                const lastIndex = updatedHistory.length - 1;
+                if (lastIndex >= 0 && updatedHistory[lastIndex].role === "assistant") {
+                  updatedHistory[lastIndex] = {
+                    ...updatedHistory[lastIndex],
+                    content: updatedHistory[lastIndex].content + parsedData.content,
                   };
-                  return newHistory;
-                });
-              } else if (data.error) {
-                throw new Error(data.error);
-              }
-            } catch (e) {
-              console.error("Parse error:", e, dataStr);
+                }
+                return updatedHistory;
+              });
+            } else if (parsedData.type === "metadata") {
+              console.log("RAG Pipeline Pipeline Execution Metadata:", parsedData.content);
+              // Optional placeholder step to render metadata objects inside standalone containers
+            } else if (parsedData.type === "error") {
+              console.error("Backend internal execution stream failure:", parsedData.content);
+              toast.error(`Stream processing error: ${parsedData.content}`);
             }
+          } catch (jsonErr) {
+            console.error("JSON parsing error on message stream fragment:", jsonErr);
           }
         }
       }
+
     } catch (err: any) {
       console.error(err);
       toast.error(err.message || t("ai_assistant.error_msg"));
+
+      // Clean up empty assistant placeholders if network crashed before stream started loading tokens
+      setChatHistory((prev) => {
+        if (prev.length > 0 && prev[prev.length - 1].role === "assistant" && prev[prev.length - 1].content === "") {
+          return prev.slice(0, -1);
+        }
+        return prev;
+      });
     } finally {
       setIsLoading(false);
     }
@@ -235,16 +269,14 @@ const AiAssistant = () => {
             {chatHistory.map((chat, index) => (
               <div
                 key={index}
-                className={`flex ${
-                  chat.role === "user" ? "justify-end" : "justify-start"
-                } animate-in fade-in slide-in-from-bottom-2 duration-300`}
+                className={`flex ${chat.role === "user" ? "justify-end" : "justify-start"
+                  } animate-in fade-in slide-in-from-bottom-2 duration-300`}
               >
                 <div
-                  className={`max-w-[85%] p-4 rounded-[1.5rem] text-xs font-medium leading-relaxed shadow-sm ${
-                    chat.role === "user"
-                      ? "bg-primary text-primary-foreground rounded-tr-none"
-                      : "bg-secondary text-foreground border border-border rounded-tl-none"
-                  }`}
+                  className={`max-w-[85%] p-4 rounded-[1.5rem] text-xs font-medium leading-relaxed shadow-sm ${chat.role === "user"
+                    ? "bg-primary text-primary-foreground rounded-tr-none"
+                    : "bg-secondary text-foreground border border-border rounded-tl-none"
+                    }`}
                 >
                   {chat.role === "assistant" ? (
                     <div className="prose prose-sm dark:prose-invert max-w-none prose-p:leading-relaxed prose-pre:bg-background/50 prose-pre:p-2 prose-pre:rounded-lg">
@@ -285,11 +317,10 @@ const AiAssistant = () => {
                 onClick={toggleSpeechRecognition}
                 disabled={isLoading}
                 aria-label={isListening ? "Stop listening" : "Start voice input"}
-                className={`p-2.5 rounded-xl transition-all shadow-lg duration-300 disabled:opacity-50 mr-2 ${
-                  isListening
-                    ? "bg-red-500 hover:bg-red-600 animate-pulse text-white shadow-red-500/20"
-                    : "bg-primary hover:scale-105 active:scale-95 text-primary-foreground shadow-primary/20"
-                }`}
+                className={`p-2.5 rounded-xl transition-all shadow-lg duration-300 disabled:opacity-50 mr-2 ${isListening
+                  ? "bg-red-500 hover:bg-red-600 animate-pulse text-white shadow-red-500/20"
+                  : "bg-primary hover:scale-105 active:scale-95 text-primary-foreground shadow-primary/20"
+                  }`}
                 title={isListening ? "Stop listening" : "Start voice input"}
               >
                 <MicIcon size={18} />
@@ -322,7 +353,7 @@ const AiAssistant = () => {
       {/* Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-         aria-label="Toggle AI assistant"
+        aria-label="Toggle AI assistant"
         className="bg-primary text-primary-foreground p-5 rounded-[2rem] shadow-[0_20px_50px_rgba(var(--primary),0.3)] hover:scale-110 active:scale-90 transition-all duration-500 group relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
