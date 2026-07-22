@@ -11,7 +11,6 @@ import {
 } from "@/redux/features/course/courseAPi";
 
 import { useGetCategoriesQuery } from "@/redux/features/category/categoriesApi";
-import { useGenerateCourseContentMutation } from "@/redux/features/ai/aiApi";
 
 type FormValues = {
   title: string;
@@ -74,8 +73,7 @@ export default function CourseCreateForm({
 
   const [createCourse, { isLoading: isCreating }] = useCreateCourseMutation();
   const [updateCourse, { isLoading: isUpdating }] = useUpdateCourseMutation();
-  const [generateCourseContent, { isLoading: isGenerating }] =
-    useGenerateCourseContentMutation();
+  const [isGenerating, setIsGenerating] = useState(false);
   
   const loading = isCreating || isUpdating;
 
@@ -216,17 +214,29 @@ export default function CourseCreateForm({
                     toast.error("Enter a title or description first.");
                     return;
                   }
+                  setIsGenerating(true);
                   try {
-                    const res = await generateCourseContent({
-                      topic: `${title?.trim() ?? ""} ${desc?.trim() ?? ""}`.trim(),
-                    }).unwrap();
-                    const ai = res?.data?.data;
+                    const res = await fetch("/api/ai/generate-course-content", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        topic: `${title?.trim() ?? ""} ${desc?.trim() ?? ""}`.trim(),
+                      }),
+                    });
+                    const result = await res.json();
+                    if (!res.ok || !result.success) {
+                      throw new Error(result?.message || "Failed to generate AI content.");
+                    }
+                    let ai = result?.data;
+                    while (ai && ai.data && typeof ai.data === "object" && !ai.title) {
+                      ai = ai.data;
+                    }
                     if (!ai) {
                       toast.error("AI returned no data.");
                       return;
                     }
                     setValue("title", ai.title ?? "", { shouldValidate: true });
-                    setValue("description", ai.description ?? "", { shouldValidate: true });
+                    setValue("description", ai.description || ai.shortDescription || "", { shouldValidate: true });
                     const toCsv = (arr?: any) => {
                       if (Array.isArray(arr)) return arr.join(", ");
                       if (typeof arr === "string") return arr;
@@ -237,9 +247,11 @@ export default function CourseCreateForm({
                     setValue("requirements", toCsv(ai.requirements));
                     setValue("targetAudience", toCsv(ai.targetAudience));
                     toast.success("AI generated content has been applied!");
-                  } catch (e) {
+                  } catch (e: any) {
                     console.error(e);
-                    toast.error("Failed to generate AI content.");
+                    toast.error(e?.message || "Failed to generate AI content.");
+                  } finally {
+                    setIsGenerating(false);
                   }
                 }}
                 className={`relative overflow-hidden inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-300 cursor-pointer ${

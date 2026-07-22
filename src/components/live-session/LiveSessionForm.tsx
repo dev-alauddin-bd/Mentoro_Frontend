@@ -9,7 +9,6 @@ import { Loader2, Sparkles } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { useGenerateLiveSessionMutation } from "@/redux/features/ai/aiApi";
 import { SessionFormValues } from "@/interfaces/liveSession.interfce";
 
 interface LiveSessionFormProps {
@@ -47,9 +46,7 @@ export function LiveSessionForm({
 }: LiveSessionFormProps) {
   const { t } = useTranslation();
   const [hasSubmitted, setHasSubmitted] = React.useState(false);
-
-  const [generateLiveSession, { isLoading: isGenerating }] =
-    useGenerateLiveSessionMutation();
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const [thumbPreview, setThumbPreview] = useState<string | null>(null);
 
@@ -180,16 +177,29 @@ export function LiveSessionForm({
       return;
     }
 
+    setIsGenerating(true);
     try {
-      const res = await generateLiveSession({
-        title: `${title} ${desc}`,
-      }).unwrap();
+      const res = await fetch("/api/ai/generate-live-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title: `${title} ${desc}`.trim(),
+        }),
+      });
 
-      const ai = res?.data?.data;
+      const result = await res.json();
+      if (!res.ok || !result.success) {
+        throw new Error(result?.message || "AI failed");
+      }
+
+      let ai = result?.data;
+      while (ai && ai.data && typeof ai.data === "object" && !ai.title) {
+        ai = ai.data;
+      }
       if (!ai) return;
 
       if (ai.title) setValue("title", ai.title);
-      if (ai.fullDescription) setValue("description", ai.fullDescription);
+      if (ai.fullDescription || ai.description) setValue("description", ai.fullDescription || ai.description);
       if (ai.level) setValue("level", ai.level);
 
       if (ai.learningOutcomes)
@@ -202,8 +212,11 @@ export function LiveSessionForm({
         setValue("keyTopics", toArray(ai.keyTopics));
 
       toast.success("AI generated!");
-    } catch {
-      toast.error("AI failed");
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err?.message || "AI failed");
+    } finally {
+      setIsGenerating(false);
     }
   };
 
